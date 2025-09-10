@@ -1,0 +1,278 @@
+[
+  {
+    "objectID": "prerequisites.html",
+    "href": "prerequisites.html",
+    "title": "Prerequisites",
+    "section": "",
+    "text": "This course assumes working knowledge with R or Python for research. We assume that you are already comfortable with an integrated development environment (IDE), such as RStudio or VS Code. You must have a GitHub account and it will be beneficial to be familiar with the concepts of version control, although we will cover these in the course.\nFamiliarity with referencing software such as Zotero (recommended) and bibliography file formats such as BibTeX will be beneficial, but not essential.",
+    "crumbs": [
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#course-prerequisites",
+    "href": "prerequisites.html#course-prerequisites",
+    "title": "Prerequisites",
+    "section": "",
+    "text": "This course assumes working knowledge with R or Python for research. We assume that you are already comfortable with an integrated development environment (IDE), such as RStudio or VS Code. You must have a GitHub account and it will be beneficial to be familiar with the concepts of version control, although we will cover these in the course.\nFamiliarity with referencing software such as Zotero (recommended) and bibliography file formats such as BibTeX will be beneficial, but not essential.",
+    "crumbs": [
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#software-prerequisites",
+    "href": "prerequisites.html#software-prerequisites",
+    "title": "Prerequisites",
+    "section": "2 Software Prerequisites",
+    "text": "2 Software Prerequisites\nYou should bring a laptop with the following software installed and tested to check it works:\n\nQuarto (minimum version: 1.5.45)\nA tested R or Python installation or both (note: if you have Docker installed you should be able to run R and Python inside a devcontainer, works best with VS Code)\nRStudio or VS Code\n\nIf you will use VS Code for the course, you need the following extensions:\n\nThe R extension reditorsupport.r if using R\nThe Python extension ms-python.python if using Python\nThe quarto extention quarto.quarto\n\n\nGit, installed with one of the following packages:\n\nGitHub Desktop (see desktop.github.com)\nGit for the command line (see git-scm.com)\n\nThe gh command-line tool (see cli.github.com for installation and set-up instructions)",
+    "crumbs": [
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#recommended-online-courses",
+    "href": "prerequisites.html#recommended-online-courses",
+    "title": "Prerequisites",
+    "section": "3 Recommended Online Courses",
+    "text": "3 Recommended Online Courses\nStudents should take these short but very useful online courses to prepare:\n\nIntro to GitHub (should take less than an hour)\nCommunicate using Markdown (should take around 30 minutes or less)",
+    "crumbs": [
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "prerequisites.html#testing-your-setup",
+    "href": "prerequisites.html#testing-your-setup",
+    "title": "Prerequisites",
+    "section": "4 Testing your setup",
+    "text": "4 Testing your setup\nYou can test your setup by running the following code in R or Python.\n\nRPython\n\n\n\noptions(repos = c(CRAN = \"https://cloud.r-project.org\"))\nif (!require(\"remotes\")) install.packages(\"remotes\")\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"tmap\",\n    \"data.table\",\n    \"stats19\",\n    \"quarto\",\n    \"stplanr\",\n    \"osmextract\",\n    \"zonebuilder\"\n)\npkgs_to_install = pkgs[!pkgs %in% installed.packages()[, \"Package\"]]\nif (length(pkgs_to_install) &gt; 0) {\n  install.packages(pkgs_to_install)\n}\nlibrary(tidyverse)\nzones = zonebuilder::zb_zone(\"Leeds\", n_circles = 3)\nstudy_area = zones |&gt;\n  sf::st_union()\nextra_tags = c(\n  \"maxspeed\",\n  \"lit\",\n  \"cycleway\"\n)\nosm_network = osmextract::oe_get(\n  place = \"Leeds, UK\",\n  boundary = study_area,\n  boundary_type = \"clipsrc\",\n  extra_tags = extra_tags\n)\n\n\nosm_network |&gt;\n  select(maxspeed) |&gt;\n  plot()\n\n\n\n\n\n\n\nsf::write_sf(study_area, \"leeds_study_area.geojson\")\n\n\n\n\nimport osmnx as ox\nimport geopandas as gpd\nimport matplotlib.pyplot as plt\nimport shapely\n\nstudy_point = shapely.Point(-1.55, 53.80)  # Latitude and Longitude for Leeds\nstudy_geom = gpd.GeoSeries([study_point], crs=4326)\nstudy_polygon = study_geom.to_crs(epsg=3857).buffer(6000).to_crs(epsg=4326).unary_union\nstudy_polygon_gpd = gpd.GeoDataFrame(geometry=[study_polygon], crs=\"EPSG:4326\")\n# Read-in geojson already saved from R\nstudy_polygon = gpd.read_file(\"leeds_study_area.geojson\")\n# study_polygon_gpd.explore()\ntags = {\"highway\": True, \"maxspeed\": True, \"lit\": True, \"cycleway\": True}\ngdf = ox.features_from_polygon(study_polygon, tags)\ngdf = gdf[gdf.geom_type.isin([\"LineString\", \"MultiLineString\"])]\ngdf = gdf.to_crs(epsg=3857)\ngdf.plot(column=\"maxspeed\", figsize=(10, 10), legend=True)\nplt.show()\n\n\n\n\nLet us know how you get on and let us know if you have any issues getting set up, either by email, or (preferably) via the Discussion forum on GitHub associated with this course repository at github.com/tdscience/dstp/discussions.",
+    "crumbs": [
+      "Prerequisites"
+    ]
+  },
+  {
+    "objectID": "s4.html",
+    "href": "s4.html",
+    "title": "Spatio-temporal data",
+    "section": "",
+    "text": "1 Spatio-temporal data\nPlaceholder for session 4 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s1.html",
+    "href": "s1.html",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "",
+    "text": "1 Finding, importing and cleaning transport datasets\nPlaceholder for session 1 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s5.html",
+    "href": "s5.html",
+    "title": "OD Transport data visualisation",
+    "section": "",
+    "text": "1 OD Transport data visualisation\nPlaceholder for session 5 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s3.html",
+    "href": "s3.html",
+    "title": "Routing and route network analysis",
+    "section": "",
+    "text": "1 Routing and route network analysis\nPlaceholder for session 3 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "next-steps.html",
+    "href": "next-steps.html",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "The Quarto website for “Data Science for Transport Planning” has been successfully created with minimal placeholder content and rendered to the docs/ directory. The site is functional, but here are suggestions to enhance it:\n\n\n\nCreate an images/ directory and copy essential images from ../course/images/, such as icon.png for favicon and a logo (e.g., update tsrtr.png to a DSTP-specific logo).\nUncomment the favicon and logo lines in _quarto.yml once assets are added to avoid broken references.\n\n\n\n\n\nFill in session pages (s1.qmd to s8.qmd) with actual teaching materials adapted from ../course/ (e.g., s1.qmd: content on importing data using stats19, osmextract for Leeds).\nUpdate examples: adapt collisions.qmd and peoplemap.qmd for Leeds UK using local data (e.g., stats19 for West Yorkshire).\nEnhance materials.qmd with links to datasets, code repositories, and readings from dstp.qmd schedule.\n\n\n\n\n\nAdd hyperlinks in schedule.qmd to corresponding session pages, e.g., [Finding, importing and cleaning transport datasets](s1.qmd).\nEnsure session titles in s*.qmd match schedule exactly for consistency.\n\n\n\n\n\nVerify the R and Python test code in prerequisites.qmd runs without errors for Leeds (e.g., use execute_command to test Rscript -e \"source('prerequisites.R')\" if extracted).\nAdd screenshots or outputs for the test plots (e.g., Leeds road network visualization).\n\n\n\n\n\nCopy slides/ from ../course/ and adapt for DSTP topics (e.g., day1.qmd on introduction to data science).\nCopy data/ with Leeds-specific files (e.g., leeds_study_area.geojson generated from prerequisites).\nAdd references.bib copied from ../course/ and integrate citations in pages.\nCopy _extensions/ from ../course/ for custom Quarto features like bsicons.\n\n\n\n\n\nCommit changes and push to GitHub to trigger publish.yml for automatic deployment to gh-pages.\nTest the live site at https://tdscience.github.io/dstp/ and fix any broken links.\n\n\n\n\n\nAdd a forum link in sidebar if discussions are enabled on GitHub.\nInclude alignment with learning outcomes from dstp.qmd in index.qmd.\nAdd navigation to examples section and ensure mobile responsiveness.\nReview for accessibility and add alt text to future images.\n\nThese steps will transform the minimal site into a comprehensive course resource."
+  },
+  {
+    "objectID": "next-steps.html#add-images-and-assets",
+    "href": "next-steps.html#add-images-and-assets",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Create an images/ directory and copy essential images from ../course/images/, such as icon.png for favicon and a logo (e.g., update tsrtr.png to a DSTP-specific logo).\nUncomment the favicon and logo lines in _quarto.yml once assets are added to avoid broken references."
+  },
+  {
+    "objectID": "next-steps.html#expand-placeholder-content",
+    "href": "next-steps.html#expand-placeholder-content",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Fill in session pages (s1.qmd to s8.qmd) with actual teaching materials adapted from ../course/ (e.g., s1.qmd: content on importing data using stats19, osmextract for Leeds).\nUpdate examples: adapt collisions.qmd and peoplemap.qmd for Leeds UK using local data (e.g., stats19 for West Yorkshire).\nEnhance materials.qmd with links to datasets, code repositories, and readings from dstp.qmd schedule."
+  },
+  {
+    "objectID": "next-steps.html#integrate-schedule-links",
+    "href": "next-steps.html#integrate-schedule-links",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Add hyperlinks in schedule.qmd to corresponding session pages, e.g., [Finding, importing and cleaning transport datasets](s1.qmd).\nEnsure session titles in s*.qmd match schedule exactly for consistency."
+  },
+  {
+    "objectID": "next-steps.html#test-and-refine-prerequisites",
+    "href": "next-steps.html#test-and-refine-prerequisites",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Verify the R and Python test code in prerequisites.qmd runs without errors for Leeds (e.g., use execute_command to test Rscript -e \"source('prerequisites.R')\" if extracted).\nAdd screenshots or outputs for the test plots (e.g., Leeds road network visualization)."
+  },
+  {
+    "objectID": "next-steps.html#add-supporting-directories-and-files",
+    "href": "next-steps.html#add-supporting-directories-and-files",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Copy slides/ from ../course/ and adapt for DSTP topics (e.g., day1.qmd on introduction to data science).\nCopy data/ with Leeds-specific files (e.g., leeds_study_area.geojson generated from prerequisites).\nAdd references.bib copied from ../course/ and integrate citations in pages.\nCopy _extensions/ from ../course/ for custom Quarto features like bsicons."
+  },
+  {
+    "objectID": "next-steps.html#deployment-and-cicd",
+    "href": "next-steps.html#deployment-and-cicd",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Commit changes and push to GitHub to trigger publish.yml for automatic deployment to gh-pages.\nTest the live site at https://tdscience.github.io/dstp/ and fix any broken links."
+  },
+  {
+    "objectID": "next-steps.html#additional-improvements",
+    "href": "next-steps.html#additional-improvements",
+    "title": "1 Next Steps to Improve the Course Website",
+    "section": "",
+    "text": "Add a forum link in sidebar if discussions are enabled on GitHub.\nInclude alignment with learning outcomes from dstp.qmd in index.qmd.\nAdd navigation to examples section and ensure mobile responsiveness.\nReview for accessibility and add alt text to future images.\n\nThese steps will transform the minimal site into a comprehensive course resource."
+  },
+  {
+    "objectID": "s6.html",
+    "href": "s6.html",
+    "title": "Best practices for data science in transport planning",
+    "section": "",
+    "text": "1 Best practices for data science in transport planning\nPlaceholder for session 6 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s2.html",
+    "href": "s2.html",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "1 Origin-destination data analysis\nPlaceholder for session 2 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Time\nSession\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n12:30 - 13:30\nLunch\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n15:15 - 17:00\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "schedule.html#day-1-introduction-to-rrstudio",
+    "href": "schedule.html#day-1-introduction-to-rrstudio",
+    "title": "Schedule",
+    "section": "",
+    "text": "Time\nSession\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n12:30 - 13:30\nLunch\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n15:15 - 17:00\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "schedule.html#day-2",
+    "href": "schedule.html#day-2",
+    "title": "Schedule",
+    "section": "2 Day 2",
+    "text": "2 Day 2\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n11:15 - 12:30\nOD Transport data visualisation\n\n\n12:30 - 13:30\nLunch\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "",
+    "text": "Get yours at store.leeds.ac.uk {-}",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#note-tickets-are-now-on-sale",
+    "href": "index.html#note-tickets-are-now-on-sale",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "",
+    "text": "Get yours at store.leeds.ac.uk {-}",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "2 Course Overview",
+    "text": "2 Course Overview\nBased on demand, we’re organising a 2-day course teaching modern data science skills for transport planning, focussed on transport planning practitioners.\nThis course will take place on the 18th and 19th of September 2025 at the University of Leeds.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#learning-objectives",
+    "href": "index.html#learning-objectives",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "3 Learning Objectives",
+    "text": "3 Learning Objectives\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "4 Prerequisites",
+    "text": "4 Prerequisites\n\nExperience with transport planning concepts and datasets, such as origin-destination data and route networks.\nBasic programming skills in R, Python or similar.\nA laptop with R and RStudio (recommended) or a Python distribution such as Anaconda and an editor such as VS Code or Jupyter Notebook set-up.\n\nSee the prerequisites page for details and to test your setup.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "5 Schedule",
+    "text": "5 Schedule\nSee the schedule page for the detailed schedule.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#registration",
+    "href": "index.html#registration",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "6 Registration",
+    "text": "6 Registration\nSee store.leeds.ac.uk for registration details.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Data Science for Transport Planning: 2 day course",
+    "section": "7 Contact",
+    "text": "7 Contact\nFor inquiries, please contact Robin Lovelace.\nWe look forward to seeing you at the course!",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "collisions.html",
+    "href": "collisions.html",
+    "title": "Road traffic collisions",
+    "section": "",
+    "text": "1 Road traffic collisions\nPlaceholder for road traffic collisions example.\nThis page will contain an analysis using stats19 data for Leeds.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace",
+    "crumbs": [
+      "Examples",
+      "Road traffic collisions"
+    ]
+  },
+  {
+    "objectID": "s7.html",
+    "href": "s7.html",
+    "title": "Advanced topics",
+    "section": "",
+    "text": "1 Advanced topics\nPlaceholder for session 7 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  }
+]

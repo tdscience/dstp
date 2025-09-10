@@ -1,0 +1,11 @@
+---
+title: "Road traffic collisions"
+description-meta: "Example analysis of road traffic collisions for Data Science for Transport Planning."
+pagetitle: "Road traffic collisions"
+---
+
+# Road traffic collisions
+
+Placeholder for road traffic collisions example.
+
+This page will contain an analysis using stats19 data for Leeds.

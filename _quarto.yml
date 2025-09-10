@@ -1,0 +1,54 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Data Science for Transport Planning"
+  # favicon: images/icon.png
+  repo-url: "https://github.com/tdscience/dstp"
+  repo-actions: [issue]
+  page-footer:
+    right: "This page is built with [Quarto](https://quarto.org/)."
+    left: "Materials by [Robin Lovelace](https://www.robinlovelace.net/), 2025."
+  sidebar:
+    background: primary
+    # logo: "images/tsrtr.png"
+    pinned: true
+    align: center
+    tools:
+      - icon: github
+        href: https://github.com/tdscience/dstp
+        text: GitHub
+    style: docked
+    contents:
+      - href: index.qmd
+        text: Home
+      - href: schedule.qmd
+        text: Schedule
+      - href: materials.qmd
+        text: Materials
+      - href: prerequisites.qmd
+        text: Prerequisites
+      - section: "Examples"
+        contents:
+          - href: collisions.qmd
+            text: Road traffic collisions
+          - href: peoplemap.qmd
+            text: People and their favourite animals
+      - href: https://github.com/tdscience/dstp/discussions
+        text: Forum
+
+format:
+  html:
+    theme: lux
+    toc: true
+    title-prefix: "Data Science for Transport Planning - "
+    number-sections: true
+    author-meta: "Robin Lovelace & contributors"
+    date-meta: "2025"
+    copyright: "© 2025 Robin Lovelace"
+    license: "CC BY-SA"
+
+execute:
+  freeze: false
+  cache: true

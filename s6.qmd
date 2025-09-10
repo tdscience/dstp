@@ -1,0 +1,8 @@
+---
+title: "Best practices for data science in transport planning"
+pagetitle: "Session 6"
+---
+
+# Best practices for data science in transport planning
+
+Placeholder for session 6 content.

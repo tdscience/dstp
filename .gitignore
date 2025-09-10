@@ -1,0 +1,13 @@
+docs
+
+/.quarto/
+.Rproj.user
+_freeze/
+*_cache/
+*_files/
+cache/
+.Rhistory
+
+**/*.quarto_ipynb
+site_libs/
+*.html

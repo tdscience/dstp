@@ -1,0 +1,43 @@
+---
+title: "Data Science for Transport Planning: 2 day course"
+description-meta: "A 2-day course on data science skills for transport planning practitioners, held on 18-19 September 2025 at the University of Leeds."
+pagetitle: "Data Science for Transport Planning"
+---
+
+## Note: tickets are now on sale!
+
+Get yours at [store.leeds.ac.uk](https://store.leeds.ac.uk/conferences-and-events/environment/institute-of-transport-studies/0925dstp2-data-science-for-transport-planning) {-}
+
+## Course Overview
+
+Based on demand, we're organising a 2-day course teaching modern data science skills for transport planning, focussed on transport planning practitioners.
+
+This course will take place on the 18th and 19th of September 2025 at the University of Leeds.
+
+## Learning Objectives
+
+- Understand the role of data science in transport planning.
+- Learn how to find, import, clean, and analyze transport data.
+- Develop skills in data visualization and reporting.
+
+## Prerequisites
+
+- Experience with transport planning concepts and datasets, such as origin-destination data and route networks.
+- Basic programming skills in R, Python or similar.
+- A laptop with R and RStudio (recommended) or a Python distribution such as Anaconda and an editor such as VS Code or Jupyter Notebook set-up.
+
+See the [prerequisites](prerequisites.qmd) page for details and to test your setup.
+
+## Schedule
+
+See the [schedule](schedule.qmd) page for the detailed schedule.
+
+## Registration
+
+See [store.leeds.ac.uk](https://store.leeds.ac.uk/conferences-and-events/environment/institute-of-transport-studies/0925dstp2-data-science-for-transport-planning) for registration details.
+
+## Contact
+
+For inquiries, please contact [Robin Lovelace](https://environment.leeds.ac.uk/transport/staff/953/professor-robin-lovelace).
+
+We look forward to seeing you at the course!

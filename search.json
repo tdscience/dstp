@@ -50,18 +50,15 @@
     ]
   },
   {
-    "objectID": "s4.html",
-    "href": "s4.html",
-    "title": "Spatio-temporal data",
+    "objectID": "collisions.html",
+    "href": "collisions.html",
+    "title": "Road traffic collisions",
     "section": "",
-    "text": "1 Spatio-temporal data\nPlaceholder for session 4 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
-  },
-  {
-    "objectID": "s1.html",
-    "href": "s1.html",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "",
-    "text": "1 Finding, importing and cleaning transport datasets\nPlaceholder for session 1 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "1 Road traffic collisions\nPlaceholder for road traffic collisions example.\nThis page will contain an analysis using stats19 data for Leeds.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace",
+    "crumbs": [
+      "Examples",
+      "Road traffic collisions"
+    ]
   },
   {
     "objectID": "s5.html",
@@ -71,11 +68,18 @@
     "text": "1 OD Transport data visualisation\nPlaceholder for session 5 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
-    "objectID": "s3.html",
-    "href": "s3.html",
-    "title": "Routing and route network analysis",
+    "objectID": "s6.html",
+    "href": "s6.html",
+    "title": "Best practices for data science in transport planning",
     "section": "",
-    "text": "1 Routing and route network analysis\nPlaceholder for session 3 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "1 Best practices for data science in transport planning\nPlaceholder for session 6 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s2.html",
+    "href": "s2.html",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "1 Origin-destination data analysis\nPlaceholder for session 2 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
     "objectID": "next-steps.html",
@@ -134,18 +138,11 @@
     "text": "Add a forum link in sidebar if discussions are enabled on GitHub.\nInclude alignment with learning outcomes from dstp.qmd in index.qmd.\nAdd navigation to examples section and ensure mobile responsiveness.\nReview for accessibility and add alt text to future images.\n\nThese steps will transform the minimal site into a comprehensive course resource."
   },
   {
-    "objectID": "s6.html",
-    "href": "s6.html",
-    "title": "Best practices for data science in transport planning",
+    "objectID": "s1.html",
+    "href": "s1.html",
+    "title": "Finding, importing and cleaning transport datasets",
     "section": "",
-    "text": "1 Best practices for data science in transport planning\nPlaceholder for session 6 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
-  },
-  {
-    "objectID": "s2.html",
-    "href": "s2.html",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "1 Origin-destination data analysis\nPlaceholder for session 2 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "1 Finding, importing and cleaning transport datasets\nPlaceholder for session 1 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
     "objectID": "schedule.html",
@@ -176,6 +173,20 @@
     "crumbs": [
       "Schedule"
     ]
+  },
+  {
+    "objectID": "s7.html",
+    "href": "s7.html",
+    "title": "Advanced topics",
+    "section": "",
+    "text": "1 Advanced topics\nPlaceholder for session 7 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s4.html",
+    "href": "s4.html",
+    "title": "Spatio-temporal data",
+    "section": "",
+    "text": "1 Spatio-temporal data\nPlaceholder for session 4 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
     "objectID": "index.html",
@@ -258,21 +269,10 @@
     ]
   },
   {
-    "objectID": "collisions.html",
-    "href": "collisions.html",
-    "title": "Road traffic collisions",
+    "objectID": "s3.html",
+    "href": "s3.html",
+    "title": "Routing and route network analysis",
     "section": "",
-    "text": "1 Road traffic collisions\nPlaceholder for road traffic collisions example.\nThis page will contain an analysis using stats19 data for Leeds.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace",
-    "crumbs": [
-      "Examples",
-      "Road traffic collisions"
-    ]
-  },
-  {
-    "objectID": "s7.html",
-    "href": "s7.html",
-    "title": "Advanced topics",
-    "section": "",
-    "text": "1 Advanced topics\nPlaceholder for session 7 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "1 Routing and route network analysis\nPlaceholder for session 3 content.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   }
 ]

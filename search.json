@@ -149,7 +149,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Time\nSession\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n12:30 - 13:30\nLunch\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n15:15 - 17:00\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data",
+    "text": "Time\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data",
     "crumbs": [
       "Schedule"
     ]
@@ -159,7 +159,7 @@
     "href": "schedule.html#day-1-introduction-to-rrstudio",
     "title": "Schedule",
     "section": "",
-    "text": "Time\nSession\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n12:30 - 13:30\nLunch\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n15:15 - 17:00\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data",
+    "text": "Time\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data",
     "crumbs": [
       "Schedule"
     ]
@@ -169,7 +169,7 @@
     "href": "schedule.html#day-2",
     "title": "Schedule",
     "section": "2 Day 2",
-    "text": "2 Day 2\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n11:15 - 12:30\nOD Transport data visualisation\n\n\n12:30 - 13:30\nLunch\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
+    "text": "2 Day 2\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n\n11:15 - 12:30\nOD Transport data visualisation\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
     "crumbs": [
       "Schedule"
     ]

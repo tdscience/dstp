@@ -163,7 +163,77 @@
     "href": "s1.html",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "",
-    "text": "Placeholder for session 1 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.\nThe session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
+  },
+  {
+    "objectID": "s1.html#openstreetmap-data",
+    "href": "s1.html#openstreetmap-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.1 OpenStreetMap Data",
+    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))"
+  },
+  {
+    "objectID": "s1.html#road-traffic-casualty-data-stats19",
+    "href": "s1.html#road-traffic-casualty-data-stats19",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.2 Road Traffic Casualty Data (STATS19)",
+    "text": "3.2 Road Traffic Casualty Data (STATS19)\nThe UK’s road traffic casualty data is available through the stats19 package. This provides data on collisions, casualties, and vehicles.\n\nlibrary(stats19)\n# Download 2020 collision data\ncollisions = get_stats19(year = 2020, type = \"collision\")\n# Download casualty data\ncasualties = get_stats19(year = 2020, type = \"cas\")\n# Download vehicle data\nvehicles = get_stats19(year = 2020, type = \"veh\")"
+  },
+  {
+    "objectID": "s1.html#origin-destination-data",
+    "href": "s1.html#origin-destination-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.3 Origin-Destination Data",
+    "text": "3.3 Origin-Destination Data\nThe pct package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.\n\nlibrary(pct)\n# Download desire lines for Leeds\nleeds_desire_lines = get_pct_lines(region = \"west-yorkshire\")"
+  },
+  {
+    "objectID": "s1.html#boundary-and-census-data",
+    "href": "s1.html#boundary-and-census-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.4 Boundary and Census Data",
+    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.\n\n# Download Local Authority Districts\nlibrary(arcgis)\nlad_url = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0\"\nlad_boundaries = arc_read(lad_url)"
+  },
+  {
+    "objectID": "s1.html#basic-cleaning-example",
+    "href": "s1.html#basic-cleaning-example",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "4.1 Basic Cleaning Example",
+    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  filter(!is.na(longitude), !is.na(latitude)) |&gt;\n  # Convert to sf object\n  st_as_sf(coords = c(\"longitude\", \"latitude\"), crs = 4326) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
+  },
+  {
+    "objectID": "s1.html#handling-missing-data",
+    "href": "s1.html#handling-missing-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "4.2 Handling Missing Data",
+    "text": "4.2 Handling Missing Data\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
+  },
+  {
+    "objectID": "s1.html#download-and-explore-stats19-data",
+    "href": "s1.html#download-and-explore-stats19-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.1 Download and Explore STATS19 Data",
+    "text": "5.1 Download and Explore STATS19 Data\n\nDownload road traffic collision data for 2019 using the stats19 package.\nExplore the structure of the data using str() and summary().\nCreate a simple plot showing the number of collisions by severity.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s1.html#extract-osm-features",
+    "href": "s1.html#extract-osm-features",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.2 Extract OSM Features",
+    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type."
+  },
+  {
+    "objectID": "s1.html#clean-and-visualize-od-data",
+    "href": "s1.html#clean-and-visualize-od-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.3 Clean and Visualize OD Data",
+    "text": "5.3 Clean and Visualize OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines colored by cycling potential.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s1.html#data-quality-assessment",
+    "href": "s1.html#data-quality-assessment",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.4 Data Quality Assessment",
+    "text": "5.4 Data Quality Assessment\n\nChoose a dataset you’ve downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
   },
   {
     "objectID": "schedule.html",

@@ -36,12 +36,11 @@ If you need to install any of these packages use:
 #| eval: false
 if (!require("pak")) install.packages("pak")
 pak::pkg_install(c("sf", "tidyverse", "remotes", "ggspatial", "tmap"))
-# GitHub pkgs
-install.packages("spDataLarge", repos = c("https://geocompr.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 ```{r}
-#| include: false
+#| echo: false
+#| eval: false
 # Only run if spDataLarge is not already installed
 if (!require("spDataLarge")) {
   install.packages("spDataLarge", repos = c("https://geocompr.r-universe.dev", "https://cloud.r-project.org"))
@@ -545,14 +544,24 @@ We need the `stplanr` package which provides many useful functions for transport
 
 We will start by loading two datasets:
 
+```{r}
+#| eval: false
+#| echo: false
+#| label: create-od-data
+od = spDataLarge::bristol_od
+zones = spDataLarge::bristol_zones
+dir.create("data")
+readr::write_csv(od, "data/od.csv")
+sf::st_write(zones, "data/zones.geojson", delete_dsn = TRUE)
+```
+
 ::: {.panel-tabset}
 ## R
 ```{r}
 library(stplanr)
 library(tmap)
-
-od = spDataLarge::bristol_od
-zones = spDataLarge::bristol_zones
+od = readr::read_csv("data/od.csv")
+zones = sf::st_read("data/zones.geojson")
 ```
 
 ## Python

@@ -25,16 +25,12 @@ website:
         text: Home
       - href: schedule.qmd
         text: Schedule
-      - href: materials.qmd
-        text: Materials
       - href: prerequisites.qmd
         text: Prerequisites
       - section: "Examples"
         contents:
           - href: collisions.qmd
             text: Road traffic collisions
-          - href: peoplemap.qmd
-            text: People and their favourite animals
       - href: https://github.com/tdscience/dstp/discussions
         text: Forum
 

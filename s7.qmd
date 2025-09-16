@@ -3,6 +3,4 @@ title: "Advanced topics"
 pagetitle: "Session 7"
 ---
 
-# Advanced topics
-
 Placeholder for session 7 content.

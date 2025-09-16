@@ -3,6 +3,4 @@ title: "Finding, importing and cleaning transport datasets"
 pagetitle: "Session 1"
 ---
 
-# Finding, importing and cleaning transport datasets
-
 Placeholder for session 1 content.

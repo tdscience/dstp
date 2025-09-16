@@ -3,6 +3,4 @@ title: "Spatio-temporal data"
 pagetitle: "Session 4"
 ---
 
-# Spatio-temporal data
-
 Placeholder for session 4 content.

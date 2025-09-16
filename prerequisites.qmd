@@ -18,11 +18,13 @@ You should bring a laptop with the following software installed and tested to ch
 
 -   Quarto (minimum version: 1.5.45)
 -   A tested R or Python installation or both (note: if you have Docker installed you should be able to run R and Python inside a devcontainer, works best with VS Code)
--   RStudio or VS Code
+-   RStudio or VS Code IDE
+    - If you use RStudio, it should 'just work' with R and Quarto.
     -   If you will use VS Code for the course, you need the following extensions:
         -   The R extension `reditorsupport.r` if using R
         -   The Python extension `ms-python.python` if using Python
         -   The quarto extention `quarto.quarto`
+    - For experienced users: you can also use an IDE of your choice, for example Positron IDE which is based on VS Code and has R, Python and Quarto support built-in.
 -   Git, installed with one of the following packages:
     -   GitHub Desktop (see [desktop.github.com](https://desktop.github.com/))
     -   Git for the command line (see [git-scm.com](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))

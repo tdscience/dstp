@@ -533,17 +533,7 @@ This section is based on [Chapter 13 of Geocomputation with R](https://r.geocomp
 
 We need the `stplanr` package which provides many useful functions for transport analysis and `tmap` package which enables advanced mapping features.
 
-We will start by loading two datasets:
-
-```{r}
-#| eval: false
-#| echo: false
-od = spDataLarge::bristol_od
-zones = spDataLarge::bristol_zones
-dir.create("data")
-readr::write_csv(od, "data/od.csv")
-sf::st_write(zones, "data/zones.geojson", delete_dsn = TRUE)
-```
+We will start by loading two datasets from the Geocomputation with R book.:
 
 ::: {.panel-tabset}
 ## R

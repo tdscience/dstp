@@ -1,6 +1,188 @@
 ---
 title: "Finding, importing and cleaning transport datasets"
-pagetitle: "Session 1"
 ---
 
-Placeholder for session 1 content.
+# Introduction
+
+In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We'll learn practical techniques using R to access and prepare this data for analysis.
+
+The session covers:
+
+- Downloading datasets from OpenStreetMap
+- Importing data into R
+- Basic data cleaning and exploration
+- Hands-on exercises
+
+# Prerequisites
+
+Before starting, ensure you have the necessary packages installed:
+
+```{r}
+#| output: false
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+if (!require("pak")) install.packages("pak")
+pkgs = c(
+  "sf",
+  "tidyverse",
+  "osmextract",
+  "tmap",
+  "maptiles",
+  "stats19",
+  "pct"
+)
+pak::pkg_install(pkgs)
+sapply(pkgs, require, character.only = TRUE)
+```
+
+# Downloading Transport Datasets
+
+## OpenStreetMap Data
+
+OpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads.
+It is therefore very useful for quickly obtaining road network data for transport analysis.
+A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.
+
+Use the `osmextract` package to download and extract specific features.
+
+```{r}
+#| eval: false
+library(osmextract)
+# Download cycleways in West Yorkshire
+west_yorkshire_cycleways = oe_get(
+  # force_download = TRUE,
+  place = "West Yorkshire",
+  extra_tags = c("maxspeed", "lit", "cycleway"),
+  query = "SELECT * FROM lines WHERE highway IN ('cycleway', 'path')"
+)
+plot(st_geometry(west_yorkshire_cycleways))
+```
+
+## Road Traffic Casualty Data (STATS19)
+
+The UK's road traffic casualty data is available through the `stats19` package. This provides data on collisions, casualties, and vehicles.
+
+```{r}
+#| eval: false
+library(stats19)
+# Download 2020 collision data
+collisions = get_stats19(year = 2020, type = "collision")
+# Download casualty data
+casualties = get_stats19(year = 2020, type = "cas")
+# Download vehicle data
+vehicles = get_stats19(year = 2020, type = "veh")
+```
+
+## Origin-Destination Data
+
+The `pct` package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.
+
+```{r}
+#| eval: false
+library(pct)
+# Download desire lines for Leeds
+leeds_desire_lines = get_pct_lines(region = "west-yorkshire")
+```
+
+## Boundary and Census Data
+
+For geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.
+
+```{r}
+#| eval: false
+# Download Local Authority Districts
+library(arcgis)
+lad_url = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0"
+lad_boundaries = arc_read(lad_url)
+```
+
+# Importing and Cleaning Data
+
+Once downloaded, data often needs cleaning. Common issues include missing values, inconsistent formats, and coordinate systems.
+
+## Basic Cleaning Example
+
+```{r}
+#| eval: false
+# Clean collision data
+collisions_clean = collisions |>
+  # Remove rows with missing coordinates
+  filter(!is.na(longitude), !is.na(latitude)) |>
+  # Convert to sf object
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+  # Select relevant columns
+  select(accident_index, date, speed_limit, accident_severity)
+```
+
+## Handling Missing Data
+
+```{r}
+#| eval: false
+# Check for missing values
+summary(collisions_clean)
+# Impute or remove missing values
+collisions_clean = collisions_clean |>
+  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))
+```
+
+# Exercises
+
+## Download and Explore STATS19 Data
+
+1. Download road traffic collision data for 2019 using the `stats19` package.
+2. Explore the structure of the data using `str()` and `summary()`.
+3. Create a simple plot showing the number of collisions by severity.
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+## Extract OSM Features
+
+1. Use `osmextract` to download all supermarkets in your chosen city.
+2. Convert the data to an sf object and plot it on a map.
+3. Count the number of supermarkets by type.
+
+## Clean and Visualize OD Data
+
+1. Download origin-destination data for a region using the `pct` package.
+2. Clean the data by removing any invalid geometries.
+3. Create a map showing the desire lines colored by cycling potential.
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+<!-- 
+## Combine Datasets
+
+1. Download boundary data for local authorities.
+2. Download census data on travel to work patterns.
+3. Join the datasets and create a choropleth map showing car commuting patterns.
+
+```{r}
+#| eval: false
+# Your code here
+```
+-->
+
+## Data Quality Assessment
+
+1. Choose a dataset you've downloaded.
+2. Assess its quality by checking for:
+   - Missing values
+   - Outliers
+   - Inconsistent data types
+3. Document any issues found and how you would address them.
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+# Further Reading
+
+- [Reproducible Road Safety Research with R](https://itsleeds.github.io/rrsrr/)
+- [Geocomputation with R](https://r.geocompx.org/)
+- [Transport Data Science course materials](https://itsleeds.github.io/tds/)

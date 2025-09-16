@@ -39,15 +39,6 @@ pak::pkg_install(c("sf", "tidyverse", "remotes", "ggspatial", "tmap"))
 ```
 
 ```{r}
-#| echo: false
-#| eval: false
-# Only run if spDataLarge is not already installed
-if (!require("spDataLarge")) {
-  install.packages("spDataLarge", repos = c("https://geocompr.r-universe.dev", "https://cloud.r-project.org"))
-}
-```
-
-``` {r}
 library(sf)        # vector data package
 library(tidyverse) # tidyverse packages
 library(ggspatial) # ggspatial package
@@ -56,7 +47,7 @@ library(spData)    # spatial data package
 
 ## Python
 
-``` {python}
+```{python}
 #| eval: false
 # Install necessary packages (uncomment if not already installed)
 # !pip install geopandas pandas matplotlib seaborn
@@ -538,7 +529,7 @@ desire_lines.plot()
 
 # Processing origin-destination data in Bristol
 
-This section is based on [Chapter 12 of Geocomputation with R](https://geocompr.robinlovelace.net/transport.html). You may read this chapter in full in your own time.
+This section is based on [Chapter 13 of Geocomputation with R](https://r.geocompx.org/transport.html). You may read this chapter in full in your own time.
 
 We need the `stplanr` package which provides many useful functions for transport analysis and `tmap` package which enables advanced mapping features.
 
@@ -547,7 +538,6 @@ We will start by loading two datasets:
 ```{r}
 #| eval: false
 #| echo: false
-#| label: create-od-data
 od = spDataLarge::bristol_od
 zones = spDataLarge::bristol_zones
 dir.create("data")
@@ -562,6 +552,14 @@ library(stplanr)
 library(tmap)
 od = readr::read_csv("data/od.csv")
 zones = sf::st_read("data/zones.geojson")
+```
+
+If you do not have these files on your computer, you can read them directly from the web:
+
+```{r}
+#| eval: false
+od = readr::read_csv("https://github.com/tdscience/dstp/raw/refs/heads/main/data/od.csv")
+zones = sf::st_read("https://github.com/tdscience/dstp/raw/refs/heads/main/data/zones.geojson")
 ```
 
 ## Python

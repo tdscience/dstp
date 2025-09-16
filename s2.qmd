@@ -37,7 +37,15 @@ If you need to install any of these packages use:
 if (!require("pak")) install.packages("pak")
 pak::pkg_install(c("sf", "tidyverse", "remotes", "ggspatial", "tmap"))
 # GitHub pkgs
-pak::pkg_install("Nowosad/spDataLarge")
+install.packages("spDataLarge", repos = c("https://geocompr.r-universe.dev", "https://cloud.r-project.org"))
+```
+
+```{r}
+#| include: false
+# Only run if spDataLarge is not already installed
+if (!require("spDataLarge")) {
+  install.packages("spDataLarge", repos = c("https://geocompr.r-universe.dev", "https://cloud.r-project.org"))
+}
 ```
 
 ``` {r}

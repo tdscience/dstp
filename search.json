@@ -422,19 +422,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Data Science for Transport Planning: 2 day course",
+    "title": "Data Science for Transport Planning",
     "section": "",
-    "text": "Note: Tickets are now on sold out",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#course-overview",
-    "href": "index.html#course-overview",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "1 Course Overview",
-    "text": "1 Course Overview\n2-day course teaching modern data science skills for transport planning, focussed on the needs of transport planning practitioners.",
+    "text": "Open in GitHub Codespaces\n\n\nNote: Tickets are now sold out\n\n\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.\n\n\n\n\nSee store.leeds.ac.uk for registration details.",
     "crumbs": [
       "Home"
     ]
@@ -442,29 +432,9 @@
   {
     "objectID": "index.html#learning-objectives",
     "href": "index.html#learning-objectives",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "2 Learning Objectives",
-    "text": "2 Learning Objectives\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "3 Prerequisites",
-    "text": "3 Prerequisites\n\nExperience with transport planning concepts and datasets, such as origin-destination data and route networks.\nBasic programming skills in R, Python or similar.\nA laptop with R and RStudio (recommended) or a Python distribution such as Anaconda and an editor such as VS Code or Jupyter Notebook set-up.\n\nSee the prerequisites page for details and to test your setup.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "4 Schedule",
-    "text": "4 Schedule\nSee the schedule page for the detailed schedule.",
+    "title": "Data Science for Transport Planning",
+    "section": "",
+    "text": "Understand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
     "crumbs": [
       "Home"
     ]
@@ -472,9 +442,59 @@
   {
     "objectID": "index.html#registration",
     "href": "index.html#registration",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "5 Registration",
-    "text": "5 Registration\nSee store.leeds.ac.uk for registration details.",
+    "title": "Data Science for Transport Planning",
+    "section": "",
+    "text": "See store.leeds.ac.uk for registration details.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Data Science for Transport Planning",
+    "section": "Course Overview",
+    "text": "Course Overview\nThis course teaches modern data science skills tailored for transport planning, including data acquisition, cleaning, analysis, visualization, and reproducible reporting. It focuses on practical applications using R and Python, with real-world transport datasets.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Data Science for Transport Planning",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nBasic knowledge of transport planning concepts and datasets\nFamiliarity with programming in R or Python\nA laptop with R (essential), Python (optional) and a data science IDE such as RStudio (recommended), VS Code or Positron installed\nA GitHub account (a GitHub account should allow you to run the code in the cloud via GitHub Codespaces as a fallback if needed)\n\nSee the prerequisites page for detailed setup instructions.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Data Science for Transport Planning",
+    "section": "Schedule",
+    "text": "Schedule\nThe course covers 7 sessions over 2 days. See the schedule page for details.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#technical-information",
+    "href": "index.html#technical-information",
+    "title": "Data Science for Transport Planning",
+    "section": "Technical Information",
+    "text": "Technical Information\n\nThe repository structure is as follows:\n\ns1.qmd to s7.qmd: Course session materials\ndata/: Sample datasets used in the course\ntds/: Additional transport data science materials and projects\n.devcontainer/: DevContainer configuration for consistent development environment\n.github/: GitHub Actions workflows for publishing\n\n\nRunning Locally\nThis project uses Quarto to generate the website. To run locally:\n\nInstall Quarto: https://quarto.org/docs/get-started/\nClone this repository\nOpen in VS Code with DevContainer support (recommended)\nRun quarto preview to preview the site\n\nAlternatively, use the “Open in Codespaces” button above for an instant cloud development environment.\n\n\nContributing\nContributions are welcome! Please:\n\nOpen issues for bugs or feature requests\nSubmit pull requests for improvements\nJoin the GitHub Discussions for questions",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Data Science for Transport Planning",
+    "section": "License",
+    "text": "License\nThis project is licensed under CC BY-SA 4.0. See LICENSE for details.",
     "crumbs": [
       "Home"
     ]
@@ -482,9 +502,9 @@
   {
     "objectID": "index.html#contact",
     "href": "index.html#contact",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "6 Contact",
-    "text": "6 Contact\nFor inquiries, please contact Robin Lovelace.\nWe look forward to seeing you at the course!",
+    "title": "Data Science for Transport Planning",
+    "section": "Contact",
+    "text": "Contact\nFor course inquiries: Robin Lovelace\nRepository maintainer: Robin Lovelace",
     "crumbs": [
       "Home"
     ]

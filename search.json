@@ -230,7 +230,7 @@
     "href": "s1.html#project-setup",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "2.1 Project setup",
-    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder/repo."
+    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder/repo if you have not already done so. The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.\n\ngh CLI toolRShell\n\n\nThe following creates a fresh GitHub repo with GitHub CLI (recommended)\nNote: you need to have installed the GitHub CLI and authenticated it with your GitHub account.\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\ncode path/to/your/folder/dstp-rl # or open in RStudio\n\n\ndir.create(\"C:/path/to/your/folder/dstp\") # replace with your path\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\n\n\nThe following creates an empty folder with PowerShell or RStudio/VS Code terminal\n# After opening a terminal in your chosen IDE/shell\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\nmkdir dstp-rl # replace 'rl' with your initials\n# Then open the folder in your IDE"
   },
   {
     "objectID": "s1.html#openstreetmap-data",
@@ -676,6 +676,13 @@
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Set-up: project folder/repo",
     "text": "Set-up: project folder/repo\nOption 1: Create an empty folder on your computer (beginner level)\n\nVia Windows Explore or other GUI\nVia command line (e.g., mkdir dstp-rl, but replace ‘rl’ with your initials)\nVia RStudio or VS Code\n\nOption 2: Create a new repository on GitHub (more advanced, recommended)\n\nVia GitHub Desktop (beginner level)\nVia gh command line tool (more advanced, recommended)\n\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials"
+  },
+  {
+    "objectID": "slides/day1.html#tabsets",
+    "href": "slides/day1.html#tabsets",
+    "title": "Data Science for Transport Planning: Day 1",
+    "section": "Tabsets",
+    "text": "Tabsets\n\ngh CLI toolRShell\n\n\nThe following creates a fresh GitHub repo with GitHub CLI (recommended)\nNote: you need to have installed the GitHub CLI and authenticated it with your GitHub account.\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\ncode path/to/your/folder/dstp-rl # or open in RStudio\n\n\ndir.create(\"C:/path/to/your/folder/dstp\") # replace with your path\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\n\n\nThe following creates an empty folder with PowerShell or RStudio/VS Code terminal\n# After opening a terminal in your chosen IDE/shell\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\nmkdir dstp-rl # replace 'rl' with your initials\n# Then open the folder in your IDE"
   },
   {
     "objectID": "slides/day1.html#opening-your-project",

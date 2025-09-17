@@ -465,15 +465,41 @@ Professor Robin Lovelace
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">gh</span> repo create dstp-rl <span class="at">--public</span> <span class="at">--clone</span> <span class="co"># replace 'rl' with your initials</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="tabsets" class="slide level2">
+<h2>Tabsets</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">gh CLI tool</a></li><li><a href="#tabset-1-2">R</a></li><li><a href="#tabset-1-3">Shell</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>The following creates a fresh GitHub repo with GitHub CLI (recommended)</p>
+<p>Note: you need to have installed the <a href="https://cli.github.com/">GitHub CLI</a> and authenticated it with your GitHub account.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="bu">cd</span> path/to/your/folder <span class="co"># e.g. cd C:/Users/YourName/Documents</span></span>
+<span id="cb3-2"><a></a><span class="ex">gh</span> repo create dstp-rl <span class="at">--public</span> <span class="at">--clone</span> <span class="co"># replace 'rl' with your initials</span></span>
+<span id="cb3-3"><a></a><span class="ex">code</span> path/to/your/folder/dstp-rl <span class="co"># or open in RStudio</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">dir.create</span>(<span class="st">"C:/path/to/your/folder/dstp"</span>) <span class="co"># replace with your path</span></span>
+<span id="cb4-2"><a></a>rstudioapi<span class="sc">::</span><span class="fu">openProject</span>(<span class="st">"C:/path/to/your/folder/dstp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3">
+<p>The following creates an empty folder with PowerShell or RStudio/VS Code terminal</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># After opening a terminal in your chosen IDE/shell</span></span>
+<span id="cb5-2"><a></a><span class="bu">cd</span> path/to/your/folder <span class="co"># e.g. cd C:/Users/YourName/Documents</span></span>
+<span id="cb5-3"><a></a><span class="fu">mkdir</span> dstp-rl <span class="co"># replace 'rl' with your initials</span></span>
+<span id="cb5-4"><a></a><span class="co"># Then open the folder in your IDE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
 <section id="opening-your-project" class="slide level2">
 <h2>Opening your project</h2>
 <p>Option 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu</p>
 <p>Option 2 (RStudio - recommended): Open the folder you created in RStudio using the <code>rstudioapi</code> package, e.g.&nbsp;with the following command in R Console:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>rstudioapi<span class="sc">::</span><span class="fu">openProject</span>(<span class="st">"C:/path/to/your/folder/dstp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>rstudioapi<span class="sc">::</span><span class="fu">openProject</span>(<span class="st">"C:/path/to/your/folder/dstp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Option 3: (VS Code): Open the folder you created in VS Code using the File &gt; Open Folder menu</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">code</span> path/to/your/folder/dstp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">code</span> path/to/your/folder/dstp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Option 4 (VS Code - recommended):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="ex">code</span> path/to/your/folder/dstp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="ex">code</span> path/to/your/folder/dstp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="minimise-context-switching" class="slide level2">
 <h2>Minimise context switching</h2>

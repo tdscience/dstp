@@ -44,7 +44,7 @@ OpenTripPlanner (OTP) is a powerful open-source routing engine that supports mul
 otpcon = otp_connect(
   hostname = "otp.robinlovelace.net",
   ssl = TRUE,
-  port = 8080,
+  port = 443,
   router = "west-yorkshire"
 )
 ```

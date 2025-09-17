@@ -36,7 +36,7 @@ Data Science for Transport Planning
 The following will help:
 
 -   An interest in transport planning and knowledge of transport datasets
--   A willingness to learn and share 
+-   A willingness to learn and share
 -   A GitHub account (to ask questions on the Discussions page and share your own code)
 -   Familiarity with data science tools, e.g. R, Python, RStudio, VS Code
 
@@ -44,9 +44,21 @@ The following will help:
 
 -   Connect to the UoL-Guest Wi-Fi network and enter your details.
 -   GitHub account sign-up if not done already.
--   R and RStudio installation check, locally or in cloud environment.
 -   Coffee and lunch: in the social space just outside this room
--   Toilets: Along the corridor and then left
+-   **Toilets**
+    -   Gents toilets can be found on first and ground floors.
+    -   Ladies toilets on the middle and far staircases and ground floor.
+    -   Accessible toilet facilities including a gender neutral toilet, are available on the lower ground floor.
+
+## Housekeeping II
+
+-   **Fire Alarm**
+    -   If the alarm sounds, leave the building via the 3 fire exits on the ground floor.
+    -   The assembly point is the grassed area to the side of ITS building.
+-   **Use of Extension Leads & Adapters**
+    -   The use of cube adapters is strictly prohibited at the University of Leeds.
+    -   International chargers are advised against.
+    -   Alternative plugs can be logged/loaned out from the Facilities Office.
 
 ## WiFi
 
@@ -59,9 +71,21 @@ To check you have the necessary software installed, try running the following co
 ```{r}
 #| eval: false
 #| echo: true
-pkgs = c("tidyverse", "stats19")
-if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
-pak::pkg_install(pkgs)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+if (!require("pak")) install.packages("pak")
+pkgs = c(
+    "sf",
+    "tidyverse",
+    "tmap",
+    "stats19",
+    "stplanr",
+    "osmextract",
+    "zonebuilder"
+)
+pkgs_to_install = pkgs[!pkgs %in% installed.packages()[, "Package"]]
+if (length(pkgs_to_install) > 0) {
+  pak::pak(pkgs_to_install)
+}
 ```
 
 You should be able to generate the map on the next slide.
@@ -75,24 +99,29 @@ You should be able to generate the map on the next slide.
 #| echo: false
 #| output: false
 library(tidyverse)
-library(stats19)
-theme_set(theme_minimal())
-collisions_2023 = stats19::get_stats19(year = 2023, type = "collision")
-collisions_2023_sf = stats19::format_sf(collisions_2023)
-collisions_west_yorkshire_sf = collisions_2023_sf |>
-  filter(police_force == "West Yorkshire") |>
-  arrange(desc(accident_severity))
+zones = zonebuilder::zb_zone("Leeds", n_circles = 3)
+study_area = zones |>
+  sf::st_union()
+extra_tags = c(
+  "maxspeed",
+  "lit",
+  "cycleway"
+)
+osm_network = osmextract::oe_get(
+  place = "Leeds, UK",
+  boundary = study_area,
+  boundary_type = "clipsrc",
+  extra_tags = extra_tags
+)
+library(sf)
 ```
 
 ```{r}
 #| label: plot
 #| echo: false
-ggplot() +
-  geom_sf(
-    data = collisions_west_yorkshire_sf,
-    aes(colour = accident_severity, alpha = accident_severity)
-  ) +
-  scale_alpha_manual(values = c(0.8, 0.4, 0.2))
+osm_network |>
+  select(maxspeed) |>
+  plot()
 ```
 
 ## About us
@@ -110,14 +139,12 @@ ggplot() +
 -   Name
 -   What tools you currently use for research
 -   Where you're from
--   What's your favourite animal
 -   A random fact about you
 
 ### Me
 
 -   Currently using VS Code, Quarto, R, Google Gemini etc, Devcontainers
--   From Herefordshire, UK
--   Favourite animal: Red kite
+-   From Herefordshire, UK, work at the University of Leeds   
 -   Random fact: I run 5 km every Saturday with double buggy
 :::
 
@@ -127,17 +154,18 @@ ggplot() +
 
 ### "If only I was told this earlier in my career"
 
+::: incremental
+
 Imagine a workflow that enabled:
 
 -   Fewer context switches
 -   More focus on *the content* and not style of the work
 -   Integration of code into your research manuscript
--   Automatic generation of results, including figures and tables...
-    -   That change seamlessly when input datasets or code changes
--   Control over how you export and publish your work
-    -   Including publication-quality PDFs, website, blogs, slides
--   Full reproducibility
--   You to share your work for maximum benefit to others
+-   Automatic generation of results that update when the data change
+-   Control over how you export and publish your work 😎
+-   Full reproducibility and control for maximum benefit 🚀
+
+:::
 
 ## Reproducible research
 
@@ -193,6 +221,12 @@ See [biclar.tmobilidade.pt source](https://biclar.tmlmobilidade.pt/index/) code:
 -   Bring you own principles (BYOP)
 :::
 
+## Computational infrastructure
+
+Source: "Dependency" by Randall Munroe: [xkcd.com/2347/](https://xkcd.com/2347/)
+
+![](images/paste-7.png)
+
 ## The practical sessions
 
 -   Time of in-depth work
@@ -216,7 +250,7 @@ Press Ctrl+Tab to switch from IDE to browser with course content and other thing
 -   15:00-15:15 Break and refreshments
 -   15:15-17:00 OD Transport data visualisation
 
-## Solo working through the practical (until ~12:30)
+## Solo working through the practical (until \~12:30)
 
 Any questions before the lunch break?
 

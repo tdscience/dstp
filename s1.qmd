@@ -4,9 +4,9 @@ title: "Finding, importing and cleaning transport datasets"
 
 # Introduction
 
-In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We'll learn practical techniques using R to access and prepare this data for analysis.
+In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We will learn practical techniques using R to access and prepare these data for analysis.
 
-The session covers:
+This session covers:
 
 - Downloading datasets from OpenStreetMap
 - Importing data into R
@@ -36,14 +36,14 @@ sapply(pkgs, require, character.only = TRUE)
 
 ## Project setup
 
-Follow the guidance in the [day 1 slides](slides/day1.qmd#practical-session-0) to set up your project folder/repo if you have not already done so.
-The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.
+Follow the guidance in the [day 1 slides](slides/day1.qmd#practical-session-0) to set up your project folder or repository if you have not already done so.
+In summary, you can run something like the following to create a new folder/repository and open it in RStudio or VS Code.
 
 ::: {.panel-tabset}
 
 ### gh CLI tool
 
-The following creates a fresh GitHub repo with GitHub CLI (recommended)
+The following creates a fresh GitHub repository using the GitHub CLI (recommended).
 
 Note: you need to have installed the [GitHub CLI](https://cli.github.com/) and authenticated it with your GitHub account.
 
@@ -62,7 +62,7 @@ rstudioapi::openProject("C:/path/to/your/folder/dstp")
 
 ### Shell
 
-The following creates an empty folder with PowerShell or RStudio/VS Code terminal
+The following creates an empty folder using PowerShell or the RStudio/VS Code terminal.
 
 ```sh
 # After opening a terminal in your chosen IDE/shell
@@ -124,21 +124,23 @@ leeds_desire_lines = get_pct_lines(region = "west-yorkshire")
 
 ## Boundary and Census Data
 
-For geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.
+For geographic boundaries and census data, you can obtain data directly from the ONS Geoportal or custom dataset tool.
 
-Get the data from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):
+Load the data directly from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):
 
 ```{r}
 #| eval: false
-# Download Local Authority Districts
-library(arcgis)
-lad_url = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0"
-lad_boundaries = arc_read(lad_url)
+library(sf)
+# Download LSOA boundaries
+url = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFE_V10/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
+lsoa_boundaries = st_read(url)
 ```
 
-# Importing and Cleaning Data
+All results from the census can be obtained from [nomis](https://www.nomisweb.co.uk/). It is possible to obtain the data programmatically in R using [`nomisr`](https://docs.ropensci.org/nomisr/); check its documentation if you are interested.
 
-Once downloaded, data often needs cleaning. Common issues include missing values, inconsistent formats, and coordinate systems.
+# Cleaning Data
+
+Once downloaded, data often need cleaning. Common issues include missing values, inconsistent formats, and inconsistent coordinate systems.
 
 ## Basic Cleaning Example
 
@@ -147,14 +149,16 @@ Once downloaded, data often needs cleaning. Common issues include missing values
 # Clean collision data
 collisions_clean = collisions |>
   # Remove rows with missing coordinates
-  filter(!is.na(longitude), !is.na(latitude)) |>
-  # Convert to sf object
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+  drop_na(location_easting_osgr,location_northing_osgr) |>
+  # Convert to sf object (spatial)
+  st_as_sf(coords = c("location_easting_osgr", "location_northing_osgr"), crs = 27700) |>
   # Select relevant columns
   select(accident_index, date, speed_limit, accident_severity)
 ```
 
 ## Handling Missing Data
+
+There is no single strategy for dealing with missing data. The approach you adopt depends on the context. A simple strategy to impute missing data is to use a constant value. The following example uses the median value to fill missing speed limits, which might be a valid approach if your dataset contains very similar road types.
 
 ```{r}
 #| eval: false
@@ -184,11 +188,16 @@ collisions_clean = collisions_clean |>
 2. Convert the data to an sf object and plot it on a map.
 3. Count the number of supermarkets by type.
 
-## Clean and Visualize OD Data
+```{r}
+#| eval: false
+# Your code here
+```
+
+## Clean and Visualise OD Data
 
 1. Download origin-destination data for a region using the `pct` package.
 2. Clean the data by removing any invalid geometries.
-3. Create a map showing the desire lines colored by cycling potential.
+3. Create a map showing the desire lines coloured by cycling potential.
 
 ```{r}
 #| eval: false
@@ -209,7 +218,6 @@ collisions_clean = collisions_clean |>
 -->
 
 ## Importing official boundary data
-
 
 <!-- https://geoportal.statistics.gov.uk/search?q=local%20enterprise%20partnerships -->
 
@@ -233,7 +241,7 @@ plot(sf::st_geometry(leps))
 
 ## Bonus: Data Quality Assessment
 
-1. Choose a dataset you've downloaded.
+1. Choose a dataset you have downloaded.
 2. Assess its quality by checking for:
    - Missing values
    - Outliers

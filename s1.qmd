@@ -36,7 +36,42 @@ sapply(pkgs, require, character.only = TRUE)
 
 ## Project setup
 
-Follow the guidance in the [day 1 slides](slides/day1.qmd#practical-session-0) to set up your project folder/repo.
+Follow the guidance in the [day 1 slides](slides/day1.qmd#practical-session-0) to set up your project folder/repo if you have not already done so.
+The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.
+
+::: {.panel-tabset}
+
+### gh CLI tool
+
+The following creates a fresh GitHub repo with GitHub CLI (recommended)
+
+Note: you need to have installed the [GitHub CLI](https://cli.github.com/) and authenticated it with your GitHub account.
+
+```sh
+cd path/to/your/folder # e.g. cd C:/Users/YourName/Documents
+gh repo create dstp-rl --public --clone # replace 'rl' with your initials
+code path/to/your/folder/dstp-rl # or open in RStudio
+```
+
+### R
+
+```r
+dir.create("C:/path/to/your/folder/dstp") # replace with your path
+rstudioapi::openProject("C:/path/to/your/folder/dstp")
+```
+
+### Shell
+
+The following creates an empty folder with PowerShell or RStudio/VS Code terminal
+
+```sh
+# After opening a terminal in your chosen IDE/shell
+cd path/to/your/folder # e.g. cd C:/Users/YourName/Documents
+mkdir dstp-rl # replace 'rl' with your initials
+# Then open the folder in your IDE
+```
+
+:::
 
 # Downloading Transport Datasets
 

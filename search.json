@@ -424,17 +424,7 @@
     "href": "index.html",
     "title": "Data Science for Transport Planning: 2 day course",
     "section": "",
-    "text": "Get yours at store.leeds.ac.uk {-}",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#note-tickets-are-now-on-sale",
-    "href": "index.html#note-tickets-are-now-on-sale",
-    "title": "Data Science for Transport Planning: 2 day course",
-    "section": "",
-    "text": "Get yours at store.leeds.ac.uk {-}",
+    "text": "Note: Tickets are now on sold out",
     "crumbs": [
       "Home"
     ]
@@ -443,8 +433,8 @@
     "objectID": "index.html#course-overview",
     "href": "index.html#course-overview",
     "title": "Data Science for Transport Planning: 2 day course",
-    "section": "2 Course Overview",
-    "text": "2 Course Overview\nBased on demand, we’re organising a 2-day course teaching modern data science skills for transport planning, focussed on transport planning practitioners.\nThis course will take place on the 18th and 19th of September 2025 at the University of Leeds.",
+    "section": "1 Course Overview",
+    "text": "1 Course Overview\n2-day course teaching modern data science skills for transport planning, focussed on the needs of transport planning practitioners.",
     "crumbs": [
       "Home"
     ]
@@ -453,8 +443,8 @@
     "objectID": "index.html#learning-objectives",
     "href": "index.html#learning-objectives",
     "title": "Data Science for Transport Planning: 2 day course",
-    "section": "3 Learning Objectives",
-    "text": "3 Learning Objectives\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
+    "section": "2 Learning Objectives",
+    "text": "2 Learning Objectives\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
     "crumbs": [
       "Home"
     ]
@@ -463,8 +453,8 @@
     "objectID": "index.html#prerequisites",
     "href": "index.html#prerequisites",
     "title": "Data Science for Transport Planning: 2 day course",
-    "section": "4 Prerequisites",
-    "text": "4 Prerequisites\n\nExperience with transport planning concepts and datasets, such as origin-destination data and route networks.\nBasic programming skills in R, Python or similar.\nA laptop with R and RStudio (recommended) or a Python distribution such as Anaconda and an editor such as VS Code or Jupyter Notebook set-up.\n\nSee the prerequisites page for details and to test your setup.",
+    "section": "3 Prerequisites",
+    "text": "3 Prerequisites\n\nExperience with transport planning concepts and datasets, such as origin-destination data and route networks.\nBasic programming skills in R, Python or similar.\nA laptop with R and RStudio (recommended) or a Python distribution such as Anaconda and an editor such as VS Code or Jupyter Notebook set-up.\n\nSee the prerequisites page for details and to test your setup.",
     "crumbs": [
       "Home"
     ]
@@ -473,8 +463,8 @@
     "objectID": "index.html#schedule",
     "href": "index.html#schedule",
     "title": "Data Science for Transport Planning: 2 day course",
-    "section": "5 Schedule",
-    "text": "5 Schedule\nSee the schedule page for the detailed schedule.",
+    "section": "4 Schedule",
+    "text": "4 Schedule\nSee the schedule page for the detailed schedule.",
     "crumbs": [
       "Home"
     ]
@@ -483,8 +473,8 @@
     "objectID": "index.html#registration",
     "href": "index.html#registration",
     "title": "Data Science for Transport Planning: 2 day course",
-    "section": "6 Registration",
-    "text": "6 Registration\nSee store.leeds.ac.uk for registration details.",
+    "section": "5 Registration",
+    "text": "5 Registration\nSee store.leeds.ac.uk for registration details.",
     "crumbs": [
       "Home"
     ]
@@ -493,8 +483,8 @@
     "objectID": "index.html#contact",
     "href": "index.html#contact",
     "title": "Data Science for Transport Planning: 2 day course",
-    "section": "7 Contact",
-    "text": "7 Contact\nFor inquiries, please contact Robin Lovelace.\nWe look forward to seeing you at the course!",
+    "section": "6 Contact",
+    "text": "6 Contact\nFor inquiries, please contact Robin Lovelace.\nWe look forward to seeing you at the course!",
     "crumbs": [
       "Home"
     ]

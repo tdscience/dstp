@@ -157,7 +157,7 @@ All results from the census can be obtained from [nomis](https://www.nomisweb.co
 
 # Cleaning Data
 
-Once downloaded, data often need cleaning. Common issues include missing values, inconsistent formats, and inconsistent coordinate systems.
+Once downloaded, data often needs cleaning. Common issues include missing values, inconsistent formats, and inconsistent coordinate systems.
 
 ## Basic Cleaning Example
 

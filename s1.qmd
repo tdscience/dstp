@@ -36,7 +36,7 @@ sapply(pkgs, require, character.only = TRUE)
 
 ## Project setup
 
-Follow the guidance in the [day 1 slides](day1.qmd#practical-session-0) to set up your project folder/repo.
+Follow the guidance in the [day 1 slides](slides/day1.qmd#practical-session-0) to set up your project folder/repo.
 
 # Downloading Transport Datasets
 

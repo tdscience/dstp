@@ -122,9 +122,20 @@ osm_network |>
   plot()
 ```
 
-## About us
+## The DSTP Team
 
-![](images/paste-9.png) ![](images/paste-8.png) ![](images/paste-10.png)
+::: {layout-ncol=3}
+
+![](images/paste-9.png)
+
+![](images/paste-8.png)
+
+![](images/paste-10.png)
+
+:::
+
+Source: GitHub
+
 
 ```{=html}
 <!-- ### Robin Lovelace

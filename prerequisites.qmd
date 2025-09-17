@@ -51,21 +51,19 @@ You can test your setup by running the following code in R or Python.
 #| warning: false
 #| results: hide
 options(repos = c(CRAN = "https://cloud.r-project.org"))
-if (!require("remotes")) install.packages("remotes")
+if (!require("pak")) install.packages("pak")
 pkgs = c(
     "sf",
     "tidyverse",
     "tmap",
-    "data.table",
     "stats19",
-    "quarto",
     "stplanr",
     "osmextract",
     "zonebuilder"
 )
 pkgs_to_install = pkgs[!pkgs %in% installed.packages()[, "Package"]]
 if (length(pkgs_to_install) > 0) {
-  install.packages(pkgs_to_install)
+  pak::pak(pkgs_to_install)
 }
 library(tidyverse)
 zones = zonebuilder::zb_zone("Leeds", n_circles = 3)

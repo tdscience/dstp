@@ -35,7 +35,7 @@ If you need to install any of these packages use:
 ```{r} 
 #| eval: false
 if (!require("pak")) install.packages("pak")
-pak::pkg_install(c("sf", "tidyverse", "remotes", "ggspatial", "tmap"))
+pak::pkg_install(c("sf", "tidyverse", "ggspatial", "tmap"))
 ```
 
 ```{r}

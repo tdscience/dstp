@@ -78,15 +78,306 @@
     "text": "Let’s move to the practical sessions\nSee the schedule for details.\nAny questions before we start?"
   },
   {
-    "objectID": "collisions.html",
-    "href": "collisions.html",
-    "title": "Road traffic collisions",
+    "objectID": "session1.html",
+    "href": "session1.html",
+    "title": "1 Importing data from OSM",
     "section": "",
-    "text": "1 Road traffic collisions\nPlaceholder for road traffic collisions example.\nThis page will contain an analysis using stats19 data for Leeds.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace",
+    "text": "1 Importing data from OSM\n\n# Code goes here\n\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data Science for Transport Planning",
+    "section": "",
+    "text": "Open in GitHub Codespaces\n\n\nNote: Tickets are now sold out\n\n\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.\n\n\n\n\nSee store.leeds.ac.uk for registration details.",
     "crumbs": [
-      "Examples",
-      "Road traffic collisions"
+      "Home"
     ]
+  },
+  {
+    "objectID": "index.html#learning-objectives",
+    "href": "index.html#learning-objectives",
+    "title": "Data Science for Transport Planning",
+    "section": "",
+    "text": "Understand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#registration",
+    "href": "index.html#registration",
+    "title": "Data Science for Transport Planning",
+    "section": "",
+    "text": "See store.leeds.ac.uk for registration details.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#course-overview",
+    "href": "index.html#course-overview",
+    "title": "Data Science for Transport Planning",
+    "section": "Course Overview",
+    "text": "Course Overview\nThis course teaches modern data science skills tailored for transport planning, including data acquisition, cleaning, analysis, visualization, and reproducible reporting. It focuses on practical applications using R and Python, with real-world transport datasets.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Data Science for Transport Planning",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nBasic knowledge of transport planning concepts and datasets\nFamiliarity with programming in R or Python\nA laptop with R (essential), Python (optional) and a data science IDE such as RStudio (recommended), VS Code or Positron installed\nA GitHub account (a GitHub account should allow you to run the code in the cloud via GitHub Codespaces as a fallback if needed)\n\nSee the prerequisites page for detailed setup instructions.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Data Science for Transport Planning",
+    "section": "Schedule",
+    "text": "Schedule\nThe course covers 7 sessions over 2 days. See the schedule page for details.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#technical-information",
+    "href": "index.html#technical-information",
+    "title": "Data Science for Transport Planning",
+    "section": "Technical Information",
+    "text": "Technical Information\n\nThe repository structure is as follows:\n\ns1.qmd to s7.qmd: Course session materials\ndata/: Sample datasets used in the course\ntds/: Additional transport data science materials and projects\n.devcontainer/: DevContainer configuration for consistent development environment\n.github/: GitHub Actions workflows for publishing\n\n\nRunning Locally\nThis project uses Quarto to generate the website. To run locally:\n\nInstall Quarto: https://quarto.org/docs/get-started/\nClone this repository\nOpen in VS Code with DevContainer support (recommended)\nRun quarto preview to preview the site\n\nAlternatively, use the “Open in Codespaces” button above for an instant cloud development environment.\n\n\nContributing\nContributions are welcome! Please:\n\nOpen issues for bugs or feature requests\nSubmit pull requests for improvements\nJoin the GitHub Discussions for questions",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Data Science for Transport Planning",
+    "section": "License",
+    "text": "License\nThis project is licensed under CC BY-SA 4.0. See LICENSE for details.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Data Science for Transport Planning",
+    "section": "Contact",
+    "text": "Contact\nFor course inquiries: Robin Lovelace\nRepository maintainer: Robin Lovelace",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "s4.html",
+    "href": "s4.html",
+    "title": "Spatio-temporal data",
+    "section": "",
+    "text": "Placeholder for session 4 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "s7.html",
+    "href": "s7.html",
+    "title": "Advanced topics",
+    "section": "",
+    "text": "Placeholder for session 7 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "schedule.html#day-1-introduction-to-rrstudio",
+    "href": "schedule.html#day-1-introduction-to-rrstudio",
+    "title": "Schedule",
+    "section": "",
+    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "schedule.html#day-2",
+    "href": "schedule.html#day-2",
+    "title": "Schedule",
+    "section": "2 Day 2",
+    "text": "2 Day 2\nDay 2 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n\n11:15 - 12:30\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "s1.html",
+    "href": "s1.html",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "",
+    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.\nThe session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
+  },
+  {
+    "objectID": "s1.html#project-setup",
+    "href": "s1.html#project-setup",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "2.1 Project setup",
+    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder/repo."
+  },
+  {
+    "objectID": "s1.html#openstreetmap-data",
+    "href": "s1.html#openstreetmap-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.1 OpenStreetMap Data",
+    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))"
+  },
+  {
+    "objectID": "s1.html#road-traffic-casualty-data-stats19",
+    "href": "s1.html#road-traffic-casualty-data-stats19",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.2 Road Traffic Casualty Data (STATS19)",
+    "text": "3.2 Road Traffic Casualty Data (STATS19)\nThe UK’s road traffic casualty data is available through the stats19 package. This provides data on collisions, casualties, and vehicles.\n\nlibrary(stats19)\n# Download 2020 collision data\ncollisions = get_stats19(year = 2020, type = \"collision\")\n# Download casualty data\ncasualties = get_stats19(year = 2020, type = \"cas\")\n# Download vehicle data\nvehicles = get_stats19(year = 2020, type = \"veh\")"
+  },
+  {
+    "objectID": "s1.html#origin-destination-data",
+    "href": "s1.html#origin-destination-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.3 Origin-Destination Data",
+    "text": "3.3 Origin-Destination Data\nThe pct package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.\n\nlibrary(pct)\n# Download desire lines for Leeds\nleeds_desire_lines = get_pct_lines(region = \"west-yorkshire\")"
+  },
+  {
+    "objectID": "s1.html#boundary-and-census-data",
+    "href": "s1.html#boundary-and-census-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.4 Boundary and Census Data",
+    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.\n\n# Download Local Authority Districts\nlibrary(arcgis)\nlad_url = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0\"\nlad_boundaries = arc_read(lad_url)"
+  },
+  {
+    "objectID": "s1.html#basic-cleaning-example",
+    "href": "s1.html#basic-cleaning-example",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "4.1 Basic Cleaning Example",
+    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  filter(!is.na(longitude), !is.na(latitude)) |&gt;\n  # Convert to sf object\n  st_as_sf(coords = c(\"longitude\", \"latitude\"), crs = 4326) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
+  },
+  {
+    "objectID": "s1.html#handling-missing-data",
+    "href": "s1.html#handling-missing-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "4.2 Handling Missing Data",
+    "text": "4.2 Handling Missing Data\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
+  },
+  {
+    "objectID": "s1.html#download-and-explore-stats19-data",
+    "href": "s1.html#download-and-explore-stats19-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.1 Download and Explore STATS19 Data",
+    "text": "5.1 Download and Explore STATS19 Data\n\nDownload road traffic collision data for 2019 using the stats19 package.\nExplore the structure of the data using str() and summary().\nCreate a simple plot showing the number of collisions by severity.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s1.html#extract-osm-features",
+    "href": "s1.html#extract-osm-features",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.2 Extract OSM Features",
+    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type."
+  },
+  {
+    "objectID": "s1.html#clean-and-visualize-od-data",
+    "href": "s1.html#clean-and-visualize-od-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.3 Clean and Visualize OD Data",
+    "text": "5.3 Clean and Visualize OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines colored by cycling potential.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s1.html#data-quality-assessment",
+    "href": "s1.html#data-quality-assessment",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.4 Data Quality Assessment",
+    "text": "5.4 Data Quality Assessment\n\nChoose a dataset you’ve downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "next-steps.html",
+    "href": "next-steps.html",
+    "title": "1 Next Steps for Slides",
+    "section": "",
+    "text": "Here are suggestions for enhancing the slides for the Data Science for Transport Planning course:\n\n\n\nAdd more detailed session introductions linking to the specific workbooks (s1.qmd, s2.qmd, etc.)\nInclude images from the course slides (e.g., paste-3.png for reproducible research)\nAdd code examples or snippets for setup checks\nInclude a slide on course objectives and learning outcomes\nAdd contact information and GitHub links prominently\n\n\n\n\n\nExpand the recap section with key takeaways from Day 1\nAdd content on spatio-temporal data analysis with examples\nInclude routing and network analysis demonstrations\nAdd best practices section with Git/GitHub workflows\nInclude advanced topics overview with links to s7.qmd\nAdd a feedback slide with QR code for course evaluation\n\n\n\n\n\nAdd consistent branding and color scheme\nInclude more transport-specific examples and datasets\nAdd interactive elements like polls or questions\nInclude references and bibliography sections\nAdd a final thank you slide with contact info and next course info\nEnsure all images are properly sourced and credited\nAdd navigation aids and table of contents\nInclude accessibility features (alt text for images)\n\n\n\n\n\nAdd slides on data sources specific to transport planning (Stats19, OSM, OD data)\nInclude case studies from Leeds or UK transport projects\nAdd slides on ethical considerations in transport data science\nInclude career development and networking opportunities\nAdd slides on publishing and sharing transport research\n\n\n\n\n\nAdd reveal.js plugins for better interactivity\nInclude code highlighting and execution\nAdd transition effects and animations\nEnsure mobile responsiveness\nAdd PDF export options"
+  },
+  {
+    "objectID": "next-steps.html#day-1-slides-enhancements",
+    "href": "next-steps.html#day-1-slides-enhancements",
+    "title": "1 Next Steps for Slides",
+    "section": "",
+    "text": "Add more detailed session introductions linking to the specific workbooks (s1.qmd, s2.qmd, etc.)\nInclude images from the course slides (e.g., paste-3.png for reproducible research)\nAdd code examples or snippets for setup checks\nInclude a slide on course objectives and learning outcomes\nAdd contact information and GitHub links prominently"
+  },
+  {
+    "objectID": "next-steps.html#day-2-slides-expansions",
+    "href": "next-steps.html#day-2-slides-expansions",
+    "title": "1 Next Steps for Slides",
+    "section": "",
+    "text": "Expand the recap section with key takeaways from Day 1\nAdd content on spatio-temporal data analysis with examples\nInclude routing and network analysis demonstrations\nAdd best practices section with Git/GitHub workflows\nInclude advanced topics overview with links to s7.qmd\nAdd a feedback slide with QR code for course evaluation"
+  },
+  {
+    "objectID": "next-steps.html#general-improvements",
+    "href": "next-steps.html#general-improvements",
+    "title": "1 Next Steps for Slides",
+    "section": "",
+    "text": "Add consistent branding and color scheme\nInclude more transport-specific examples and datasets\nAdd interactive elements like polls or questions\nInclude references and bibliography sections\nAdd a final thank you slide with contact info and next course info\nEnsure all images are properly sourced and credited\nAdd navigation aids and table of contents\nInclude accessibility features (alt text for images)"
+  },
+  {
+    "objectID": "next-steps.html#content-additions",
+    "href": "next-steps.html#content-additions",
+    "title": "1 Next Steps for Slides",
+    "section": "",
+    "text": "Add slides on data sources specific to transport planning (Stats19, OSM, OD data)\nInclude case studies from Leeds or UK transport projects\nAdd slides on ethical considerations in transport data science\nInclude career development and networking opportunities\nAdd slides on publishing and sharing transport research"
+  },
+  {
+    "objectID": "next-steps.html#technical-enhancements",
+    "href": "next-steps.html#technical-enhancements",
+    "title": "1 Next Steps for Slides",
+    "section": "",
+    "text": "Add reveal.js plugins for better interactivity\nInclude code highlighting and execution\nAdd transition effects and animations\nEnsure mobile responsiveness\nAdd PDF export options"
+  },
+  {
+    "objectID": "s2.html",
+    "href": "s2.html",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "Origin-destination (OD) data forms the backbone of transportation planning, urban analytics, and spatial mobility research. This type of data captures movement patterns between geographic locations, revealing how people, goods, or services flow through space. Understanding OD data is crucial for making informed decisions such as infrastructure development and public transport planning.\nIn this session, we will how to use and analyse geographic and origin-destination data. It includes:\n\nA short lecture on geographic and origin-destination data (see slides)\nHands-on analysis: Working with various geographic and OD datasets\n\n\n\nYou need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python\n\n\n\n\nWe will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()\n\n\n\n\n\n\n\nLoad the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
+  },
+  {
+    "objectID": "s2.html#pre-requisites",
+    "href": "s2.html#pre-requisites",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "You need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python"
+  },
+  {
+    "objectID": "s2.html#basic-sf-operations",
+    "href": "s2.html#basic-sf-operations",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "We will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()"
+  },
+  {
+    "objectID": "s2.html#basic-spatial-operations",
+    "href": "s2.html#basic-spatial-operations",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "Load the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
+  },
+  {
+    "objectID": "s6.html",
+    "href": "s6.html",
+    "title": "Best practices for data science in transport planning",
+    "section": "",
+    "text": "Placeholder for session 6 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
     "objectID": "s5.html",
@@ -236,291 +527,14 @@
     "text": "6.5 Exercise 5: Network Centrality\n\nDownload road network data for a small area\nCalculate betweenness centrality\nIdentify the most critical roads in the network\n\n\n# Your code here"
   },
   {
-    "objectID": "s6.html",
-    "href": "s6.html",
-    "title": "Best practices for data science in transport planning",
+    "objectID": "collisions.html",
+    "href": "collisions.html",
+    "title": "Road traffic collisions",
     "section": "",
-    "text": "Placeholder for session 6 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
-  },
-  {
-    "objectID": "s2.html",
-    "href": "s2.html",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "Origin-destination (OD) data forms the backbone of transportation planning, urban analytics, and spatial mobility research. This type of data captures movement patterns between geographic locations, revealing how people, goods, or services flow through space. Understanding OD data is crucial for making informed decisions such as infrastructure development and public transport planning.\nIn this session, we will how to use and analyse geographic and origin-destination data. It includes:\n\nA short lecture on geographic and origin-destination data (see slides)\nHands-on analysis: Working with various geographic and OD datasets\n\n\n\nYou need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python\n\n\n\n\nWe will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()\n\n\n\n\n\n\n\nLoad the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
-  },
-  {
-    "objectID": "s2.html#pre-requisites",
-    "href": "s2.html#pre-requisites",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "You need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python"
-  },
-  {
-    "objectID": "s2.html#basic-sf-operations",
-    "href": "s2.html#basic-sf-operations",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "We will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()"
-  },
-  {
-    "objectID": "s2.html#basic-spatial-operations",
-    "href": "s2.html#basic-spatial-operations",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "Load the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
-  },
-  {
-    "objectID": "next-steps.html",
-    "href": "next-steps.html",
-    "title": "1 Next Steps for Slides",
-    "section": "",
-    "text": "Here are suggestions for enhancing the slides for the Data Science for Transport Planning course:\n\n\n\nAdd more detailed session introductions linking to the specific workbooks (s1.qmd, s2.qmd, etc.)\nInclude images from the course slides (e.g., paste-3.png for reproducible research)\nAdd code examples or snippets for setup checks\nInclude a slide on course objectives and learning outcomes\nAdd contact information and GitHub links prominently\n\n\n\n\n\nExpand the recap section with key takeaways from Day 1\nAdd content on spatio-temporal data analysis with examples\nInclude routing and network analysis demonstrations\nAdd best practices section with Git/GitHub workflows\nInclude advanced topics overview with links to s7.qmd\nAdd a feedback slide with QR code for course evaluation\n\n\n\n\n\nAdd consistent branding and color scheme\nInclude more transport-specific examples and datasets\nAdd interactive elements like polls or questions\nInclude references and bibliography sections\nAdd a final thank you slide with contact info and next course info\nEnsure all images are properly sourced and credited\nAdd navigation aids and table of contents\nInclude accessibility features (alt text for images)\n\n\n\n\n\nAdd slides on data sources specific to transport planning (Stats19, OSM, OD data)\nInclude case studies from Leeds or UK transport projects\nAdd slides on ethical considerations in transport data science\nInclude career development and networking opportunities\nAdd slides on publishing and sharing transport research\n\n\n\n\n\nAdd reveal.js plugins for better interactivity\nInclude code highlighting and execution\nAdd transition effects and animations\nEnsure mobile responsiveness\nAdd PDF export options"
-  },
-  {
-    "objectID": "next-steps.html#day-1-slides-enhancements",
-    "href": "next-steps.html#day-1-slides-enhancements",
-    "title": "1 Next Steps for Slides",
-    "section": "",
-    "text": "Add more detailed session introductions linking to the specific workbooks (s1.qmd, s2.qmd, etc.)\nInclude images from the course slides (e.g., paste-3.png for reproducible research)\nAdd code examples or snippets for setup checks\nInclude a slide on course objectives and learning outcomes\nAdd contact information and GitHub links prominently"
-  },
-  {
-    "objectID": "next-steps.html#day-2-slides-expansions",
-    "href": "next-steps.html#day-2-slides-expansions",
-    "title": "1 Next Steps for Slides",
-    "section": "",
-    "text": "Expand the recap section with key takeaways from Day 1\nAdd content on spatio-temporal data analysis with examples\nInclude routing and network analysis demonstrations\nAdd best practices section with Git/GitHub workflows\nInclude advanced topics overview with links to s7.qmd\nAdd a feedback slide with QR code for course evaluation"
-  },
-  {
-    "objectID": "next-steps.html#general-improvements",
-    "href": "next-steps.html#general-improvements",
-    "title": "1 Next Steps for Slides",
-    "section": "",
-    "text": "Add consistent branding and color scheme\nInclude more transport-specific examples and datasets\nAdd interactive elements like polls or questions\nInclude references and bibliography sections\nAdd a final thank you slide with contact info and next course info\nEnsure all images are properly sourced and credited\nAdd navigation aids and table of contents\nInclude accessibility features (alt text for images)"
-  },
-  {
-    "objectID": "next-steps.html#content-additions",
-    "href": "next-steps.html#content-additions",
-    "title": "1 Next Steps for Slides",
-    "section": "",
-    "text": "Add slides on data sources specific to transport planning (Stats19, OSM, OD data)\nInclude case studies from Leeds or UK transport projects\nAdd slides on ethical considerations in transport data science\nInclude career development and networking opportunities\nAdd slides on publishing and sharing transport research"
-  },
-  {
-    "objectID": "next-steps.html#technical-enhancements",
-    "href": "next-steps.html#technical-enhancements",
-    "title": "1 Next Steps for Slides",
-    "section": "",
-    "text": "Add reveal.js plugins for better interactivity\nInclude code highlighting and execution\nAdd transition effects and animations\nEnsure mobile responsiveness\nAdd PDF export options"
-  },
-  {
-    "objectID": "s1.html",
-    "href": "s1.html",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "",
-    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.\nThe session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
-  },
-  {
-    "objectID": "s1.html#openstreetmap-data",
-    "href": "s1.html#openstreetmap-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.1 OpenStreetMap Data",
-    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))"
-  },
-  {
-    "objectID": "s1.html#road-traffic-casualty-data-stats19",
-    "href": "s1.html#road-traffic-casualty-data-stats19",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.2 Road Traffic Casualty Data (STATS19)",
-    "text": "3.2 Road Traffic Casualty Data (STATS19)\nThe UK’s road traffic casualty data is available through the stats19 package. This provides data on collisions, casualties, and vehicles.\n\nlibrary(stats19)\n# Download 2020 collision data\ncollisions = get_stats19(year = 2020, type = \"collision\")\n# Download casualty data\ncasualties = get_stats19(year = 2020, type = \"cas\")\n# Download vehicle data\nvehicles = get_stats19(year = 2020, type = \"veh\")"
-  },
-  {
-    "objectID": "s1.html#origin-destination-data",
-    "href": "s1.html#origin-destination-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.3 Origin-Destination Data",
-    "text": "3.3 Origin-Destination Data\nThe pct package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.\n\nlibrary(pct)\n# Download desire lines for Leeds\nleeds_desire_lines = get_pct_lines(region = \"west-yorkshire\")"
-  },
-  {
-    "objectID": "s1.html#boundary-and-census-data",
-    "href": "s1.html#boundary-and-census-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.4 Boundary and Census Data",
-    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.\n\n# Download Local Authority Districts\nlibrary(arcgis)\nlad_url = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0\"\nlad_boundaries = arc_read(lad_url)"
-  },
-  {
-    "objectID": "s1.html#basic-cleaning-example",
-    "href": "s1.html#basic-cleaning-example",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "4.1 Basic Cleaning Example",
-    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  filter(!is.na(longitude), !is.na(latitude)) |&gt;\n  # Convert to sf object\n  st_as_sf(coords = c(\"longitude\", \"latitude\"), crs = 4326) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
-  },
-  {
-    "objectID": "s1.html#handling-missing-data",
-    "href": "s1.html#handling-missing-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "4.2 Handling Missing Data",
-    "text": "4.2 Handling Missing Data\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
-  },
-  {
-    "objectID": "s1.html#download-and-explore-stats19-data",
-    "href": "s1.html#download-and-explore-stats19-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.1 Download and Explore STATS19 Data",
-    "text": "5.1 Download and Explore STATS19 Data\n\nDownload road traffic collision data for 2019 using the stats19 package.\nExplore the structure of the data using str() and summary().\nCreate a simple plot showing the number of collisions by severity.\n\n\n# Your code here"
-  },
-  {
-    "objectID": "s1.html#extract-osm-features",
-    "href": "s1.html#extract-osm-features",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.2 Extract OSM Features",
-    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type."
-  },
-  {
-    "objectID": "s1.html#clean-and-visualize-od-data",
-    "href": "s1.html#clean-and-visualize-od-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.3 Clean and Visualize OD Data",
-    "text": "5.3 Clean and Visualize OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines colored by cycling potential.\n\n\n# Your code here"
-  },
-  {
-    "objectID": "s1.html#data-quality-assessment",
-    "href": "s1.html#data-quality-assessment",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.4 Data Quality Assessment",
-    "text": "5.4 Data Quality Assessment\n\nChoose a dataset you’ve downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
-    "section": "",
-    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
+    "text": "1 Road traffic collisions\nPlaceholder for road traffic collisions example.\nThis page will contain an analysis using stats19 data for Leeds.\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace",
     "crumbs": [
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "schedule.html#day-1-introduction-to-rrstudio",
-    "href": "schedule.html#day-1-introduction-to-rrstudio",
-    "title": "Schedule",
-    "section": "",
-    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
-    "crumbs": [
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "schedule.html#day-2",
-    "href": "schedule.html#day-2",
-    "title": "Schedule",
-    "section": "2 Day 2",
-    "text": "2 Day 2\nDay 2 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n\n11:15 - 12:30\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
-    "crumbs": [
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "s7.html",
-    "href": "s7.html",
-    "title": "Advanced topics",
-    "section": "",
-    "text": "Placeholder for session 7 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
-  },
-  {
-    "objectID": "s4.html",
-    "href": "s4.html",
-    "title": "Spatio-temporal data",
-    "section": "",
-    "text": "Placeholder for session 4 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Data Science for Transport Planning",
-    "section": "",
-    "text": "Open in GitHub Codespaces\n\n\nNote: Tickets are now sold out\n\n\n\nUnderstand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.\n\n\n\n\nSee store.leeds.ac.uk for registration details.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#learning-objectives",
-    "href": "index.html#learning-objectives",
-    "title": "Data Science for Transport Planning",
-    "section": "",
-    "text": "Understand the role of data science in transport planning.\nLearn how to find, import, clean, and analyze transport data.\nDevelop skills in data visualization and reporting.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#registration",
-    "href": "index.html#registration",
-    "title": "Data Science for Transport Planning",
-    "section": "",
-    "text": "See store.leeds.ac.uk for registration details.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#course-overview",
-    "href": "index.html#course-overview",
-    "title": "Data Science for Transport Planning",
-    "section": "Course Overview",
-    "text": "Course Overview\nThis course teaches modern data science skills tailored for transport planning, including data acquisition, cleaning, analysis, visualization, and reproducible reporting. It focuses on practical applications using R and Python, with real-world transport datasets.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "Data Science for Transport Planning",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nBasic knowledge of transport planning concepts and datasets\nFamiliarity with programming in R or Python\nA laptop with R (essential), Python (optional) and a data science IDE such as RStudio (recommended), VS Code or Positron installed\nA GitHub account (a GitHub account should allow you to run the code in the cloud via GitHub Codespaces as a fallback if needed)\n\nSee the prerequisites page for detailed setup instructions.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Data Science for Transport Planning",
-    "section": "Schedule",
-    "text": "Schedule\nThe course covers 7 sessions over 2 days. See the schedule page for details.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#technical-information",
-    "href": "index.html#technical-information",
-    "title": "Data Science for Transport Planning",
-    "section": "Technical Information",
-    "text": "Technical Information\n\nThe repository structure is as follows:\n\ns1.qmd to s7.qmd: Course session materials\ndata/: Sample datasets used in the course\ntds/: Additional transport data science materials and projects\n.devcontainer/: DevContainer configuration for consistent development environment\n.github/: GitHub Actions workflows for publishing\n\n\nRunning Locally\nThis project uses Quarto to generate the website. To run locally:\n\nInstall Quarto: https://quarto.org/docs/get-started/\nClone this repository\nOpen in VS Code with DevContainer support (recommended)\nRun quarto preview to preview the site\n\nAlternatively, use the “Open in Codespaces” button above for an instant cloud development environment.\n\n\nContributing\nContributions are welcome! Please:\n\nOpen issues for bugs or feature requests\nSubmit pull requests for improvements\nJoin the GitHub Discussions for questions",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#license",
-    "href": "index.html#license",
-    "title": "Data Science for Transport Planning",
-    "section": "License",
-    "text": "License\nThis project is licensed under CC BY-SA 4.0. See LICENSE for details.",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#contact",
-    "href": "index.html#contact",
-    "title": "Data Science for Transport Planning",
-    "section": "Contact",
-    "text": "Contact\nFor course inquiries: Robin Lovelace\nRepository maintainer: Robin Lovelace",
-    "crumbs": [
-      "Home"
+      "Examples",
+      "Road traffic collisions"
     ]
   },
   {
@@ -657,18 +671,18 @@
     "text": "The practical sessions\n\nTime of in-depth work\nUse the course website as a reference point but spend most of the time in your own environment\nI will support people 1-2-1 and do ‘live demos’ now and then\n\n\n\n\n\n\n\nTip\n\n\nPress Ctrl+Tab to switch from IDE to browser with course content and other things for an efficient workflow"
   },
   {
-    "objectID": "slides/day1.html#setting-up-your-project",
-    "href": "slides/day1.html#setting-up-your-project",
+    "objectID": "slides/day1.html#set-up-project-folderrepo",
+    "href": "slides/day1.html#set-up-project-folderrepo",
     "title": "Data Science for Transport Planning: Day 1",
-    "section": "Setting-up your project",
-    "text": "Setting-up your project\n\n\nCreating a new project folder/repo\nOption 1: Create an empty folder on your computer (beginner level)\n\nVia Windows Explore or other GUI\nVia command line (e.g., mkdir dstp-rl, but replace ‘rl’ with your initials)\nVia RStudio or VS Code\n\nOption 2: Create a new repository on GitHub (more advanced, recommended)\n\nVia GitHub Desktop (beginner level)\nVia gh command line tool (more advanced, recommended)\n\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\n\n\nOpening your project\nOption 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu\nOption 2 (RStudio - recommended): Open the folder you created in RStudio using the rstudioapi package, e.g. with the following command in R Console:\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\nOption 3: (VS Code): Open the folder you created in VS Code using the File &gt; Open Folder menu\nOption 4 (VS Code - recommended):\ncode path/to/your/folder/dstp"
+    "section": "Set-up: project folder/repo",
+    "text": "Set-up: project folder/repo\nOption 1: Create an empty folder on your computer (beginner level)\n\nVia Windows Explore or other GUI\nVia command line (e.g., mkdir dstp-rl, but replace ‘rl’ with your initials)\nVia RStudio or VS Code\n\nOption 2: Create a new repository on GitHub (more advanced, recommended)\n\nVia GitHub Desktop (beginner level)\nVia gh command line tool (more advanced, recommended)\n\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials"
   },
   {
     "objectID": "slides/day1.html#opening-your-project",
     "href": "slides/day1.html#opening-your-project",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Opening your project",
-    "text": "Opening your project\nOption 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu\nOption 2 (RStudio - recommended): Open the folder you created in RStudio using the rstudioapi package, e.g. with the following command in R Console:\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\nOption 3: (VS Code): Open the folder you created in VS Code using the File &gt; Open Folder menu\nOption 4 (VS Code - recommended):\ncode path/to/your/folder/dstp"
+    "text": "Opening your project\nOption 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu\nOption 2 (RStudio - recommended): Open the folder you created in RStudio using the rstudioapi package, e.g. with the following command in R Console:\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\nOption 3: (VS Code): Open the folder you created in VS Code using the File &gt; Open Folder menu\ncode path/to/your/folder/dstp\nOption 4 (VS Code - recommended):\ncode path/to/your/folder/dstp"
   },
   {
     "objectID": "slides/day1.html#minimise-context-switching",

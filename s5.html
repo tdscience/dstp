@@ -9,7 +9,7 @@
 <meta name="author" content="Robin Lovelace &amp; contributors">
 <meta name="dcterms.date" content="2025">
 
-<title>Session 5 – Data Science for Transport Planning - </title>
+<title>Routing and route network analysis – Data Science for Transport Planning -</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -155,8 +190,53 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">1.1</span> Prerequisites</a></li>
+  </ul></li>
+  <li><a href="#opentripplanner-routing" id="toc-opentripplanner-routing" class="nav-link" data-scroll-target="#opentripplanner-routing"><span class="header-section-number">2</span> OpenTripPlanner Routing</a>
+  <ul class="collapse">
+  <li><a href="#connecting-to-otp" id="toc-connecting-to-otp" class="nav-link" data-scroll-target="#connecting-to-otp"><span class="header-section-number">2.1</span> Connecting to OTP</a></li>
+  <li><a href="#basic-routing" id="toc-basic-routing" class="nav-link" data-scroll-target="#basic-routing"><span class="header-section-number">2.2</span> Basic Routing</a></li>
+  <li><a href="#multi-modal-routing" id="toc-multi-modal-routing" class="nav-link" data-scroll-target="#multi-modal-routing"><span class="header-section-number">2.3</span> Multi-Modal Routing</a></li>
+  </ul></li>
+  <li><a href="#working-with-desire-lines" id="toc-working-with-desire-lines" class="nav-link" data-scroll-target="#working-with-desire-lines"><span class="header-section-number">3</span> Working with Desire Lines</a>
+  <ul class="collapse">
+  <li><a href="#loading-od-data" id="toc-loading-od-data" class="nav-link" data-scroll-target="#loading-od-data"><span class="header-section-number">3.1</span> Loading OD Data</a></li>
+  <li><a href="#visualizing-desire-lines" id="toc-visualizing-desire-lines" class="nav-link" data-scroll-target="#visualizing-desire-lines"><span class="header-section-number">3.2</span> Visualizing Desire Lines</a></li>
+  <li><a href="#extracting-route-endpoints" id="toc-extracting-route-endpoints" class="nav-link" data-scroll-target="#extracting-route-endpoints"><span class="header-section-number">3.3</span> Extracting Route Endpoints</a></li>
+  <li><a href="#calculating-routes" id="toc-calculating-routes" class="nav-link" data-scroll-target="#calculating-routes"><span class="header-section-number">3.4</span> Calculating Routes</a></li>
+  <li><a href="#visualizing-routes" id="toc-visualizing-routes" class="nav-link" data-scroll-target="#visualizing-routes"><span class="header-section-number">3.5</span> Visualizing Routes</a></li>
+  </ul></li>
+  <li><a href="#route-network-analysis" id="toc-route-network-analysis" class="nav-link" data-scroll-target="#route-network-analysis"><span class="header-section-number">4</span> Route Network Analysis</a>
+  <ul class="collapse">
+  <li><a href="#creating-route-networks" id="toc-creating-route-networks" class="nav-link" data-scroll-target="#creating-route-networks"><span class="header-section-number">4.1</span> Creating Route Networks</a></li>
+  <li><a href="#aggregating-routes" id="toc-aggregating-routes" class="nav-link" data-scroll-target="#aggregating-routes"><span class="header-section-number">4.2</span> Aggregating Routes</a></li>
+  <li><a href="#visualizing-route-networks" id="toc-visualizing-route-networks" class="nav-link" data-scroll-target="#visualizing-route-networks"><span class="header-section-number">4.3</span> Visualizing Route Networks</a></li>
+  </ul></li>
+  <li><a href="#network-centrality-analysis" id="toc-network-centrality-analysis" class="nav-link" data-scroll-target="#network-centrality-analysis"><span class="header-section-number">5</span> Network Centrality Analysis</a>
+  <ul class="collapse">
+  <li><a href="#preparing-network-data" id="toc-preparing-network-data" class="nav-link" data-scroll-target="#preparing-network-data"><span class="header-section-number">5.1</span> Preparing Network Data</a></li>
+  <li><a href="#calculating-centrality" id="toc-calculating-centrality" class="nav-link" data-scroll-target="#calculating-centrality"><span class="header-section-number">5.2</span> Calculating Centrality</a></li>
+  <li><a href="#visualizing-centrality" id="toc-visualizing-centrality" class="nav-link" data-scroll-target="#visualizing-centrality"><span class="header-section-number">5.3</span> Visualizing Centrality</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-basic-routing" id="toc-exercise-1-basic-routing" class="nav-link" data-scroll-target="#exercise-1-basic-routing"><span class="header-section-number">6.1</span> Exercise 1: Basic Routing</a></li>
+  <li><a href="#exercise-2-multi-modal-routing" id="toc-exercise-2-multi-modal-routing" class="nav-link" data-scroll-target="#exercise-2-multi-modal-routing"><span class="header-section-number">6.2</span> Exercise 2: Multi-Modal Routing</a></li>
+  <li><a href="#exercise-3-desire-lines-analysis" id="toc-exercise-3-desire-lines-analysis" class="nav-link" data-scroll-target="#exercise-3-desire-lines-analysis"><span class="header-section-number">6.3</span> Exercise 3: Desire Lines Analysis</a></li>
+  <li><a href="#exercise-4-route-network-creation" id="toc-exercise-4-route-network-creation" class="nav-link" data-scroll-target="#exercise-4-route-network-creation"><span class="header-section-number">6.4</span> Exercise 4: Route Network Creation</a></li>
+  <li><a href="#exercise-5-network-centrality" id="toc-exercise-5-network-centrality" class="nav-link" data-scroll-target="#exercise-5-network-centrality"><span class="header-section-number">6.5</span> Exercise 5: Network Centrality</a></li>
+  </ul></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7</span> Further Reading</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">8</span> Homework</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -180,9 +260,293 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Placeholder for session 5 content.</p>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This session demonstrates routing and network analysis techniques. By the end of this session, you should be able to:</p>
+<ul>
+<li>Understand the principles of routing and network analysis</li>
+<li>Use routing services such as OpenTripPlanner for multi-modal routing</li>
+<li>Create and analyze route networks</li>
+<li>Apply network centrality measures</li>
+</ul>
+<section id="prerequisites" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">1.1</span> Prerequisites</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pak"</span>)) <span class="fu">install.packages</span>(<span class="st">"pak"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="fu">c</span>(<span class="st">"sf"</span>, <span class="st">"tidyverse"</span>, <span class="st">"stplanr"</span>, <span class="st">"dodgr"</span>, <span class="st">"opentripplanner"</span>, <span class="st">"tmap"</span>, <span class="st">"osmextract"</span>, <span class="st">"lwgeom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stplanr)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(opentripplanner)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lwgeom)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="opentripplanner-routing" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> OpenTripPlanner Routing</h1>
+<p>OpenTripPlanner (OTP) is a powerful open-source routing engine that supports multi-modal transportation planning.</p>
+<section id="connecting-to-otp" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="connecting-to-otp"><span class="header-section-number">2.1</span> Connecting to OTP</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>otpcon <span class="ot">=</span> <span class="fu">otp_connect</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">hostname =</span> <span class="st">"otp.robinlovelace.net"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ssl =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">port =</span> <span class="dv">443</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">router =</span> <span class="st">"west-yorkshire"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="basic-routing" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="basic-routing"><span class="header-section-number">2.2</span> Basic Routing</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a simple walking route</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>route_walk <span class="ot">=</span> <span class="fu">otp_plan</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">otpcon =</span> otpcon,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fromPlace =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.55555</span>, <span class="fl">53.81005</span>), <span class="co"># Longitude, Latitude</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">toPlace =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.54710</span>, <span class="fl">53.79519</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"WALK"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="multi-modal-routing" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="multi-modal-routing"><span class="header-section-number">2.3</span> Multi-Modal Routing</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Public transport route</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>route_transit <span class="ot">=</span> <span class="fu">otp_plan</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">otpcon =</span> otpcon,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fromPlace =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.55555</span>, <span class="fl">53.81005</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">toPlace =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.54710</span>, <span class="fl">53.79519</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">"WALK"</span>, <span class="st">"TRANSIT"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cycling with public transport</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>route_bike_transit <span class="ot">=</span> <span class="fu">otp_plan</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">otpcon =</span> otpcon,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">fromPlace =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.55555</span>, <span class="fl">53.81005</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">toPlace =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.54710</span>, <span class="fl">53.79519</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">"BICYCLE"</span>, <span class="st">"TRANSIT"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="working-with-desire-lines" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Working with Desire Lines</h1>
+<p>Desire lines represent travel demand between origin-destination pairs.</p>
+<section id="loading-od-data" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="loading-od-data"><span class="header-section-number">3.1</span> Loading OD Data</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load desire lines data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>desire_lines <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">"https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_flow.geojson"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(from, to, all, walk, drive, cycle)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load zone centroids</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>centroids <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">"https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_cents.geojson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualizing-desire-lines" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="visualizing-desire-lines"><span class="header-section-number">3.2</span> Visualizing Desire Lines</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(desire_lines) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"all"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="st">"all"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values.scale =</span> <span class="dv">10</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> <span class="st">"-viridis"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(centroids) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="extracting-route-endpoints" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="extracting-route-endpoints"><span class="header-section-number">3.3</span> Extracting Route Endpoints</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get top 3 desire lines</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>desire_top <span class="ot">=</span> desire_lines <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> all, <span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract start and end points</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>fromPlace <span class="ot">=</span> <span class="fu">st_sf</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">id =</span> desire_top<span class="sc">$</span>from, <span class="at">geometry =</span> lwgeom<span class="sc">::</span><span class="fu">st_startpoint</span>(desire_top))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>toPlace <span class="ot">=</span> <span class="fu">st_sf</span>(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">id =</span> desire_top<span class="sc">$</span>to, <span class="at">geometry =</span> lwgeom<span class="sc">::</span><span class="fu">st_endpoint</span>(desire_top))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="calculating-routes" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="calculating-routes"><span class="header-section-number">3.4</span> Calculating Routes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate driving routes for top desire lines</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>routes_drive_top <span class="ot">=</span> <span class="fu">otp_plan</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">otpcon =</span> otpcon,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fromPlace =</span> fromPlace,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">toPlace =</span> toPlace,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fromID =</span> fromPlace<span class="sc">$</span>id,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">toID =</span> toPlace<span class="sc">$</span>id,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"CAR"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualizing-routes" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="visualizing-routes"><span class="header-section-number">3.5</span> Visualizing Routes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(routes_drive_top) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="route-network-analysis" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Route Network Analysis</h1>
+<p>Route networks aggregate individual routes to show cumulative traffic flow.</p>
+<section id="creating-route-networks" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="creating-route-networks"><span class="header-section-number">4.1</span> Creating Route Networks</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load more comprehensive route data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>routes_drive <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">"https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>routes_transit <span class="ot">=</span> <span class="fu">read_sf</span>(<span class="st">"https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="aggregating-routes" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="aggregating-routes"><span class="header-section-number">4.2</span> Aggregating Routes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create route network by aggregating overlapping routes</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>rnet_drive <span class="ot">=</span> <span class="fu">overline</span>(routes_drive, <span class="st">"drive"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualizing-route-networks" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="visualizing-route-networks"><span class="header-section-number">4.3</span> Visualizing Route Networks</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(rnet_drive) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"drive"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale_intervals</span>(<span class="at">values =</span> <span class="st">"-viridis"</span>, <span class="at">style =</span> <span class="st">"jenks"</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="network-centrality-analysis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Network Centrality Analysis</h1>
+<p>Network centrality measures help identify critical infrastructure.</p>
+<section id="preparing-network-data" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="preparing-network-data"><span class="header-section-number">5.1</span> Preparing Network Data</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download road network data</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>roads <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"Isle of Wight"</span>, <span class="at">extra_tags =</span> <span class="fu">c</span>(<span class="st">"maxspeed"</span>, <span class="st">"oneway"</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for main roads</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>roads <span class="ot">=</span> roads <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(highway)) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"primary"</span>, <span class="st">"secondary"</span>, <span class="st">"tertiary"</span>, <span class="st">"residential"</span>, <span class="st">"unclassified"</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create network graph</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">=</span> <span class="fu">weight_streetnet</span>(roads)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="calculating-centrality" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="calculating-centrality"><span class="header-section-number">5.2</span> Calculating Centrality</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate betweenness centrality</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>centrality <span class="ot">=</span> <span class="fu">dodgr_centrality</span>(graph)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert back to spatial format</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>centrality_sf <span class="ot">=</span> <span class="fu">dodgr_to_sf</span>(centrality)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualizing-centrality" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="visualizing-centrality"><span class="header-section-number">5.3</span> Visualizing Centrality</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(centrality_sf) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"centrality"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale_intervals</span>(<span class="at">values =</span> <span class="st">"-viridis"</span>, <span class="at">style =</span> <span class="st">"fisher"</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">3</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="exercises" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Exercises</h1>
+<section id="exercise-1-basic-routing" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="exercise-1-basic-routing"><span class="header-section-number">6.1</span> Exercise 1: Basic Routing</h2>
+<ol type="1">
+<li>Connect to the OpenTripPlanner server</li>
+<li>Calculate a walking route between two points in Leeds</li>
+<li>Visualize the route on a map</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-2-multi-modal-routing" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="exercise-2-multi-modal-routing"><span class="header-section-number">6.2</span> Exercise 2: Multi-Modal Routing</h2>
+<ol type="1">
+<li>Calculate routes using different modes (walk, transit, bicycle+transit)</li>
+<li>Compare the travel times and distances</li>
+<li>Visualize the different route options</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-3-desire-lines-analysis" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="exercise-3-desire-lines-analysis"><span class="header-section-number">6.3</span> Exercise 3: Desire Lines Analysis</h2>
+<ol type="1">
+<li>Load the desire lines dataset</li>
+<li>Filter for the top 5 desire lines by total trips</li>
+<li>Create a map showing the desire lines colored by mode share</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-4-route-network-creation" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="exercise-4-route-network-creation"><span class="header-section-number">6.4</span> Exercise 4: Route Network Creation</h2>
+<ol type="1">
+<li>Load route data for a specific mode</li>
+<li>Create a route network using <code>overline()</code></li>
+<li>Compare the route network visualization with individual routes</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-5-network-centrality" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="exercise-5-network-centrality"><span class="header-section-number">6.5</span> Exercise 5: Network Centrality</h2>
+<ol type="1">
+<li>Download road network data for a small area</li>
+<li>Calculate betweenness centrality</li>
+<li>Identify the most critical roads in the network</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="further-reading" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Further Reading</h1>
+<ul>
+<li><a href="https://docs.opentripplanner.org/">OpenTripPlanner Documentation</a></li>
+<li><a href="https://urbananalyst.github.io/dodgr/">dodgr Network Analysis</a></li>
+<li><a href="https://docs.ropensci.org/stplanr/">stplanr Transport Analysis</a></li>
+</ul>
+</section>
+<section id="homework" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Homework</h1>
+<ol type="1">
+<li>Experiment with different routing modes and parameters</li>
+<li>Create a route network for your local area</li>
+<li>Analyze network centrality for a transport network</li>
+</ol>
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>© 2025 Robin Lovelace</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -593,7 +957,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

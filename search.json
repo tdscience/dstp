@@ -65,7 +65,147 @@
     "href": "s5.html",
     "title": "Routing and route network analysis",
     "section": "",
-    "text": "Placeholder for session 5 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "This session demonstrates routing and network analysis techniques. By the end of this session, you should be able to:\n\nUnderstand the principles of routing and network analysis\nUse routing services such as OpenTripPlanner for multi-modal routing\nCreate and analyze route networks\nApply network centrality measures\n\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"stplanr\", \"dodgr\", \"opentripplanner\", \"tmap\", \"osmextract\", \"lwgeom\"))\n\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(stplanr)\nlibrary(dodgr)\nlibrary(opentripplanner)\nlibrary(tmap)\nlibrary(osmextract)\nlibrary(lwgeom)\ntmap_mode(\"plot\")"
+  },
+  {
+    "objectID": "s5.html#prerequisites",
+    "href": "s5.html#prerequisites",
+    "title": "Routing and route network analysis",
+    "section": "",
+    "text": "if (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"stplanr\", \"dodgr\", \"opentripplanner\", \"tmap\", \"osmextract\", \"lwgeom\"))\n\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(stplanr)\nlibrary(dodgr)\nlibrary(opentripplanner)\nlibrary(tmap)\nlibrary(osmextract)\nlibrary(lwgeom)\ntmap_mode(\"plot\")"
+  },
+  {
+    "objectID": "s5.html#connecting-to-otp",
+    "href": "s5.html#connecting-to-otp",
+    "title": "Routing and route network analysis",
+    "section": "2.1 Connecting to OTP",
+    "text": "2.1 Connecting to OTP\n\notpcon = otp_connect(\n  hostname = \"otp.robinlovelace.net\",\n  ssl = TRUE,\n  port = 443,\n  router = \"west-yorkshire\"\n)"
+  },
+  {
+    "objectID": "s5.html#basic-routing",
+    "href": "s5.html#basic-routing",
+    "title": "Routing and route network analysis",
+    "section": "2.2 Basic Routing",
+    "text": "2.2 Basic Routing\n\n# Create a simple walking route\nroute_walk = otp_plan(\n  otpcon = otpcon,\n  fromPlace = c(-1.55555, 53.81005), # Longitude, Latitude\n  toPlace = c(-1.54710, 53.79519),\n  mode = \"WALK\"\n)"
+  },
+  {
+    "objectID": "s5.html#multi-modal-routing",
+    "href": "s5.html#multi-modal-routing",
+    "title": "Routing and route network analysis",
+    "section": "2.3 Multi-Modal Routing",
+    "text": "2.3 Multi-Modal Routing\n\n# Public transport route\nroute_transit = otp_plan(\n  otpcon = otpcon,\n  fromPlace = c(-1.55555, 53.81005),\n  toPlace = c(-1.54710, 53.79519),\n  mode = c(\"WALK\", \"TRANSIT\")\n)\n\n# Cycling with public transport\nroute_bike_transit = otp_plan(\n  otpcon = otpcon,\n  fromPlace = c(-1.55555, 53.81005),\n  toPlace = c(-1.54710, 53.79519),\n  mode = c(\"BICYCLE\", \"TRANSIT\")\n)"
+  },
+  {
+    "objectID": "s5.html#loading-od-data",
+    "href": "s5.html#loading-od-data",
+    "title": "Routing and route network analysis",
+    "section": "3.1 Loading OD Data",
+    "text": "3.1 Loading OD Data\n\n# Load desire lines data\ndesire_lines = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_flow.geojson\") |&gt;\n  select(from, to, all, walk, drive, cycle)\n\n# Load zone centroids\ncentroids = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_cents.geojson\")"
+  },
+  {
+    "objectID": "s5.html#visualizing-desire-lines",
+    "href": "s5.html#visualizing-desire-lines",
+    "title": "Routing and route network analysis",
+    "section": "3.2 Visualizing Desire Lines",
+    "text": "3.2 Visualizing Desire Lines\n\ntm_shape(desire_lines) +\n  tm_lines(\n    col = \"all\",\n    lwd = \"all\",\n    lwd.scale = tm_scale_continuous(values.scale = 10),\n    col.scale = tm_scale_continuous(values = \"-viridis\")\n  ) +\n  tm_shape(centroids) +\n  tm_dots(fill = \"red\", size = 0.5)"
+  },
+  {
+    "objectID": "s5.html#extracting-route-endpoints",
+    "href": "s5.html#extracting-route-endpoints",
+    "title": "Routing and route network analysis",
+    "section": "3.3 Extracting Route Endpoints",
+    "text": "3.3 Extracting Route Endpoints\n\n# Get top 3 desire lines\ndesire_top = desire_lines |&gt;\n  slice_max(order_by = all, n = 3)\n\n# Extract start and end points\nfromPlace = st_sf(\n  data.frame(id = desire_top$from, geometry = lwgeom::st_startpoint(desire_top))\n)\ntoPlace = st_sf(\n  data.frame(id = desire_top$to, geometry = lwgeom::st_endpoint(desire_top))\n)"
+  },
+  {
+    "objectID": "s5.html#calculating-routes",
+    "href": "s5.html#calculating-routes",
+    "title": "Routing and route network analysis",
+    "section": "3.4 Calculating Routes",
+    "text": "3.4 Calculating Routes\n\n# Calculate driving routes for top desire lines\nroutes_drive_top = otp_plan(\n  otpcon = otpcon,\n  fromPlace = fromPlace,\n  toPlace = toPlace,\n  fromID = fromPlace$id,\n  toID = toPlace$id,\n  mode = \"CAR\"\n)"
+  },
+  {
+    "objectID": "s5.html#visualizing-routes",
+    "href": "s5.html#visualizing-routes",
+    "title": "Routing and route network analysis",
+    "section": "3.5 Visualizing Routes",
+    "text": "3.5 Visualizing Routes\n\ntm_shape(routes_drive_top) +\n  tm_lines(col = \"blue\", lwd = 3)"
+  },
+  {
+    "objectID": "s5.html#creating-route-networks",
+    "href": "s5.html#creating-route-networks",
+    "title": "Routing and route network analysis",
+    "section": "4.1 Creating Route Networks",
+    "text": "4.1 Creating Route Networks\n\n# Load more comprehensive route data\nroutes_drive = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson\")\nroutes_transit = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson\")"
+  },
+  {
+    "objectID": "s5.html#aggregating-routes",
+    "href": "s5.html#aggregating-routes",
+    "title": "Routing and route network analysis",
+    "section": "4.2 Aggregating Routes",
+    "text": "4.2 Aggregating Routes\n\n# Create route network by aggregating overlapping routes\nrnet_drive = overline(routes_drive, \"drive\")"
+  },
+  {
+    "objectID": "s5.html#visualizing-route-networks",
+    "href": "s5.html#visualizing-route-networks",
+    "title": "Routing and route network analysis",
+    "section": "4.3 Visualizing Route Networks",
+    "text": "4.3 Visualizing Route Networks\n\ntm_shape(rnet_drive) +\n  tm_lines(\n    col = \"drive\",\n    col.scale = tm_scale_intervals(values = \"-viridis\", style = \"jenks\"),\n    lwd = 2\n  )"
+  },
+  {
+    "objectID": "s5.html#preparing-network-data",
+    "href": "s5.html#preparing-network-data",
+    "title": "Routing and route network analysis",
+    "section": "5.1 Preparing Network Data",
+    "text": "5.1 Preparing Network Data\n\n# Download road network data\nroads = oe_get(\"Isle of Wight\", extra_tags = c(\"maxspeed\", \"oneway\"))\n\n# Filter for main roads\nroads = roads |&gt;\n  filter(!is.na(highway)) |&gt;\n  filter(highway %in% c(\"primary\", \"secondary\", \"tertiary\", \"residential\", \"unclassified\"))\n\n# Create network graph\ngraph = weight_streetnet(roads)"
+  },
+  {
+    "objectID": "s5.html#calculating-centrality",
+    "href": "s5.html#calculating-centrality",
+    "title": "Routing and route network analysis",
+    "section": "5.2 Calculating Centrality",
+    "text": "5.2 Calculating Centrality\n\n# Calculate betweenness centrality\ncentrality = dodgr_centrality(graph)\n\n# Convert back to spatial format\ncentrality_sf = dodgr_to_sf(centrality)"
+  },
+  {
+    "objectID": "s5.html#visualizing-centrality",
+    "href": "s5.html#visualizing-centrality",
+    "title": "Routing and route network analysis",
+    "section": "5.3 Visualizing Centrality",
+    "text": "5.3 Visualizing Centrality\n\ntm_shape(centrality_sf) +\n  tm_lines(\n    col = \"centrality\",\n    col.scale = tm_scale_intervals(values = \"-viridis\", style = \"fisher\"),\n    lwd = 3\n  )"
+  },
+  {
+    "objectID": "s5.html#exercise-1-basic-routing",
+    "href": "s5.html#exercise-1-basic-routing",
+    "title": "Routing and route network analysis",
+    "section": "6.1 Exercise 1: Basic Routing",
+    "text": "6.1 Exercise 1: Basic Routing\n\nConnect to the OpenTripPlanner server\nCalculate a walking route between two points in Leeds\nVisualize the route on a map\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s5.html#exercise-2-multi-modal-routing",
+    "href": "s5.html#exercise-2-multi-modal-routing",
+    "title": "Routing and route network analysis",
+    "section": "6.2 Exercise 2: Multi-Modal Routing",
+    "text": "6.2 Exercise 2: Multi-Modal Routing\n\nCalculate routes using different modes (walk, transit, bicycle+transit)\nCompare the travel times and distances\nVisualize the different route options\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s5.html#exercise-3-desire-lines-analysis",
+    "href": "s5.html#exercise-3-desire-lines-analysis",
+    "title": "Routing and route network analysis",
+    "section": "6.3 Exercise 3: Desire Lines Analysis",
+    "text": "6.3 Exercise 3: Desire Lines Analysis\n\nLoad the desire lines dataset\nFilter for the top 5 desire lines by total trips\nCreate a map showing the desire lines colored by mode share\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s5.html#exercise-4-route-network-creation",
+    "href": "s5.html#exercise-4-route-network-creation",
+    "title": "Routing and route network analysis",
+    "section": "6.4 Exercise 4: Route Network Creation",
+    "text": "6.4 Exercise 4: Route Network Creation\n\nLoad route data for a specific mode\nCreate a route network using overline()\nCompare the route network visualization with individual routes\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s5.html#exercise-5-network-centrality",
+    "href": "s5.html#exercise-5-network-centrality",
+    "title": "Routing and route network analysis",
+    "section": "6.5 Exercise 5: Network Centrality",
+    "text": "6.5 Exercise 5: Network Centrality\n\nDownload road network data for a small area\nCalculate betweenness centrality\nIdentify the most critical roads in the network\n\n\n# Your code here"
   },
   {
     "objectID": "s6.html",

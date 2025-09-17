@@ -144,12 +144,17 @@ gcloud compute instances create-with-container routing-vm \
 
 3.  **Create a Firewall Rule:**
 ```bash
-gcloud compute firewall-rules create allow-http \
-  --allow tcp:80 \
+gcloud compute firewall-rules create allow-otp \
+  --allow tcp:8080 \
   --source-ranges=0.0.0.0/0 \
   --target-tags=allow-http-traffic
 ```
-*Note: The `create-with-container` command maps the container's port (8080) to the VM's port 80 by default.*
+
+To update the firewall rule later (if needed):
+
+```bash
+gcloud compute firewall-rules update allow-otp --allow tcp:8080
+```
 
 ---
 
@@ -164,7 +169,13 @@ echo "Server IP: $EXTERNAL_IP"
 2.  **Test the API:**
 Wait a minute for the VM to boot and the container to start, then run:
 ```bash
-curl "http://$EXTERNAL_IP/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+curl "http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
+
+You can also see an interactive map by navigating to:
+
+```
+curl "http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan"
 ```
 
 3.  **View Logs:**
@@ -175,13 +186,54 @@ gcloud logging read "resource.type=gce_instance AND resource.labels.instance_id=
 
 ---
 
+Connect to the VM via SSH (if needed):
+
+```bash
+gcloud compute ssh routing-vm --zone=europe-west2-a
+```
+
+Debug with:
+
+```bash
+# Check it's running
+docker image ls
+docker ps
+# Check endpoint:
+curl "http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
+
+```sh
+gcloud compute firewall-rules list --filter="name=allow-otp" --format="table(name,allowed,targetTags)"
+# NAME        ALLOWED                                     TARGET_TAGS
+# allow-otp   [{'IPProtocol': 'tcp', 'ports': ['8080']}]  ['allow-http-traffic']
+```
+
+Update firewall rules (if needed)
+
+Test the network connectivity on local machine:
+
+```sh
+nc -zv $EXTERNAL_IP 8080
+# If nc -zv 34.39.7.234 8080  # Or telnet 34.39.7.234 8080 -- should say "Connected"
+# nc: connect to 34.39.7.234 port 8080 (tcp) failed: Connection refused:
+# If connection refused, check firewall rules and VM status
+```
+
+Firewall checks on remote
+
+```sh
+# On VM (via SSH)
+sudo iptables -L -n | grep 8080  # Should be empty or ACCEPT for port 8080
+sudo ufw status  # If UFW is enabled, it might block; disable if needed: sudo ufw disable
+```
+
 ### Step 5: Cleanup
 
 To avoid ongoing charges, delete the resources when you are finished.
 
 ```bash
 gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet
-gcloud compute firewall-rules delete allow-http --quiet
+gcloud compute firewall-rules delete allow-otp --quiet
 gcloud iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com --quiet
 # Optional: delete the Artifact Registry repository and image
 gcloud artifacts repositories delete routing-engine --location=europe-west2 --quiet

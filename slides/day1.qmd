@@ -53,10 +53,10 @@ The following will help:
 ## Housekeeping II
 
 -   **Fire Alarm**
-    -   If the alarm sounds, leave the building via the 3 fire exits on the ground floor.
-    -   The assembly point is the grassed area to the side of ITS building.
+    -   If the alarm sounds, leave the building via the ground floor.
+    -   The assembly point is the grassed area outside
 -   **Use of Extension Leads & Adapters**
-    -   The use of cube adapters is strictly prohibited at the University of Leeds.
+    -   Cube adapters are prohibited.
     -   International chargers are advised against.
     -   Alternative plugs can be logged/loaned out from the Facilities Office.
 
@@ -124,12 +124,16 @@ osm_network |>
 
 ## About us
 
-### Robin Lovelace
+![](images/paste-9.png) ![](images/paste-8.png) ![](images/paste-10.png)
+
+```{=html}
+<!-- ### Robin Lovelace
 
 -   Professor of Transport Data Science
 -   Focus: influencing decision-making, to make it more evidence-based
 -   R package developer and data scientist
--   New methods for more reproducible, data-driven and participatory transport planning
+-   New methods for more reproducible, data-driven and participatory transport planning -->
+```
 
 ## About you
 

@@ -1,6 +1,303 @@
 ---
 title: "Routing and route network analysis"
-pagetitle: "Session 5"
+execute: 
+  eval: false
 ---
 
-Placeholder for session 5 content.
+# Introduction
+
+This session demonstrates routing and network analysis techniques. By the end of this session, you should be able to:
+
+- Understand the principles of routing and network analysis
+- Use routing services such as OpenTripPlanner for multi-modal routing
+- Create and analyze route networks
+- Apply network centrality measures
+
+## Prerequisites
+
+```{r}
+#| eval: false
+if (!require("pak")) install.packages("pak")
+pak::pkg_install(c("sf", "tidyverse", "stplanr", "dodgr", "opentripplanner", "tmap", "osmextract", "lwgeom"))
+```
+
+```{r}
+library(sf)
+library(tidyverse)
+library(stplanr)
+library(dodgr)
+library(opentripplanner)
+library(tmap)
+library(osmextract)
+library(lwgeom)
+tmap_mode("plot")
+```
+
+# OpenTripPlanner Routing
+
+OpenTripPlanner (OTP) is a powerful open-source routing engine that supports multi-modal transportation planning.
+
+## Connecting to OTP
+
+```{r}
+#| eval: false
+otpcon = otp_connect(
+  hostname = "otp.robinlovelace.net",
+  ssl = TRUE,
+  port = 443,
+  router = "west-yorkshire"
+)
+```
+
+## Basic Routing
+
+```{r}
+#| eval: false
+# Create a simple walking route
+route_walk = otp_plan(
+  otpcon = otpcon,
+  fromPlace = c(-1.55555, 53.81005), # Longitude, Latitude
+  toPlace = c(-1.54710, 53.79519),
+  mode = "WALK"
+)
+```
+
+## Multi-Modal Routing
+
+```{r}
+#| eval: false
+# Public transport route
+route_transit = otp_plan(
+  otpcon = otpcon,
+  fromPlace = c(-1.55555, 53.81005),
+  toPlace = c(-1.54710, 53.79519),
+  mode = c("WALK", "TRANSIT")
+)
+
+# Cycling with public transport
+route_bike_transit = otp_plan(
+  otpcon = otpcon,
+  fromPlace = c(-1.55555, 53.81005),
+  toPlace = c(-1.54710, 53.79519),
+  mode = c("BICYCLE", "TRANSIT")
+)
+```
+
+# Working with Desire Lines
+
+Desire lines represent travel demand between origin-destination pairs.
+
+## Loading OD Data
+
+```{r}
+# Load desire lines data
+desire_lines = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_flow.geojson") |>
+  select(from, to, all, walk, drive, cycle)
+
+# Load zone centroids
+centroids = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_cents.geojson")
+```
+
+## Visualizing Desire Lines
+
+```{r}
+tm_shape(desire_lines) +
+  tm_lines(
+    col = "all",
+    lwd = "all",
+    lwd.scale = tm_scale_continuous(values.scale = 10),
+    col.scale = tm_scale_continuous(values = "-viridis")
+  ) +
+  tm_shape(centroids) +
+  tm_dots(fill = "red", size = 0.5)
+```
+
+## Extracting Route Endpoints
+
+```{r}
+# Get top 3 desire lines
+desire_top = desire_lines |>
+  slice_max(order_by = all, n = 3)
+
+# Extract start and end points
+fromPlace = st_sf(
+  data.frame(id = desire_top$from, geometry = lwgeom::st_startpoint(desire_top))
+)
+toPlace = st_sf(
+  data.frame(id = desire_top$to, geometry = lwgeom::st_endpoint(desire_top))
+)
+```
+
+## Calculating Routes
+
+```{r}
+#| eval: false
+# Calculate driving routes for top desire lines
+routes_drive_top = otp_plan(
+  otpcon = otpcon,
+  fromPlace = fromPlace,
+  toPlace = toPlace,
+  fromID = fromPlace$id,
+  toID = toPlace$id,
+  mode = "CAR"
+)
+```
+
+```{r}
+#| echo: false
+# Load pre-calculated routes
+routes_drive_top = readRDS(url("https://github.com/ITSLeeds/TDS/releases/download/23/routes_drive_top.Rds"))
+```
+
+## Visualizing Routes
+
+```{r}
+tm_shape(routes_drive_top) +
+  tm_lines(col = "blue", lwd = 3)
+```
+
+# Route Network Analysis
+
+Route networks aggregate individual routes to show cumulative traffic flow.
+
+## Creating Route Networks
+
+```{r}
+#| eval: false
+# Load more comprehensive route data
+routes_drive = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson")
+routes_transit = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson")
+```
+
+```{r}
+#| echo: false
+# Load pre-calculated data for demonstration
+routes_drive = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson")
+```
+
+## Aggregating Routes
+
+```{r}
+# Create route network by aggregating overlapping routes
+rnet_drive = overline(routes_drive, "drive")
+```
+
+## Visualizing Route Networks
+
+```{r}
+tm_shape(rnet_drive) +
+  tm_lines(
+    col = "drive",
+    col.scale = tm_scale_intervals(values = "-viridis", style = "jenks"),
+    lwd = 2
+  )
+```
+
+# Network Centrality Analysis
+
+Network centrality measures help identify critical infrastructure.
+
+## Preparing Network Data
+
+```{r}
+# Download road network data
+roads = oe_get("Isle of Wight", extra_tags = c("maxspeed", "oneway"))
+
+# Filter for main roads
+roads = roads |>
+  filter(!is.na(highway)) |>
+  filter(highway %in% c("primary", "secondary", "tertiary", "residential", "unclassified"))
+
+# Create network graph
+graph = weight_streetnet(roads)
+```
+
+## Calculating Centrality
+
+```{r}
+# Calculate betweenness centrality
+centrality = dodgr_centrality(graph)
+
+# Convert back to spatial format
+centrality_sf = dodgr_to_sf(centrality)
+```
+
+## Visualizing Centrality
+
+```{r}
+tm_shape(centrality_sf) +
+  tm_lines(
+    col = "centrality",
+    col.scale = tm_scale_intervals(values = "-viridis", style = "fisher"),
+    lwd = 3
+  )
+```
+
+# Exercises
+
+## Exercise 1: Basic Routing
+
+1. Connect to the OpenTripPlanner server
+2. Calculate a walking route between two points in Leeds
+3. Visualize the route on a map
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+## Exercise 2: Multi-Modal Routing
+
+1. Calculate routes using different modes (walk, transit, bicycle+transit)
+2. Compare the travel times and distances
+3. Visualize the different route options
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+## Exercise 3: Desire Lines Analysis
+
+1. Load the desire lines dataset
+2. Filter for the top 5 desire lines by total trips
+3. Create a map showing the desire lines colored by mode share
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+## Exercise 4: Route Network Creation
+
+1. Load route data for a specific mode
+2. Create a route network using `overline()`
+3. Compare the route network visualization with individual routes
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+## Exercise 5: Network Centrality
+
+1. Download road network data for a small area
+2. Calculate betweenness centrality
+3. Identify the most critical roads in the network
+
+```{r}
+#| eval: false
+# Your code here
+```
+
+# Further Reading
+
+- [OpenTripPlanner Documentation](https://docs.opentripplanner.org/)
+- [dodgr Network Analysis](https://urbananalyst.github.io/dodgr/)
+- [stplanr Transport Analysis](https://docs.ropensci.org/stplanr/)
+
+# Homework
+
+1. Experiment with different routing modes and parameters
+2. Create a route network for your local area
+3. Analyze network centrality for a transport network

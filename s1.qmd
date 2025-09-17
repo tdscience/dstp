@@ -96,6 +96,23 @@ west_yorkshire_cycleways = oe_get(
 plot(st_geometry(west_yorkshire_cycleways))
 ```
 
+You might also be interested in other spatial data in West Yorkshire. For example, you can use the following code to extract amenities in the region:
+
+```{r}
+#| eval: false
+library(osmextract)
+# Download amenities in West Yorkshire
+west_yorkshire_amenities = oe_get(
+  layer = "points", # We want the point location
+  place = "West Yorkshire",
+  extra_tags = c("amenity") 
+)
+plot(st_geometry(west_yorkshire_amenities))
+
+west_yorkshire_amenities$amenity |> table()
+```
+
+
 ## Road Traffic Casualty Data (STATS19)
 
 The UK's road traffic casualty data is available through the `stats19` package. This provides data on collisions, casualties, and vehicles.

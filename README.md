@@ -16,7 +16,8 @@ This course teaches modern data science skills tailored for transport planning, 
 
 - Basic knowledge of transport planning concepts and datasets
 - Familiarity with programming in R or Python
-- A laptop with R/RStudio or Python/Anaconda installed
+- A laptop with R (essential), Python (optional) and a data science IDE such as RStudio (recommended), VS Code or Positron installed
+- A GitHub account (a GitHub account should allow you to run the code in the cloud via GitHub Codespaces as a fallback if needed)
 
 See the [prerequisites page](prerequisites.qmd) for detailed setup instructions.
 

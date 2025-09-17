@@ -444,9 +444,47 @@ Professor Robin Lovelace
 </div>
 </div>
 </section>
+<section>
+<section id="practical-session-0" class="title-slide slide level1 center">
+<h1>Practical session 0</h1>
+
+</section>
+<section id="setting-up-your-project" class="slide level2">
+<h2>Setting-up your project</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="creating-a-new-project-folderrepo">Creating a new project folder/repo</h3>
+<p>Option 1: Create an empty folder on your computer (beginner level)</p>
+<ul>
+<li>Via Windows Explore or other GUI</li>
+<li>Via command line (e.g., <code>mkdir dstp-rl</code>, but replace ‘rl’ with your initials)</li>
+<li>Via RStudio or VS Code</li>
+</ul>
+<p>Option 2: Create a new repository on GitHub (more advanced, recommended)</p>
+<ul>
+<li>Via GitHub Desktop (beginner level)</li>
+<li>Via <code>gh</code> command line tool (more advanced, recommended)</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">gh</span> repo create dstp-rl <span class="at">--public</span> <span class="at">--clone</span> <span class="co"># replace 'rl' with your initials</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<section id="opening-your-project" class="slide level2">
+<h2>Opening your project</h2>
+<p>Option 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu</p>
+<p>Option 2 (RStudio - recommended): Open the folder you created in RStudio using the <code>rstudioapi</code> package, e.g.&nbsp;with the following command in R Console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>rstudioapi<span class="sc">::</span><span class="fu">openProject</span>(<span class="st">"C:/path/to/your/folder/dstp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Option 3: (VS Code): Open the folder you created in VS Code using the File &gt; Open Folder menu</p>
+<p>Option 4 (VS Code - recommended):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">code</span> path/to/your/folder/dstp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div></div>
+</section>
+<section id="minimise-context-switching" class="slide level2">
+<h2>Minimise context switching</h2>
+
+<img data-src="images/paste-11.png" class="r-stretch"></section>
 <section id="any-questions-before-we-move-to-the-first-practical-session" class="slide level2">
 <h2>Any questions before we move to the first practical session?</h2>
-</section>
+</section></section>
 <section>
 <section id="session-1-see-session-1-workbook" class="title-slide slide level1 center">
 <h1>Session 1 (see <a href="../s1.html">Session 1 workbook</a>)</h1>

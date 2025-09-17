@@ -44,7 +44,7 @@
     "href": "prerequisites.html#testing-your-setup",
     "title": "Prerequisites",
     "section": "4 Testing your setup",
-    "text": "4 Testing your setup\nYou can test your setup by running the following code in R or Python.\n\nRPython\n\n\n\noptions(repos = c(CRAN = \"https://cloud.r-project.org\"))\nif (!require(\"pak\")) install.packages(\"pak\")\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"tmap\",\n    \"stats19\",\n    \"stplanr\",\n    \"osmextract\",\n    \"zonebuilder\"\n)\npkgs_to_install = pkgs[!pkgs %in% installed.packages()[, \"Package\"]]\nif (length(pkgs_to_install) &gt; 0) {\n  pak::pak(pkgs_to_install)\n}\nlibrary(tidyverse)\nzones = zonebuilder::zb_zone(\"Leeds\", n_circles = 3)\nstudy_area = zones |&gt;\n  sf::st_union()\nextra_tags = c(\n  \"maxspeed\",\n  \"lit\",\n  \"cycleway\"\n)\nosm_network = osmextract::oe_get(\n  place = \"Leeds, UK\",\n  boundary = study_area,\n  boundary_type = \"clipsrc\",\n  extra_tags = extra_tags\n)\n\n\nosm_network |&gt;\n  select(maxspeed) |&gt;\n  plot()\n\n\n\n\n\n\n\nsf::write_sf(study_area, \"leeds_study_area.geojson\")\n\n\n\n\nimport osmnx as ox\nimport geopandas as gpd\nimport matplotlib.pyplot as plt\nimport shapely\n\nstudy_point = shapely.Point(-1.55, 53.80)  # Latitude and Longitude for Leeds\nstudy_geom = gpd.GeoSeries([study_point], crs=4326)\nstudy_polygon = study_geom.to_crs(epsg=3857).buffer(6000).to_crs(epsg=4326).unary_union\nstudy_polygon_gpd = gpd.GeoDataFrame(geometry=[study_polygon], crs=\"EPSG:4326\")\n# Read-in geojson already saved from R\nstudy_polygon = gpd.read_file(\"leeds_study_area.geojson\")\n# study_polygon_gpd.explore()\ntags = {\"highway\": True, \"maxspeed\": True, \"lit\": True, \"cycleway\": True}\ngdf = ox.features_from_polygon(study_polygon, tags)\ngdf = gdf[gdf.geom_type.isin([\"LineString\", \"MultiLineString\"])]\ngdf = gdf.to_crs(epsg=3857)\ngdf.plot(column=\"maxspeed\", figsize=(10, 10), legend=True)\nplt.show()\n\n\n\n\nLet us know how you get on and let us know if you have any issues getting set up, either by email, or (preferably) via the Discussion forum on GitHub associated with this course repository at github.com/tdscience/dstp/discussions.",
+    "text": "4 Testing your setup\nYou can test your setup by running the following code in R or Python.\n\nRPython\n\n\n\noptions(repos = c(CRAN = \"https://cloud.r-project.org\"))\nif (!require(\"pak\")) install.packages(\"pak\")\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"tmap\",\n    \"stats19\",\n    \"stplanr\",\n    \"osmextract\",\n    \"zonebuilder\"\n)\npak::pak(pkgs)\nlibrary(tidyverse)\nzones = zonebuilder::zb_zone(\"Leeds\", n_circles = 3)\nstudy_area = zones |&gt;\n  sf::st_union()\nextra_tags = c(\n  \"maxspeed\",\n  \"lit\",\n  \"cycleway\"\n)\nosm_network = osmextract::oe_get(\n  place = \"Leeds, UK\",\n  boundary = study_area,\n  boundary_type = \"clipsrc\",\n  extra_tags = extra_tags\n)\n\n\nosm_network |&gt;\n  select(maxspeed) |&gt;\n  plot()\n\n\n\n\n\n\n\nsf::write_sf(study_area, \"leeds_study_area.geojson\")\n\n\n\n\nimport osmnx as ox\nimport geopandas as gpd\nimport matplotlib.pyplot as plt\nimport shapely\n\nstudy_point = shapely.Point(-1.55, 53.80)  # Latitude and Longitude for Leeds\nstudy_geom = gpd.GeoSeries([study_point], crs=4326)\nstudy_polygon = study_geom.to_crs(epsg=3857).buffer(6000).to_crs(epsg=4326).unary_union\nstudy_polygon_gpd = gpd.GeoDataFrame(geometry=[study_polygon], crs=\"EPSG:4326\")\n# Read-in geojson already saved from R\nstudy_polygon = gpd.read_file(\"leeds_study_area.geojson\")\n# study_polygon_gpd.explore()\ntags = {\"highway\": True, \"maxspeed\": True, \"lit\": True, \"cycleway\": True}\ngdf = ox.features_from_polygon(study_polygon, tags)\ngdf = gdf[gdf.geom_type.isin([\"LineString\", \"MultiLineString\"])]\ngdf = gdf.to_crs(epsg=3857)\ngdf.plot(column=\"maxspeed\", figsize=(10, 10), legend=True)\nplt.show()\n\n\n\n\nLet us know how you get on and let us know if you have any issues getting set up, either by email, or (preferably) via the Discussion forum on GitHub associated with this course repository at github.com/tdscience/dstp/discussions.",
     "crumbs": [
       "Prerequisites"
     ]
@@ -563,7 +563,14 @@
     "href": "slides/day1.html#housekeeping",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Housekeeping",
-    "text": "Housekeeping\n\nConnect to the UoL-Guest Wi-Fi network and enter your details.\nGitHub account sign-up if not done already.\nR and RStudio installation check, locally or in cloud environment.\nCoffee and lunch: in the social space just outside this room\nToilets: Along the corridor and then left"
+    "text": "Housekeeping\n\nConnect to the UoL-Guest Wi-Fi network and enter your details.\nGitHub account sign-up if not done already.\nCoffee and lunch: in the social space just outside this room\nToilets\n\nGents toilets can be found on first and ground floors.\nLadies toilets on the middle and far staircases and ground floor.\nAccessible toilet facilities including a gender neutral toilet, are available on the lower ground floor."
+  },
+  {
+    "objectID": "slides/day1.html#housekeeping-ii",
+    "href": "slides/day1.html#housekeeping-ii",
+    "title": "Data Science for Transport Planning: Day 1",
+    "section": "Housekeeping II",
+    "text": "Housekeeping II\n\nFire Alarm\n\nIf the alarm sounds, leave the building via the 3 fire exits on the ground floor.\nThe assembly point is the grassed area to the side of ITS building.\n\nUse of Extension Leads & Adapters\n\nThe use of cube adapters is strictly prohibited at the University of Leeds.\nInternational chargers are advised against.\nAlternative plugs can be logged/loaned out from the Facilities Office."
   },
   {
     "objectID": "slides/day1.html#wifi",
@@ -577,7 +584,7 @@
     "href": "slides/day1.html#setup-check",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Setup check",
-    "text": "Setup check\nTo check you have the necessary software installed, try running the following code.\n\npkgs = c(\"tidyverse\", \"stats19\")\nif (!requireNamespace(\"pak\", quietly = TRUE)) install.packages(\"pak\")\npak::pkg_install(pkgs)\n\nYou should be able to generate the map on the next slide."
+    "text": "Setup check\nTo check you have the necessary software installed, try running the following code.\n\noptions(repos = c(CRAN = \"https://cloud.r-project.org\"))\nif (!require(\"pak\")) install.packages(\"pak\")\nif (!require(\"pak\")) install.packages(\"pak\")\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"tmap\",\n    \"stats19\",\n    \"stplanr\",\n    \"osmextract\",\n    \"zonebuilder\"\n)\npak::pak(pkgs)\n\nYou should be able to generate the map on the next slide."
   },
   {
     "objectID": "slides/day1.html#setup-check-the-result",
@@ -598,21 +605,21 @@
     "href": "slides/day1.html#about-you",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "About you",
-    "text": "About you\n\nName\nWhat tools you currently use for research\nWhere you’re from\nWhat’s your favourite animal\nA random fact about you\n\nMe\n\nCurrently using VS Code, Quarto, R, Google Gemini etc, Devcontainers\nFrom Herefordshire, UK\nFavourite animal: Red kite\nRandom fact: I run 5 km every Saturday with double buggy\n\nOver to you"
+    "text": "About you\n\nName\nWhat tools you currently use for research\nWhere you’re from\nA random fact about you\n\nMe\n\nCurrently using VS Code, Quarto, R, Google Gemini etc, Devcontainers\nFrom Herefordshire, UK, work at the University of Leeds\n\nRandom fact: I run 5 km every Saturday with double buggy\n\nOver to you"
   },
   {
     "objectID": "slides/day1.html#the-origins-of-the-course",
     "href": "slides/day1.html#the-origins-of-the-course",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "The origins of the course",
-    "text": "The origins of the course\n“If only I was told this earlier in my career”\nImagine a workflow that enabled:\n\nFewer context switches\nMore focus on the content and not style of the work\nIntegration of code into your research manuscript\nAutomatic generation of results, including figures and tables…\n\nThat change seamlessly when input datasets or code changes\n\nControl over how you export and publish your work\n\nIncluding publication-quality PDFs, website, blogs, slides\n\nFull reproducibility\nYou to share your work for maximum benefit to others"
+    "text": "The origins of the course\n“If only I was told this earlier in my career”\nImagine a workflow that enabled:\n\nFewer context switches\nMore focus on the content and not style of the work\nIntegration of code into your research manuscript\nAutomatic generation of results that update when the data change\nControl over how you export and publish your work 😎\nFull reproducibility and control for maximum benefit 🚀"
   },
   {
-    "objectID": "slides/day1.html#reproducible-research",
-    "href": "slides/day1.html#reproducible-research",
+    "objectID": "slides/day1.html#reproducible-workflows",
+    "href": "slides/day1.html#reproducible-workflows",
     "title": "Data Science for Transport Planning: Day 1",
-    "section": "Reproducible research",
-    "text": "Reproducible research\n“Research is considered to be reproducible when the exact results can be reproduced if given access to the original data, software, or code.” Source: displayr.com"
+    "section": "Reproducible workflows",
+    "text": "Reproducible workflows\n“Research is considered to be reproducible when the exact results can be reproduced if given access to the original data, software, or code.” Source: displayr.com"
   },
   {
     "objectID": "slides/day1.html#stages-of-open-and-reproducible-science",
@@ -641,6 +648,13 @@
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Course principles",
     "text": "Course principles\n\n“Learn by doing”\n“Learn by teaching”\n“Learn from each other”\n“We’re all learning”\n“Growth mindset”\n“Can-do” and “Go for It” attitude\n“Every error is a learning opportunity”\n“No such thing as a bad question”\n“Fail fast”\nBalance between focused work and comms\nBring you own principles (BYOP)"
+  },
+  {
+    "objectID": "slides/day1.html#computational-infrastructure",
+    "href": "slides/day1.html#computational-infrastructure",
+    "title": "Data Science for Transport Planning: Day 1",
+    "section": "Computational infrastructure",
+    "text": "Computational infrastructure\nSource: “Dependency” by Randall Munroe: xkcd.com/2347/"
   },
   {
     "objectID": "slides/day1.html#the-practical-sessions",

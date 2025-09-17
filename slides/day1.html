@@ -269,9 +269,29 @@ Professor Robin Lovelace
 <ul>
 <li>Connect to the UoL-Guest Wi-Fi network and enter your details.</li>
 <li>GitHub account sign-up if not done already.</li>
-<li>R and RStudio installation check, locally or in cloud environment.</li>
 <li>Coffee and lunch: in the social space just outside this room</li>
-<li>Toilets: Along the corridor and then left</li>
+<li><strong>Toilets</strong>
+<ul>
+<li>Gents toilets can be found on first and ground floors.</li>
+<li>Ladies toilets on the middle and far staircases and ground floor.</li>
+<li>Accessible toilet facilities including a gender neutral toilet, are available on the lower ground floor.</li>
+</ul></li>
+</ul>
+</section>
+<section id="housekeeping-ii" class="slide level2">
+<h2>Housekeeping II</h2>
+<ul>
+<li><strong>Fire Alarm</strong>
+<ul>
+<li>If the alarm sounds, leave the building via the 3 fire exits on the ground floor.</li>
+<li>The assembly point is the grassed area to the side of ITS building.</li>
+</ul></li>
+<li><strong>Use of Extension Leads &amp; Adapters</strong>
+<ul>
+<li>The use of cube adapters is strictly prohibited at the University of Leeds.</li>
+<li>International chargers are advised against.</li>
+<li>Alternative plugs can be logged/loaned out from the Facilities Office.</li>
+</ul></li>
 </ul>
 </section>
 <section id="wifi" class="slide level2">
@@ -282,9 +302,19 @@ Professor Robin Lovelace
 <h2>Setup check</h2>
 <p>To check you have the necessary software installed, try running the following code.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"stats19"</span>)</span>
-<span id="cb1-2"><a></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pak"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"pak"</span>)</span>
-<span id="cb1-3"><a></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(pkgs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="fu">c</span>(<span class="at">CRAN =</span> <span class="st">"https://cloud.r-project.org"</span>))</span>
+<span id="cb1-2"><a></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pak"</span>)) <span class="fu">install.packages</span>(<span class="st">"pak"</span>)</span>
+<span id="cb1-3"><a></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pak"</span>)) <span class="fu">install.packages</span>(<span class="st">"pak"</span>)</span>
+<span id="cb1-4"><a></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb1-5"><a></a>    <span class="st">"sf"</span>,</span>
+<span id="cb1-6"><a></a>    <span class="st">"tidyverse"</span>,</span>
+<span id="cb1-7"><a></a>    <span class="st">"tmap"</span>,</span>
+<span id="cb1-8"><a></a>    <span class="st">"stats19"</span>,</span>
+<span id="cb1-9"><a></a>    <span class="st">"stplanr"</span>,</span>
+<span id="cb1-10"><a></a>    <span class="st">"osmextract"</span>,</span>
+<span id="cb1-11"><a></a>    <span class="st">"zonebuilder"</span></span>
+<span id="cb1-12"><a></a>)</span>
+<span id="cb1-13"><a></a>pak<span class="sc">::</span><span class="fu">pak</span>(pkgs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You should be able to generate the map on the next slide.</p>
 </section>
@@ -308,14 +338,13 @@ Professor Robin Lovelace
 <li class="fragment">Name</li>
 <li class="fragment">What tools you currently use for research</li>
 <li class="fragment">Where you’re from</li>
-<li class="fragment">What’s your favourite animal</li>
 <li class="fragment">A random fact about you</li>
 </ul>
 <h3 id="me">Me</h3>
 <ul>
 <li class="fragment">Currently using VS Code, Quarto, R, Google Gemini etc, Devcontainers</li>
-<li class="fragment">From Herefordshire, UK</li>
-<li class="fragment">Favourite animal: Red kite</li>
+<li class="fragment">From Herefordshire, UK, work at the University of Leeds<br>
+</li>
 <li class="fragment">Random fact: I run 5 km every Saturday with double buggy</li>
 </ul>
 <h3 id="over-to-you">Over to you</h3>
@@ -325,23 +354,16 @@ Professor Robin Lovelace
 <h3 id="if-only-i-was-told-this-earlier-in-my-career">“If only I was told this earlier in my career”</h3>
 <p>Imagine a workflow that enabled:</p>
 <ul>
-<li>Fewer context switches</li>
-<li>More focus on <em>the content</em> and not style of the work</li>
-<li>Integration of code into your research manuscript</li>
-<li>Automatic generation of results, including figures and tables…
-<ul>
-<li>That change seamlessly when input datasets or code changes</li>
-</ul></li>
-<li>Control over how you export and publish your work
-<ul>
-<li>Including publication-quality PDFs, website, blogs, slides</li>
-</ul></li>
-<li>Full reproducibility</li>
-<li>You to share your work for maximum benefit to others</li>
+<li class="fragment">Fewer context switches</li>
+<li class="fragment">More focus on <em>the content</em> and not style of the work</li>
+<li class="fragment">Integration of code into your research manuscript</li>
+<li class="fragment">Automatic generation of results that update when the data change</li>
+<li class="fragment">Control over how you export and publish your work 😎</li>
+<li class="fragment">Full reproducibility and control for maximum benefit 🚀</li>
 </ul>
 </section>
-<section id="reproducible-research" class="slide level2">
-<h2>Reproducible research</h2>
+<section id="reproducible-workflows" class="slide level2">
+<h2>Reproducible workflows</h2>
 <p>“Research is considered to be reproducible when the exact results can be reproduced if given access to the original data, software, or code.” Source: <a href="https://www.displayr.com/what-is-reproducible-research/">displayr.com</a></p>
 
 <img data-src="images/paste-3.png" class="r-stretch"></section>
@@ -386,6 +408,11 @@ Professor Robin Lovelace
 <li class="fragment">Bring you own principles (BYOP)</li>
 </ul>
 </section>
+<section id="computational-infrastructure" class="slide level2">
+<h2>Computational infrastructure</h2>
+<p>Source: “Dependency” by Randall Munroe: <a href="https://xkcd.com/2347/">xkcd.com/2347/</a></p>
+
+<img data-src="images/paste-7.png" class="r-stretch"></section>
 <section id="the-practical-sessions" class="slide level2">
 <h2>The practical sessions</h2>
 <ul>

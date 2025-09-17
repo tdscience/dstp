@@ -189,118 +189,32 @@
     "text": "Placeholder for session 7 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
+    "objectID": "s2.html",
+    "href": "s2.html",
+    "title": "Origin-destination data analysis",
     "section": "",
-    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
-    "crumbs": [
-      "Schedule"
-    ]
+    "text": "Origin-destination (OD) data forms the backbone of transportation planning, urban analytics, and spatial mobility research. This type of data captures movement patterns between geographic locations, revealing how people, goods, or services flow through space. Understanding OD data is crucial for making informed decisions such as infrastructure development and public transport planning.\nIn this session, we will how to use and analyse geographic and origin-destination data. It includes:\n\nA short lecture on geographic and origin-destination data (see slides)\nHands-on analysis: Working with various geographic and OD datasets\n\n\n\nYou need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python\n\n\n\n\nWe will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()\n\n\n\n\n\n\n\nLoad the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
   },
   {
-    "objectID": "schedule.html#day-1-introduction-to-rrstudio",
-    "href": "schedule.html#day-1-introduction-to-rrstudio",
-    "title": "Schedule",
+    "objectID": "s2.html#pre-requisites",
+    "href": "s2.html#pre-requisites",
+    "title": "Origin-destination data analysis",
     "section": "",
-    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
-    "crumbs": [
-      "Schedule"
-    ]
+    "text": "You need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python"
   },
   {
-    "objectID": "schedule.html#day-2",
-    "href": "schedule.html#day-2",
-    "title": "Schedule",
-    "section": "2 Day 2",
-    "text": "2 Day 2\nDay 2 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n\n11:15 - 12:30\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
-    "crumbs": [
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "s1.html",
-    "href": "s1.html",
-    "title": "Finding, importing and cleaning transport datasets",
+    "objectID": "s2.html#basic-sf-operations",
+    "href": "s2.html#basic-sf-operations",
+    "title": "Origin-destination data analysis",
     "section": "",
-    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.\nThe session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
+    "text": "We will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()"
   },
   {
-    "objectID": "s1.html#project-setup",
-    "href": "s1.html#project-setup",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "2.1 Project setup",
-    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder/repo if you have not already done so. The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.\n\ngh CLI toolRShell\n\n\nThe following creates a fresh GitHub repo with GitHub CLI (recommended)\nNote: you need to have installed the GitHub CLI and authenticated it with your GitHub account.\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\ncode path/to/your/folder/dstp-rl # or open in RStudio\n\n\ndir.create(\"C:/path/to/your/folder/dstp\") # replace with your path\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\n\n\nThe following creates an empty folder with PowerShell or RStudio/VS Code terminal\n# After opening a terminal in your chosen IDE/shell\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\nmkdir dstp-rl # replace 'rl' with your initials\n# Then open the folder in your IDE"
-  },
-  {
-    "objectID": "s1.html#openstreetmap-data",
-    "href": "s1.html#openstreetmap-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.1 OpenStreetMap Data",
-    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))"
-  },
-  {
-    "objectID": "s1.html#road-traffic-casualty-data-stats19",
-    "href": "s1.html#road-traffic-casualty-data-stats19",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.2 Road Traffic Casualty Data (STATS19)",
-    "text": "3.2 Road Traffic Casualty Data (STATS19)\nThe UK’s road traffic casualty data is available through the stats19 package. This provides data on collisions, casualties, and vehicles.\n\nlibrary(stats19)\n# Download 2020 collision data\ncollisions = get_stats19(year = 2020, type = \"collision\")\n# Download casualty data\ncasualties = get_stats19(year = 2020, type = \"cas\")\n# Download vehicle data\nvehicles = get_stats19(year = 2020, type = \"veh\")"
-  },
-  {
-    "objectID": "s1.html#origin-destination-data",
-    "href": "s1.html#origin-destination-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.3 Origin-Destination Data",
-    "text": "3.3 Origin-Destination Data\nThe pct package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.\n\nlibrary(pct)\n# Download desire lines for Leeds\nleeds_desire_lines = get_pct_lines(region = \"west-yorkshire\")"
-  },
-  {
-    "objectID": "s1.html#boundary-and-census-data",
-    "href": "s1.html#boundary-and-census-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "3.4 Boundary and Census Data",
-    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.\n\n# Download Local Authority Districts\nlibrary(arcgis)\nlad_url = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0\"\nlad_boundaries = arc_read(lad_url)"
-  },
-  {
-    "objectID": "s1.html#basic-cleaning-example",
-    "href": "s1.html#basic-cleaning-example",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "4.1 Basic Cleaning Example",
-    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  filter(!is.na(longitude), !is.na(latitude)) |&gt;\n  # Convert to sf object\n  st_as_sf(coords = c(\"longitude\", \"latitude\"), crs = 4326) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
-  },
-  {
-    "objectID": "s1.html#handling-missing-data",
-    "href": "s1.html#handling-missing-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "4.2 Handling Missing Data",
-    "text": "4.2 Handling Missing Data\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
-  },
-  {
-    "objectID": "s1.html#download-and-explore-stats19-data",
-    "href": "s1.html#download-and-explore-stats19-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.1 Download and Explore STATS19 Data",
-    "text": "5.1 Download and Explore STATS19 Data\n\nDownload road traffic collision data for 2019 using the stats19 package.\nExplore the structure of the data using str() and summary().\nCreate a simple plot showing the number of collisions by severity.\n\n\n# Your code here"
-  },
-  {
-    "objectID": "s1.html#extract-osm-features",
-    "href": "s1.html#extract-osm-features",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.2 Extract OSM Features",
-    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type."
-  },
-  {
-    "objectID": "s1.html#clean-and-visualize-od-data",
-    "href": "s1.html#clean-and-visualize-od-data",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.3 Clean and Visualize OD Data",
-    "text": "5.3 Clean and Visualize OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines colored by cycling potential.\n\n\n# Your code here"
-  },
-  {
-    "objectID": "s1.html#data-quality-assessment",
-    "href": "s1.html#data-quality-assessment",
-    "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.4 Data Quality Assessment",
-    "text": "5.4 Data Quality Assessment\n\nChoose a dataset you’ve downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
+    "objectID": "s2.html#basic-spatial-operations",
+    "href": "s2.html#basic-spatial-operations",
+    "title": "Origin-destination data analysis",
+    "section": "",
+    "text": "Load the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
   },
   {
     "objectID": "next-steps.html",
@@ -345,32 +259,139 @@
     "text": "Add reveal.js plugins for better interactivity\nInclude code highlighting and execution\nAdd transition effects and animations\nEnsure mobile responsiveness\nAdd PDF export options"
   },
   {
-    "objectID": "s2.html",
-    "href": "s2.html",
-    "title": "Origin-destination data analysis",
+    "objectID": "s1.html",
+    "href": "s1.html",
+    "title": "Finding, importing and cleaning transport datasets",
     "section": "",
-    "text": "Origin-destination (OD) data forms the backbone of transportation planning, urban analytics, and spatial mobility research. This type of data captures movement patterns between geographic locations, revealing how people, goods, or services flow through space. Understanding OD data is crucial for making informed decisions such as infrastructure development and public transport planning.\nIn this session, we will how to use and analyse geographic and origin-destination data. It includes:\n\nA short lecture on geographic and origin-destination data (see slides)\nHands-on analysis: Working with various geographic and OD datasets\n\n\n\nYou need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python\n\n\n\n\nWe will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()\n\n\n\n\n\n\n\nLoad the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
+    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.\nThe session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
   },
   {
-    "objectID": "s2.html#pre-requisites",
-    "href": "s2.html#pre-requisites",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "You need to have a number of packages installed and loaded. Install the packages by typing in the following commands into RStudio (you do not need to add the comments after the # symbol)\nIf you need to install any of these packages use:\n\nRPython\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"ggspatial\", \"tmap\"))\n\n\nlibrary(sf)        # vector data package\nlibrary(tidyverse) # tidyverse packages\nlibrary(ggspatial) # ggspatial package\nlibrary(spData)    # spatial data package\n\n\n\n\n# Install necessary packages (uncomment if not already installed)\n# !pip install geopandas pandas matplotlib seaborn\n\nimport geopandas as gpd       # vector data package\nimport pandas as pd           # data manipulation\nimport matplotlib.pyplot as plt  # plotting\nimport seaborn as sns            # advanced plotting\n# For spatial data, geopandas comes with sample datasets\n# Alternatively, we can use the naturalearth datasets\nimport geopandas.datasets\n\n\n\n\n\nCheck your packages are up-to-date with update.packages() in R (or equivalent in Python)\nCreate a project folder with an appropriate name for this session (e.g. session2)\nCreate appropriate folders for code, data and anything else (e.g. images)\nCreate a script called learning-OD.R (or learning-OD.py if you are using python), e.g. with the following command:\n\nmkdir code\ncode code/learning-OD.R # for R\ncode code/learning-OD.py # for Python"
+    "objectID": "s1.html#project-setup",
+    "href": "s1.html#project-setup",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "2.1 Project setup",
+    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder/repo if you have not already done so. The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.\n\ngh CLI toolRShell\n\n\nThe following creates a fresh GitHub repo with GitHub CLI (recommended)\nNote: you need to have installed the GitHub CLI and authenticated it with your GitHub account.\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\ncode path/to/your/folder/dstp-rl # or open in RStudio\n\n\ndir.create(\"C:/path/to/your/folder/dstp\") # replace with your path\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\n\n\nThe following creates an empty folder with PowerShell or RStudio/VS Code terminal\n# After opening a terminal in your chosen IDE/shell\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\nmkdir dstp-rl # replace 'rl' with your initials\n# Then open the folder in your IDE"
   },
   {
-    "objectID": "s2.html#basic-sf-operations",
-    "href": "s2.html#basic-sf-operations",
-    "title": "Origin-destination data analysis",
-    "section": "",
-    "text": "We will start with a simple map of the world. Load the world object from the spData package. Notice the use of :: to say that you want the world object from the spData package.\n\nRPython\n\n\n\nworld = spData::world\n\n\n\n\nworld = gpd.read_file(\n    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'\n)\n\n\n\n\nUse some basic R functions to explore the world object. e.g. class(world), dim(world), head(world), summary(world). Also view the world object by clicking on it in the Environment panel.\nsf objects can be plotted with plot().\n\nRPython\n\n\n\nplot(world)\n\n\n\n\n\n\n\n\n\n\n\nprint(type(world))       # Equivalent to class(world)\nprint(world.shape)       # Equivalent to dim(world)\nprint(world.head())      # Equivalent to head(world)\nprint(world.describe())  # Equivalent to summary(world)\n\n# Plotting the world GeoDataFrame\nworld.plot(figsize=(12, 8))\nplt.title('World Map')\nplt.show()\n\n\n\n\nNote that this makes a map of each column in the data frame. Try some other plotting options\n\nRPython\n\n\n\nplot(world[3:6])\n\n\n\n\n\n\n\nplot(world[\"pop\"])\n\n\n\n\n\n\n\n\n\n\n\n# Since world is a GeoDataFrame, we can select columns by position\n# However, GeoPandas plots the geometry, so we need to specify columns\nfig, axes = plt.subplots(1, 3, figsize=(15, 5))\nworld.plot(column='POP_EST', ax=axes[0])\nworld.plot(column='GDP_YEAR', ax=axes[1])\nworld.plot(column='CONTINENT', ax=axes[2])\nplt.show()"
+    "objectID": "s1.html#openstreetmap-data",
+    "href": "s1.html#openstreetmap-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.1 OpenStreetMap Data",
+    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))"
   },
   {
-    "objectID": "s2.html#basic-spatial-operations",
-    "href": "s2.html#basic-spatial-operations",
-    "title": "Origin-destination data analysis",
+    "objectID": "s1.html#road-traffic-casualty-data-stats19",
+    "href": "s1.html#road-traffic-casualty-data-stats19",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.2 Road Traffic Casualty Data (STATS19)",
+    "text": "3.2 Road Traffic Casualty Data (STATS19)\nThe UK’s road traffic casualty data is available through the stats19 package. This provides data on collisions, casualties, and vehicles.\n\nlibrary(stats19)\n# Download 2020 collision data\ncollisions = get_stats19(year = 2020, type = \"collision\")\n# Download casualty data\ncasualties = get_stats19(year = 2020, type = \"cas\")\n# Download vehicle data\nvehicles = get_stats19(year = 2020, type = \"veh\")"
+  },
+  {
+    "objectID": "s1.html#origin-destination-data",
+    "href": "s1.html#origin-destination-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.3 Origin-Destination Data",
+    "text": "3.3 Origin-Destination Data\nThe pct package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.\n\nlibrary(pct)\n# Download desire lines for Leeds\nleeds_desire_lines = get_pct_lines(region = \"west-yorkshire\")"
+  },
+  {
+    "objectID": "s1.html#boundary-and-census-data",
+    "href": "s1.html#boundary-and-census-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "3.4 Boundary and Census Data",
+    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.\nGet the data from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):\n\n# Download Local Authority Districts\nlibrary(arcgis)\nlad_url = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0\"\nlad_boundaries = arc_read(lad_url)"
+  },
+  {
+    "objectID": "s1.html#basic-cleaning-example",
+    "href": "s1.html#basic-cleaning-example",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "4.1 Basic Cleaning Example",
+    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  filter(!is.na(longitude), !is.na(latitude)) |&gt;\n  # Convert to sf object\n  st_as_sf(coords = c(\"longitude\", \"latitude\"), crs = 4326) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
+  },
+  {
+    "objectID": "s1.html#handling-missing-data",
+    "href": "s1.html#handling-missing-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "4.2 Handling Missing Data",
+    "text": "4.2 Handling Missing Data\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
+  },
+  {
+    "objectID": "s1.html#download-and-explore-stats19-data",
+    "href": "s1.html#download-and-explore-stats19-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.1 Download and Explore STATS19 Data",
+    "text": "5.1 Download and Explore STATS19 Data\n\nDownload road traffic collision data for 2019 using the stats19 package.\nExplore the structure of the data using str() and summary().\nCreate a simple plot showing the number of collisions by severity.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s1.html#extract-osm-features",
+    "href": "s1.html#extract-osm-features",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.2 Extract OSM Features",
+    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type."
+  },
+  {
+    "objectID": "s1.html#clean-and-visualize-od-data",
+    "href": "s1.html#clean-and-visualize-od-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.3 Clean and Visualize OD Data",
+    "text": "5.3 Clean and Visualize OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines colored by cycling potential.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s1.html#importing-official-boundary-data",
+    "href": "s1.html#importing-official-boundary-data",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.4 Importing official boundary data",
+    "text": "5.4 Importing official boundary data\n\n\nNavigate to the ONS Geoportal and search for Local Enterprise Partnerships (LEPs), using the checkboxes to find only ‘Feature Services’.\nGet the URL of the endpoint for GeoJSON format of the 2021 LEP boundaries. Note: you need to click on the bottom right “I want to use this service” button and then on the “View API Resources” link to find the URL.\nImport the downloaded GeoJSON file into R using the sf package.\nPlot the result. It should look something like this:\n\n\nplot(sf::st_geometry(leps))"
+  },
+  {
+    "objectID": "s1.html#bonus-data-quality-assessment",
+    "href": "s1.html#bonus-data-quality-assessment",
+    "title": "Finding, importing and cleaning transport datasets",
+    "section": "5.5 Bonus: Data Quality Assessment",
+    "text": "5.5 Bonus: Data Quality Assessment\n\nChoose a dataset you’ve downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
     "section": "",
-    "text": "Load the nz and nz_height datasets from the spData package.\n\nRPython\n\n\n\nnz = spData::nz\nnz_height = spData::nz_height\n\n\n\n\nnz = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz.gpkg\")\nnz_height = gpd.read_file(\"https://github.com/Nowosad/spData_files/raw/refs/heads/main/data/nz_height.gpkg\")\n\n\n\n\nWe can use tidyverse functions like filter and select on sf objects in the same way you did in Practical 1.\n\nRPython\n\n\n\ncanterbury = nz |&gt; filter(Name == \"Canterbury\")\ncanterbury_height = nz_height[canterbury, ]\n\n\n\n\ncanterbury = nz[nz['Name'] == 'Canterbury']\n\n\n\n\nIn this case we filtered the nz object to only include places called Canterbury and then did and intersection to find objects in the nz_height object that are in Canterbury.\nThis syntax is not very clear. But is the equivalent to\n\nRPython\n\n\n\ncanterbury_height = nz_height[canterbury, , op = st_intersects]\n\n\n\n\ncanterbury_height = gpd.overlay(nz_height, canterbury, how='intersection')\n\n\n\n\nThere are many different types of relationships you can use with op. Try ?st_intersects() to see more. For example this would give all the places not in Canterbury\n\nRPython\n\n\n\nnz_height[canterbury, , op = st_disjoint]\n\n\n\n\ncanterbury_height = gpd.sjoin(nz_height, canterbury, op='intersects')\n\n\n\n\n\n\n\nTopological relations between vector geometries, inspired by Figures 1 and 2 in Egenhofer and Herring (1990). The relations for which the function(x, y) is true are printed for each geometry pair, with x represented in pink and y represented in blue. The nature of the spatial relationship for each pair is described by the Dimensionally Extended 9-Intersection Model string."
+    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "schedule.html#day-1-introduction-to-rrstudio",
+    "href": "schedule.html#day-1-introduction-to-rrstudio",
+    "title": "Schedule",
+    "section": "",
+    "text": "Day 1 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n10:00 - 11:00\nIntroduction to Data Science for Transport Planning\n\n\n\n11:00 - 12:30\nFinding, importing and cleaning transport datasets- Origin-destination datasets- OpenStreetMap (OSM) and Ordnance Survey (OS) OpenRoads datasets- Stats19 road safety data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nOrigin-destination data analysis\n\n\n\n15:00 - 15:15\nBreak and refreshments\n\n\n\n15:15 - 17:00\nOD Transport data visualisation",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "schedule.html#day-2",
+    "href": "schedule.html#day-2",
+    "title": "Schedule",
+    "section": "2 Day 2",
+    "text": "2 Day 2\nDay 2 Slides\n\n\n\n\n\n\n\n\nTime\nSession\n\n\n\n\n\n09:00 - 10:45\nSpatio-temporal data- Demonstration of open-access OD data with hourly resolution- Demonstration with stats19 data for road safety analysis\n\n\n\n10:45 - 11:15\nBreak and refreshments\n\n\n\n11:15 - 12:30\nRouting and route network analysis- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data\n\n\n\n12:30 - 13:30\nLunch\n\n\n\n13:30 - 15:00\nBest practices for data science in transport planning- Version control with Git and GitHub- Reproducible research with Quarto\n\n\n\n15:00 - 16:00\nAdvanced topics- Visualising large datasets- Route network integration (e.g., OSM networks)- Deploying your work as web applications",
+    "crumbs": [
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "routing-engine.html",
+    "href": "routing-engine.html",
+    "title": "Deploying a Dockerized Routing Engine on GCP",
+    "section": "",
+    "text": "This guide provides a minimal, quick, and robust method for deploying a Dockerized OpenTripPlanner (OTP) server on Google Cloud Platform (GCP), adhering to modern best practices.\nCore Principles: - Declarative Deployment: Use create-with-container for reliable, atomic deployments instead of fragile startup scripts. - Least Privilege Security: Employ a dedicated Service Account with minimal permissions. - Optimized Images: Use multi-stage Docker builds for smaller, more secure images. - Cost Efficiency: Utilize Spot VMs for non-critical workloads. - Stable Networking: Reserve a static IP address.\n\n\n\n\nInstall Google Cloud SDK: This provides the gcloud command-line tool.\n\ncurl https://sdk.cloud.google.com | bash\nexec -l $SHELL\ngcloud init\nFollow the prompts to log in and select your GCP project (e.g., shiny-server-154518).\n\nInstall Docker: If not already installed.\n\nsudo apt update && sudo apt install -y docker.io\nsudo usermod -aG docker $USER\n# Log out and back in for the group changes to take effect.\n\nEnable GCP APIs:\n\ngcloud services enable compute.googleapis.com artifactregistry.googleapis.com iam.googleapis.com\n\nConfigure Docker to Authenticate with Artifact Registry:\n\n# Replace 'europe-west2' with your preferred GCP region, e.g. for london: europe-west2\ngcloud auth configure-docker europe-west2-docker.pkg.dev\n\n\n\n\n\nCreate the Dockerfile: Save the following as routing-engine/Dockerfile. This multi-stage build creates a minimal final image.\n\n# ---- Build Stage ----\n# Use a standard Ubuntu image as a 'builder' to get the OTP files\nFROM ubuntu:22.04 as builder\n\n# Install only the tools needed to download and unpack\nRUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*\n\n# Download and unpack OTP into a temporary location\nWORKDIR /source\nRUN wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip && \\\nunzip otp_TDS.zip\n\n# ---- Final Stage ----\n# Start from a clean, official OpenJDK base image, which is minimal and secure\nFROM eclipse-temurin:8-jre-focal\n\n# Set the working directory\nWORKDIR /app\n\n# Copy the OTP application files from the 'builder' stage\nCOPY --from=builder /source/otp_TDS/ .\n\n# Ensure the graphs directory exists, as OTP will look for it\nRUN mkdir -p graphs\n\n# Expose the port the application will run on\nEXPOSE 8080\n\n# Set the command to run the OTP server\nCMD [\"java\", \"-Xmx3g\", \"-jar\", \"otp-1.5.0-shaded.jar\", \"--router\", \"west-yorkshire\", \"--graphs\", \"/app/graphs\", \"--server\", \"--port\", \"8080\"]\n\nCreate the Artifact Registry Repository: This is a one-time setup for your project.\n\ngcloud artifacts repositories create routing-engine \\\n  --repository-format=docker \\\n  --location=europe-west2 \\\n  --project=shiny-server-154518\n\nBuild, Tag, and Push the Image:\n\n# Define your image URI\nexport IMAGE_URI=\"europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest\"\n\n# Build and push\ndocker build -t $IMAGE_URI ./routing-engine/\ndocker push $IMAGE_URI\nTest the image locally (optional):\ndocker run -p 8080:8080 $IMAGE_URI\ncurl \"http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR\"\n\n\n\n\n\nCreate a Dedicated Service Account (One-time setup):\n\nThis ensures the VM has only the permissions it needs.\ngcloud iam service-accounts create otp-vm-sa \\\n  --display-name=\"OTP VM Service Account\" \\\n  --project=shiny-server-154518\n\ngcloud projects add-iam-policy-binding shiny-server-154518 \\\n  --member=\"serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com\" \\\n  --role=\"roles/artifactregistry.reader\"\n\nDeploy the VM and Container: This single command creates the VM and deploys your container declaratively.\n\ngcloud compute instances create-with-container routing-vm \\\n  --zone=europe-west2-a \\\n  --machine-type=e2-medium \\\n  --provisioning-model=SPOT \\\n  --service-account=otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com \\\n  --tags=allow-http-traffic \\\n  --container-image=$IMAGE_URI \\\n  --container-restart-policy=always\n\nCreate a Firewall Rule:\n\ngcloud compute firewall-rules create allow-http \\\n  --allow tcp:80 \\\n  --source-ranges=0.0.0.0/0 \\\n  --target-tags=allow-http-traffic\nNote: The create-with-container command maps the container’s port (8080) to the VM’s port 80 by default.\n\n\n\n\n\nGet the External IP Address:\n\nexport EXTERNAL_IP=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)')\necho \"Server IP: $EXTERNAL_IP\"\n\nTest the API: Wait a minute for the VM to boot and the container to start, then run:\n\ncurl \"http://$EXTERNAL_IP/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR\"\n\nView Logs: The logs are automatically streamed to Google Cloud’s operations suite (formerly Stackdriver).\n\ngcloud logging read \"resource.type=gce_instance AND resource.labels.instance_id=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(id)')\" --limit 100\n\n\n\n\nTo avoid ongoing charges, delete the resources when you are finished.\ngcloud compute instances delete routing-vm --zone=europe-west2-a --quiet\ngcloud compute firewall-rules delete allow-http --quiet\ngcloud iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com --quiet\n# Optional: delete the Artifact Registry repository and image\ngcloud artifacts repositories delete routing-engine --location=europe-west2 --quiet"
+  },
+  {
+    "objectID": "routing-engine.html#modern-failsafe-gcp-deployment-guide",
+    "href": "routing-engine.html#modern-failsafe-gcp-deployment-guide",
+    "title": "Deploying a Dockerized Routing Engine on GCP",
+    "section": "",
+    "text": "This guide provides a minimal, quick, and robust method for deploying a Dockerized OpenTripPlanner (OTP) server on Google Cloud Platform (GCP), adhering to modern best practices.\nCore Principles: - Declarative Deployment: Use create-with-container for reliable, atomic deployments instead of fragile startup scripts. - Least Privilege Security: Employ a dedicated Service Account with minimal permissions. - Optimized Images: Use multi-stage Docker builds for smaller, more secure images. - Cost Efficiency: Utilize Spot VMs for non-critical workloads. - Stable Networking: Reserve a static IP address.\n\n\n\n\nInstall Google Cloud SDK: This provides the gcloud command-line tool.\n\ncurl https://sdk.cloud.google.com | bash\nexec -l $SHELL\ngcloud init\nFollow the prompts to log in and select your GCP project (e.g., shiny-server-154518).\n\nInstall Docker: If not already installed.\n\nsudo apt update && sudo apt install -y docker.io\nsudo usermod -aG docker $USER\n# Log out and back in for the group changes to take effect.\n\nEnable GCP APIs:\n\ngcloud services enable compute.googleapis.com artifactregistry.googleapis.com iam.googleapis.com\n\nConfigure Docker to Authenticate with Artifact Registry:\n\n# Replace 'europe-west2' with your preferred GCP region, e.g. for london: europe-west2\ngcloud auth configure-docker europe-west2-docker.pkg.dev\n\n\n\n\n\nCreate the Dockerfile: Save the following as routing-engine/Dockerfile. This multi-stage build creates a minimal final image.\n\n# ---- Build Stage ----\n# Use a standard Ubuntu image as a 'builder' to get the OTP files\nFROM ubuntu:22.04 as builder\n\n# Install only the tools needed to download and unpack\nRUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*\n\n# Download and unpack OTP into a temporary location\nWORKDIR /source\nRUN wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip && \\\nunzip otp_TDS.zip\n\n# ---- Final Stage ----\n# Start from a clean, official OpenJDK base image, which is minimal and secure\nFROM eclipse-temurin:8-jre-focal\n\n# Set the working directory\nWORKDIR /app\n\n# Copy the OTP application files from the 'builder' stage\nCOPY --from=builder /source/otp_TDS/ .\n\n# Ensure the graphs directory exists, as OTP will look for it\nRUN mkdir -p graphs\n\n# Expose the port the application will run on\nEXPOSE 8080\n\n# Set the command to run the OTP server\nCMD [\"java\", \"-Xmx3g\", \"-jar\", \"otp-1.5.0-shaded.jar\", \"--router\", \"west-yorkshire\", \"--graphs\", \"/app/graphs\", \"--server\", \"--port\", \"8080\"]\n\nCreate the Artifact Registry Repository: This is a one-time setup for your project.\n\ngcloud artifacts repositories create routing-engine \\\n  --repository-format=docker \\\n  --location=europe-west2 \\\n  --project=shiny-server-154518\n\nBuild, Tag, and Push the Image:\n\n# Define your image URI\nexport IMAGE_URI=\"europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest\"\n\n# Build and push\ndocker build -t $IMAGE_URI ./routing-engine/\ndocker push $IMAGE_URI\nTest the image locally (optional):\ndocker run -p 8080:8080 $IMAGE_URI\ncurl \"http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR\"\n\n\n\n\n\nCreate a Dedicated Service Account (One-time setup):\n\nThis ensures the VM has only the permissions it needs.\ngcloud iam service-accounts create otp-vm-sa \\\n  --display-name=\"OTP VM Service Account\" \\\n  --project=shiny-server-154518\n\ngcloud projects add-iam-policy-binding shiny-server-154518 \\\n  --member=\"serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com\" \\\n  --role=\"roles/artifactregistry.reader\"\n\nDeploy the VM and Container: This single command creates the VM and deploys your container declaratively.\n\ngcloud compute instances create-with-container routing-vm \\\n  --zone=europe-west2-a \\\n  --machine-type=e2-medium \\\n  --provisioning-model=SPOT \\\n  --service-account=otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com \\\n  --tags=allow-http-traffic \\\n  --container-image=$IMAGE_URI \\\n  --container-restart-policy=always\n\nCreate a Firewall Rule:\n\ngcloud compute firewall-rules create allow-http \\\n  --allow tcp:80 \\\n  --source-ranges=0.0.0.0/0 \\\n  --target-tags=allow-http-traffic\nNote: The create-with-container command maps the container’s port (8080) to the VM’s port 80 by default.\n\n\n\n\n\nGet the External IP Address:\n\nexport EXTERNAL_IP=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)')\necho \"Server IP: $EXTERNAL_IP\"\n\nTest the API: Wait a minute for the VM to boot and the container to start, then run:\n\ncurl \"http://$EXTERNAL_IP/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR\"\n\nView Logs: The logs are automatically streamed to Google Cloud’s operations suite (formerly Stackdriver).\n\ngcloud logging read \"resource.type=gce_instance AND resource.labels.instance_id=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(id)')\" --limit 100\n\n\n\n\nTo avoid ongoing charges, delete the resources when you are finished.\ngcloud compute instances delete routing-vm --zone=europe-west2-a --quiet\ngcloud compute firewall-rules delete allow-http --quiet\ngcloud iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com --quiet\n# Optional: delete the Artifact Registry repository and image\ngcloud artifacts repositories delete routing-engine --location=europe-west2 --quiet"
   },
   {
     "objectID": "s6.html",

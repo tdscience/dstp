@@ -217,7 +217,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#download-and-explore-stats19-data" id="toc-download-and-explore-stats19-data" class="nav-link" data-scroll-target="#download-and-explore-stats19-data"><span class="header-section-number">5.1</span> Download and Explore STATS19 Data</a></li>
   <li><a href="#extract-osm-features" id="toc-extract-osm-features" class="nav-link" data-scroll-target="#extract-osm-features"><span class="header-section-number">5.2</span> Extract OSM Features</a></li>
   <li><a href="#clean-and-visualize-od-data" id="toc-clean-and-visualize-od-data" class="nav-link" data-scroll-target="#clean-and-visualize-od-data"><span class="header-section-number">5.3</span> Clean and Visualize OD Data</a></li>
-  <li><a href="#data-quality-assessment" id="toc-data-quality-assessment" class="nav-link" data-scroll-target="#data-quality-assessment"><span class="header-section-number">5.4</span> Data Quality Assessment</a></li>
+  <li><a href="#importing-official-boundary-data" id="toc-importing-official-boundary-data" class="nav-link" data-scroll-target="#importing-official-boundary-data"><span class="header-section-number">5.4</span> Importing official boundary data</a></li>
+  <li><a href="#bonus-data-quality-assessment" id="toc-bonus-data-quality-assessment" class="nav-link" data-scroll-target="#bonus-data-quality-assessment"><span class="header-section-number">5.5</span> Bonus: Data Quality Assessment</a></li>
   </ul></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">6</span> Further Reading</a></li>
   </ul>
@@ -345,6 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="boundary-and-census-data" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="boundary-and-census-data"><span class="header-section-number">3.4</span> Boundary and Census Data</h2>
 <p>For geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.</p>
+<p>Get the data from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download Local Authority Districts</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arcgis)</span>
@@ -428,8 +430,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 -->
 </section>
-<section id="data-quality-assessment" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="data-quality-assessment"><span class="header-section-number">5.4</span> Data Quality Assessment</h2>
+<section id="importing-official-boundary-data" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="importing-official-boundary-data"><span class="header-section-number">5.4</span> Importing official boundary data</h2>
+<!-- https://geoportal.statistics.gov.uk/search?q=local%20enterprise%20partnerships -->
+<ol type="1">
+<li><p>Navigate to the <a href="https://geoportal.statistics.gov.uk/">ONS Geoportal</a> and search for Local Enterprise Partnerships (LEPs), using the checkboxes to find only ‘Feature Services’.</p></li>
+<li><p>Get the URL of the endpoint for GeoJSON format of the 2021 LEP boundaries. Note: you need to click on the bottom right “I want to use this service” button and then on the “View API Resources” link to find the URL.</p></li>
+<li><p>Import the downloaded GeoJSON file into R using the <code>sf</code> package.</p></li>
+<li><p>Plot the result. It should look something like this:</p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(leps))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="s1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bonus-data-quality-assessment" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="bonus-data-quality-assessment"><span class="header-section-number">5.5</span> Bonus: Data Quality Assessment</h2>
 <ol type="1">
 <li>Choose a dataset you’ve downloaded.</li>
 <li>Assess its quality by checking for:
@@ -441,7 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Document any issues found and how you would address them.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>

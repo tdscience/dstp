@@ -263,21 +263,21 @@
     "href": "s1.html",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "",
-    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.\nThe session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
+    "text": "In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We will learn practical techniques using R to access and prepare this data for analysis.\nThis session covers:\n\nDownloading datasets from OpenStreetMap\nImporting data into R\nBasic data cleaning and exploration\nHands-on exercises"
   },
   {
     "objectID": "s1.html#project-setup",
     "href": "s1.html#project-setup",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "2.1 Project setup",
-    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder/repo if you have not already done so. The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.\n\ngh CLI toolRShell\n\n\nThe following creates a fresh GitHub repo with GitHub CLI (recommended)\nNote: you need to have installed the GitHub CLI and authenticated it with your GitHub account.\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\ncode path/to/your/folder/dstp-rl # or open in RStudio\n\n\ndir.create(\"C:/path/to/your/folder/dstp\") # replace with your path\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\n\n\nThe following creates an empty folder with PowerShell or RStudio/VS Code terminal\n# After opening a terminal in your chosen IDE/shell\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\nmkdir dstp-rl # replace 'rl' with your initials\n# Then open the folder in your IDE"
+    "text": "2.1 Project setup\nFollow the guidance in the day 1 slides to set up your project folder or repository if you have not already done so. In summary, you can run something like the following to create a new folder/repository and open it in RStudio or VS Code.\n\ngh CLI toolRShell\n\n\nThe following creates a fresh GitHub repository using the GitHub CLI (recommended).\nNote: you need to have installed the GitHub CLI and authenticated it with your GitHub account.\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\ngh repo create dstp-rl --public --clone # replace 'rl' with your initials\ncode path/to/your/folder/dstp-rl # or open in RStudio\n\n\ndir.create(\"C:/path/to/your/folder/dstp\") # replace with your path\nrstudioapi::openProject(\"C:/path/to/your/folder/dstp\")\n\n\nThe following creates an empty folder using PowerShell or the RStudio/VS Code terminal.\n# After opening a terminal in your chosen IDE/shell\ncd path/to/your/folder # e.g. cd C:/Users/YourName/Documents\nmkdir dstp-rl # replace 'rl' with your initials\n# Then open the folder in your IDE"
   },
   {
     "objectID": "s1.html#openstreetmap-data",
     "href": "s1.html#openstreetmap-data",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "3.1 OpenStreetMap Data",
-    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))"
+    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))\n\nYou might also be interested in other spatial data in West Yorkshire. For example, you can use the following code to extract amenities in the region:\n\nlibrary(osmextract)\n# Download amenities in West Yorkshire\nwest_yorkshire_amenities = oe_get(\n  layer = \"points\", # We want the point location\n  place = \"West Yorkshire\",\n  extra_tags = c(\"amenity\") \n)\nplot(st_geometry(west_yorkshire_amenities))\n\nwest_yorkshire_amenities$amenity |&gt; table()"
   },
   {
     "objectID": "s1.html#road-traffic-casualty-data-stats19",
@@ -298,21 +298,21 @@
     "href": "s1.html#boundary-and-census-data",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "3.4 Boundary and Census Data",
-    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.\nGet the data from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):\n\n# Download Local Authority Districts\nlibrary(arcgis)\nlad_url = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0\"\nlad_boundaries = arc_read(lad_url)"
+    "text": "3.4 Boundary and Census Data\nFor geographic boundaries and census data, you can obtain data directly from the ONS Geoportal or custom dataset tool.\nLoad the data directly from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):\n\nlibrary(sf)\n# Download LSOA boundaries\nurl = \"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFE_V10/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson\"\nlsoa_boundaries = st_read(url)\n\nAll results from the census can be obtained from nomis. It is possible to obtain the data programmatically in R using nomisr; check its documentation if you are interested."
   },
   {
     "objectID": "s1.html#basic-cleaning-example",
     "href": "s1.html#basic-cleaning-example",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "4.1 Basic Cleaning Example",
-    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  filter(!is.na(longitude), !is.na(latitude)) |&gt;\n  # Convert to sf object\n  st_as_sf(coords = c(\"longitude\", \"latitude\"), crs = 4326) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
+    "text": "4.1 Basic Cleaning Example\n\n# Clean collision data\ncollisions_clean = collisions |&gt;\n  # Remove rows with missing coordinates\n  drop_na(location_easting_osgr,location_northing_osgr) |&gt;\n  # Convert to sf object (spatial)\n  st_as_sf(coords = c(\"location_easting_osgr\", \"location_northing_osgr\"), crs = 27700) |&gt;\n  # Select relevant columns\n  select(accident_index, date, speed_limit, accident_severity)"
   },
   {
     "objectID": "s1.html#handling-missing-data",
     "href": "s1.html#handling-missing-data",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "4.2 Handling Missing Data",
-    "text": "4.2 Handling Missing Data\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
+    "text": "4.2 Handling Missing Data\nThere is no single strategy for dealing with missing data. The approach you adopt depends on the context. A simple strategy to impute missing data is to use a constant value. The following example uses the median value to fill missing speed limits, which might be a valid approach if your dataset contains very similar road types.\n\n# Check for missing values\nsummary(collisions_clean)\n# Impute or remove missing values\ncollisions_clean = collisions_clean |&gt;\n  mutate(speed_limit = ifelse(is.na(speed_limit), median(speed_limit, na.rm = TRUE), speed_limit))"
   },
   {
     "objectID": "s1.html#download-and-explore-stats19-data",
@@ -326,14 +326,14 @@
     "href": "s1.html#extract-osm-features",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "5.2 Extract OSM Features",
-    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type."
+    "text": "5.2 Extract OSM Features\n\nUse osmextract to download all supermarkets in your chosen city.\nConvert the data to an sf object and plot it on a map.\nCount the number of supermarkets by type.\n\n\n# Your code here"
   },
   {
-    "objectID": "s1.html#clean-and-visualize-od-data",
-    "href": "s1.html#clean-and-visualize-od-data",
+    "objectID": "s1.html#clean-and-visualise-od-data",
+    "href": "s1.html#clean-and-visualise-od-data",
     "title": "Finding, importing and cleaning transport datasets",
-    "section": "5.3 Clean and Visualize OD Data",
-    "text": "5.3 Clean and Visualize OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines colored by cycling potential.\n\n\n# Your code here"
+    "section": "5.3 Clean and Visualise OD Data",
+    "text": "5.3 Clean and Visualise OD Data\n\nDownload origin-destination data for a region using the pct package.\nClean the data by removing any invalid geometries.\nCreate a map showing the desire lines coloured by cycling potential.\n\n\n# Your code here"
   },
   {
     "objectID": "s1.html#importing-official-boundary-data",
@@ -347,7 +347,7 @@
     "href": "s1.html#bonus-data-quality-assessment",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "5.5 Bonus: Data Quality Assessment",
-    "text": "5.5 Bonus: Data Quality Assessment\n\nChoose a dataset you’ve downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
+    "text": "5.5 Bonus: Data Quality Assessment\n\nChoose a dataset you have downloaded.\nAssess its quality by checking for:\n\nMissing values\nOutliers\nInconsistent data types\n\nDocument any issues found and how you would address them.\n\n\n# Your code here"
   },
   {
     "objectID": "schedule.html",

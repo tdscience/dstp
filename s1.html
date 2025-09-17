@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#origin-destination-data" id="toc-origin-destination-data" class="nav-link" data-scroll-target="#origin-destination-data"><span class="header-section-number">3.3</span> Origin-Destination Data</a></li>
   <li><a href="#boundary-and-census-data" id="toc-boundary-and-census-data" class="nav-link" data-scroll-target="#boundary-and-census-data"><span class="header-section-number">3.4</span> Boundary and Census Data</a></li>
   </ul></li>
-  <li><a href="#importing-and-cleaning-data" id="toc-importing-and-cleaning-data" class="nav-link" data-scroll-target="#importing-and-cleaning-data"><span class="header-section-number">4</span> Importing and Cleaning Data</a>
+  <li><a href="#cleaning-data" id="toc-cleaning-data" class="nav-link" data-scroll-target="#cleaning-data"><span class="header-section-number">4</span> Cleaning Data</a>
   <ul class="collapse">
   <li><a href="#basic-cleaning-example" id="toc-basic-cleaning-example" class="nav-link" data-scroll-target="#basic-cleaning-example"><span class="header-section-number">4.1</span> Basic Cleaning Example</a></li>
   <li><a href="#handling-missing-data" id="toc-handling-missing-data" class="nav-link" data-scroll-target="#handling-missing-data"><span class="header-section-number">4.2</span> Handling Missing Data</a></li>
@@ -216,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#download-and-explore-stats19-data" id="toc-download-and-explore-stats19-data" class="nav-link" data-scroll-target="#download-and-explore-stats19-data"><span class="header-section-number">5.1</span> Download and Explore STATS19 Data</a></li>
   <li><a href="#extract-osm-features" id="toc-extract-osm-features" class="nav-link" data-scroll-target="#extract-osm-features"><span class="header-section-number">5.2</span> Extract OSM Features</a></li>
-  <li><a href="#clean-and-visualize-od-data" id="toc-clean-and-visualize-od-data" class="nav-link" data-scroll-target="#clean-and-visualize-od-data"><span class="header-section-number">5.3</span> Clean and Visualize OD Data</a></li>
+  <li><a href="#clean-and-visualise-od-data" id="toc-clean-and-visualise-od-data" class="nav-link" data-scroll-target="#clean-and-visualise-od-data"><span class="header-section-number">5.3</span> Clean and Visualise OD Data</a></li>
   <li><a href="#importing-official-boundary-data" id="toc-importing-official-boundary-data" class="nav-link" data-scroll-target="#importing-official-boundary-data"><span class="header-section-number">5.4</span> Importing official boundary data</a></li>
   <li><a href="#bonus-data-quality-assessment" id="toc-bonus-data-quality-assessment" class="nav-link" data-scroll-target="#bonus-data-quality-assessment"><span class="header-section-number">5.5</span> Bonus: Data Quality Assessment</a></li>
   </ul></li>
@@ -248,8 +248,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We’ll learn practical techniques using R to access and prepare this data for analysis.</p>
-<p>The session covers:</p>
+<p>In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We will learn practical techniques using R to access and prepare this data for analysis.</p>
+<p>This session covers:</p>
 <ul>
 <li>Downloading datasets from OpenStreetMap</li>
 <li>Importing data into R</li>
@@ -277,12 +277,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="project-setup" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="project-setup"><span class="header-section-number">2.1</span> Project setup</h2>
-<p>Follow the guidance in the <a href="./slides/day1.html#practical-session-0">day 1 slides</a> to set up your project folder/repo if you have not already done so. The short version of that is to run something like the following to create a new folder/repo and open it in RStudio or VS Code.</p>
+<p>Follow the guidance in the <a href="./slides/day1.html#practical-session-0">day 1 slides</a> to set up your project folder or repository if you have not already done so. In summary, you can run something like the following to create a new folder/repository and open it in RStudio or VS Code.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">gh CLI tool</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Shell</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>The following creates a fresh GitHub repo with GitHub CLI (recommended)</p>
+<p>The following creates a fresh GitHub repository using the GitHub CLI (recommended).</p>
 <p>Note: you need to have installed the <a href="https://cli.github.com/">GitHub CLI</a> and authenticated it with your GitHub account.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/your/folder <span class="co"># e.g. cd C:/Users/YourName/Documents</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> repo create dstp-rl <span class="at">--public</span> <span class="at">--clone</span> <span class="co"># replace 'rl' with your initials</span></span>
@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">openProject</span>(<span class="st">"C:/path/to/your/folder/dstp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>The following creates an empty folder with PowerShell or RStudio/VS Code terminal</p>
+<p>The following creates an empty folder using PowerShell or the RStudio/VS Code terminal.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After opening a terminal in your chosen IDE/shell</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/your/folder <span class="co"># e.g. cd C:/Users/YourName/Documents</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> dstp-rl <span class="co"># replace 'rl' with your initials</span></span>
@@ -320,65 +320,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(west_yorkshire_cycleways))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>You might also be interested in other spatial data in West Yorkshire. For example, you can use the following code to extract amenities in the region:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download amenities in West Yorkshire</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>west_yorkshire_amenities <span class="ot">=</span> <span class="fu">oe_get</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> <span class="st">"points"</span>, <span class="co"># We want the point location</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">place =</span> <span class="st">"West Yorkshire"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">extra_tags =</span> <span class="fu">c</span>(<span class="st">"amenity"</span>) </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(west_yorkshire_amenities))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>west_yorkshire_amenities<span class="sc">$</span>amenity <span class="sc">|&gt;</span> <span class="fu">table</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="road-traffic-casualty-data-stats19" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="road-traffic-casualty-data-stats19"><span class="header-section-number">3.2</span> Road Traffic Casualty Data (STATS19)</h2>
 <p>The UK’s road traffic casualty data is available through the <code>stats19</code> package. This provides data on collisions, casualties, and vehicles.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats19)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download 2020 collision data</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>collisions <span class="ot">=</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"collision"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download casualty data</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>casualties <span class="ot">=</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"cas"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Download vehicle data</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>vehicles <span class="ot">=</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"veh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats19)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download 2020 collision data</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>collisions <span class="ot">=</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"collision"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download casualty data</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>casualties <span class="ot">=</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"cas"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Download vehicle data</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>vehicles <span class="ot">=</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"veh"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="origin-destination-data" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="origin-destination-data"><span class="header-section-number">3.3</span> Origin-Destination Data</h2>
 <p>The <code>pct</code> package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pct)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download desire lines for Leeds</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>leeds_desire_lines <span class="ot">=</span> <span class="fu">get_pct_lines</span>(<span class="at">region =</span> <span class="st">"west-yorkshire"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pct)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download desire lines for Leeds</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>leeds_desire_lines <span class="ot">=</span> <span class="fu">get_pct_lines</span>(<span class="at">region =</span> <span class="st">"west-yorkshire"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="boundary-and-census-data" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="boundary-and-census-data"><span class="header-section-number">3.4</span> Boundary and Census Data</h2>
-<p>For geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.</p>
-<p>Get the data from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):</p>
+<p>For geographic boundaries and census data, you can obtain data directly from the ONS Geoportal or custom dataset tool.</p>
+<p>Load the data directly from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download Local Authority Districts</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arcgis)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>lad_url <span class="ot">=</span> <span class="st">"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Authority_Districts_May_2023_UK_BUC/FeatureServer/0"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>lad_boundaries <span class="ot">=</span> <span class="fu">arc_read</span>(lad_url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download LSOA boundaries</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">=</span> <span class="st">"https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFE_V10/FeatureServer/0/query?outFields=*&amp;where=1%3D1&amp;f=geojson"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>lsoa_boundaries <span class="ot">=</span> <span class="fu">st_read</span>(url)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>All results from the census can be obtained from <a href="https://www.nomisweb.co.uk/">nomis</a>. It is possible to obtain the data programmatically in R using <a href="https://docs.ropensci.org/nomisr/"><code>nomisr</code></a>; check its documentation if you are interested.</p>
 </section>
 </section>
-<section id="importing-and-cleaning-data" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Importing and Cleaning Data</h1>
-<p>Once downloaded, data often needs cleaning. Common issues include missing values, inconsistent formats, and coordinate systems.</p>
+<section id="cleaning-data" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Cleaning Data</h1>
+<p>Once downloaded, data often needs cleaning. Common issues include missing values, inconsistent formats, and inconsistent coordinate systems.</p>
 <section id="basic-cleaning-example" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="basic-cleaning-example"><span class="header-section-number">4.1</span> Basic Cleaning Example</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean collision data</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>collisions_clean <span class="ot">=</span> collisions <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove rows with missing coordinates</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(longitude), <span class="sc">!</span><span class="fu">is.na</span>(latitude)) <span class="sc">|&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to sf object</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select relevant columns</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(accident_index, date, speed_limit, accident_severity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean collision data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>collisions_clean <span class="ot">=</span> collisions <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove rows with missing coordinates</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(location_easting_osgr,location_northing_osgr) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to sf object (spatial)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"location_easting_osgr"</span>, <span class="st">"location_northing_osgr"</span>), <span class="at">crs =</span> <span class="dv">27700</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select relevant columns</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(accident_index, date, speed_limit, accident_severity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="handling-missing-data" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="handling-missing-data"><span class="header-section-number">4.2</span> Handling Missing Data</h2>
+<p>There is no single strategy for dealing with missing data. The approach you adopt depends on the context. A simple strategy to impute missing data is to use a constant value. The following example uses the median value to fill missing speed limits, which might be a valid approach if your dataset contains very similar road types.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for missing values</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(collisions_clean)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute or remove missing values</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>collisions_clean <span class="ot">=</span> collisions_clean <span class="sc">|&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">speed_limit =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(speed_limit), <span class="fu">median</span>(speed_limit, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), speed_limit))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for missing values</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(collisions_clean)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute or remove missing values</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>collisions_clean <span class="ot">=</span> collisions_clean <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">speed_limit =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(speed_limit), <span class="fu">median</span>(speed_limit, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), speed_limit))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -392,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Create a simple plot showing the number of collisions by severity.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="extract-osm-features" class="level2" data-number="5.2">
@@ -402,16 +417,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Convert the data to an sf object and plot it on a map.</li>
 <li>Count the number of supermarkets by type.</li>
 </ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="clean-and-visualize-od-data" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="clean-and-visualize-od-data"><span class="header-section-number">5.3</span> Clean and Visualize OD Data</h2>
+<section id="clean-and-visualise-od-data" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="clean-and-visualise-od-data"><span class="header-section-number">5.3</span> Clean and Visualise OD Data</h2>
 <ol type="1">
 <li>Download origin-destination data for a region using the <code>pct</code> package.</li>
 <li>Clean the data by removing any invalid geometries.</li>
-<li>Create a map showing the desire lines colored by cycling potential.</li>
+<li>Create a map showing the desire lines coloured by cycling potential.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- 
 ## Combine Datasets
@@ -440,11 +458,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Plot the result. It should look something like this:</p></li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(leps))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(leps))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="s1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="s1_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -453,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="bonus-data-quality-assessment" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="bonus-data-quality-assessment"><span class="header-section-number">5.5</span> Bonus: Data Quality Assessment</h2>
 <ol type="1">
-<li>Choose a dataset you’ve downloaded.</li>
+<li>Choose a dataset you have downloaded.</li>
 <li>Assess its quality by checking for:
 <ul>
 <li>Missing values</li>
@@ -463,7 +481,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Document any issues found and how you would address them.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>

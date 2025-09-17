@@ -238,3 +238,111 @@ gcloud iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceacc
 # Optional: delete the Artifact Registry repository and image
 gcloud artifacts repositories delete routing-engine --location=europe-west2 --quiet
 ```
+
+
+### Step 6: Deploy to https
+
+
+---
+### Step 6: Updating the Deployment After Dockerfile Changes
+
+If the `Dockerfile` has been modified (e.g., to update OTP version, add configurations, or optimize the build), you need to rebuild the Docker image, push it to Artifact Registry, and redeploy the VM to use the new image. This ensures the changes take effect without compatibility issues.
+
+**Important Notes:**
+- Deleting and recreating the VM is the simplest way to update the container image with `create-with-container`, as it declaratively applies the new image.
+- The firewall rule (`allow-otp`) and service account persist, so no need to recreate them.
+- If the VM is running, shut it down first to avoid costs.
+- Test locally before pushing to catch build issues.
+
+#### 6.1: Shut Down the Existing VM (if running)
+
+Check the VM status first:
+
+```sh
+gcloud compute instances list --filter="name:routing-vm" --project=shiny-server-154518 --format="table(name,status,zone)"
+```
+
+If it's running (`RUNNING`), delete it:
+
+```sh
+gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet
+```
+
+This stops the instance and releases resources. The static IP may change unless reserved (consider reserving one for stability: `gcloud compute addresses create otp-static-ip --region=europe-west2` and attach it).
+
+#### 6.2: Rebuild and Push the Updated Docker Image
+
+Navigate to the project directory and rebuild:
+
+```sh
+cd /path/to/your/project  # e.g., /home/robin/github/tdscience/dstp
+export IMAGE_URI="europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest"
+
+# Build the image with the updated Dockerfile
+docker build -t $IMAGE_URI ./routing-engine/
+
+# Push to Artifact Registry
+docker push $IMAGE_URI
+```
+
+**Optional: Test the Image Locally**
+
+Before deploying to GCP, run it locally to verify:
+
+```sh
+docker run -p 8080:8080 $IMAGE_URI
+# In another terminal:
+curl "http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+# Stop with Ctrl+C when done
+```
+
+#### 6.3: Redeploy the VM with the New Image
+
+Recreate the VM using the updated image:
+
+```sh
+gcloud compute instances create-with-container routing-vm \
+  --zone=europe-west2-a \
+  --machine-type=e2-medium \
+  --provisioning-model=SPOT \
+  --service-account=otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com \
+  --tags=allow-http-traffic \
+  --container-image=$IMAGE_URI \
+  --container-restart-policy=always
+```
+
+Wait 1-2 minutes for the VM to start.
+
+#### 6.4: Verify the Deployment is Working
+
+Get the external IP:
+
+```sh
+export EXTERNAL_IP=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+echo "Server IP: $EXTERNAL_IP"
+```
+
+Test the API endpoint:
+
+```sh
+curl "http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
+
+Expected output: A JSON response with routing details (e.g., itinerary, legs). If it fails:
+
+- Check VM status: `gcloud compute instances describe routing-vm --zone=europe-west2-a --format="table(status)"`
+- View logs: `gcloud logging read "resource.type=gce_instance AND resource.labels.instance_id=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(id)')" --limit=50`
+- Network test: `nc -zv $EXTERNAL_IP 8080` (should connect)
+- SSH debug: `gcloud compute ssh routing-vm --zone=europe-west2-a` then `docker ps` and `curl http://localhost:8080/...`
+
+For an interactive trip planner UI, open `http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan` in a browser.
+
+#### 6.5: Cleanup (if testing only)
+
+If redeploying was for testing and you want to shut down:
+
+```sh
+gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet
+```
+
+This process ensures a clean update. For production, consider automating with Terraform or GitHub Actions for CI/CD.

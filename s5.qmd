@@ -1,7 +1,7 @@
 ---
 title: "Routing and route network analysis"
 execute: 
-  eval: false
+  eval: true
 ---
 
 # Introduction
@@ -42,9 +42,9 @@ OpenTripPlanner (OTP) is a powerful open-source routing engine that supports mul
 ```{r}
 #| eval: false
 otpcon = otp_connect(
-  hostname = "otp.robinlovelace.net",
-  ssl = TRUE,
-  port = 443,
+  hostname = "34.39.7.234",
+  ssl = FALSE,
+  port = 8080,
   router = "west-yorkshire"
 )
 ```
@@ -112,20 +112,12 @@ tm_shape(desire_lines) +
   tm_dots(fill = "red", size = 0.5)
 ```
 
-## Extracting Route Endpoints
+Note: you can extract start and end points as follows:
 
 ```{r}
-# Get top 3 desire lines
-desire_top = desire_lines |>
-  slice_max(order_by = all, n = 3)
-
 # Extract start and end points
-fromPlace = st_sf(
-  data.frame(id = desire_top$from, geometry = lwgeom::st_startpoint(desire_top))
-)
-toPlace = st_sf(
-  data.frame(id = desire_top$to, geometry = lwgeom::st_endpoint(desire_top))
-)
+fromPlace = lwgeom::st_startpoint(desire_top) 
+toPlace = lwgeom::st_endpoint(desire_top)
 ```
 
 ## Calculating Routes

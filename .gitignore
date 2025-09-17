@@ -11,3 +11,5 @@ cache/
 **/*.quarto_ipynb
 site_libs/
 *.html
+
+/.luarc.json

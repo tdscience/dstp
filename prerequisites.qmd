@@ -72,7 +72,7 @@ extra_tags = c(
   "cycleway"
 )
 osm_network = osmextract::oe_get(
-  place = "Leeds, UK",
+  place = study_area,
   boundary = study_area,
   boundary_type = "clipsrc",
   extra_tags = extra_tags

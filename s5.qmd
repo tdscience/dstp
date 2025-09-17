@@ -42,8 +42,8 @@ OpenTripPlanner (OTP) is a powerful open-source routing engine that supports mul
 ```{r}
 #| eval: false
 otpcon = otp_connect(
-  hostname = "34.39.7.234",
-  ssl = FALSE,
+  hostname = "otp.robinlovelace.net",
+  ssl = TRUE,
   port = 8080,
   router = "west-yorkshire"
 )
@@ -89,13 +89,25 @@ Desire lines represent travel demand between origin-destination pairs.
 
 ## Loading OD Data
 
+We'll import and apply basic preprocessing steps to desire lines from the National Trip End Model (NTEM).
+Note that we keep the raw data unchanged for reproducibility.
+
 ```{r}
 # Load desire lines data
-desire_lines = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_flow.geojson") |>
+desire_lines_raw = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_flow.geojson")
+desire_lines = desire_lines_raw |>
   select(from, to, all, walk, drive, cycle)
 
 # Load zone centroids
 centroids = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_cents.geojson")
+```
+
+We'll also create a smaller subset of the desire lines for demonstration purposes.
+
+```{r}
+# Filter for top 5 desire lines by total trips
+desire_top = desire_lines |>
+  slice_max(order_by = all, n = 5)
 ```
 
 ## Visualizing Desire Lines
@@ -112,12 +124,18 @@ tm_shape(desire_lines) +
   tm_dots(fill = "red", size = 0.5)
 ```
 
-Note: you can extract start and end points as follows:
+Extract start and end points as follows:
 
 ```{r}
 # Extract start and end points
-fromPlace = lwgeom::st_startpoint(desire_top) 
-toPlace = lwgeom::st_endpoint(desire_top)
+fromPlace = sf::st_sf(
+  data.frame(id = desire_top$from),
+  geometry = lwgeom::st_startpoint(desire_top)
+)
+toPlace = sf::st_sf(
+  data.frame(id = desire_top$to),
+  geometry = lwgeom::st_endpoint(desire_top)
+)
 ```
 
 ## Calculating Routes
@@ -133,6 +151,13 @@ routes_drive_top = otp_plan(
   toID = toPlace$id,
   mode = "CAR"
 )
+```
+
+```{r}
+#| eval: false
+#| echo: false
+# stplanr way of doing it, but lacks join:
+routes_drive_top = route(l = desire_top, route_fun = otp_plan, mode = "CAR", otpcon = otpcon)
 ```
 
 ```{r}
@@ -152,7 +177,9 @@ tm_shape(routes_drive_top) +
 
 Route networks aggregate individual routes to show cumulative traffic flow.
 
-## Creating Route Networks
+## Joining routes to create a route network
+
+The full dataset can be loaded as follows:
 
 ```{r}
 #| eval: false
@@ -161,17 +188,40 @@ routes_drive = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/rou
 routes_transit = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson")
 ```
 
+We'll join this with the desire lines data to get trip counts associated with each route.
+
 ```{r}
-#| echo: false
-# Load pre-calculated data for demonstration
-routes_drive = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson")
+names(desire_lines)
+nrow(desire_lines)
+names(routes_drive)
+nrow(routes_drive)
+nrow(routes_transit)
 ```
+
+```{r}
+routes_drive_joined = dplyr::left_join(
+  routes_drive |>
+    rename(from = fromPlace, to = toPlace),
+  desire_lines |>
+    sf::st_drop_geometry()
+)
+```
+
+```{r}
+routes_transit_joined = dplyr::left_join(
+  routes_transit |>
+    rename(from = fromPlace, to = toPlace),
+  desire_lines |>
+    sf::st_drop_geometry()
+)
+```
+
 
 ## Aggregating Routes
 
 ```{r}
 # Create route network by aggregating overlapping routes
-rnet_drive = overline(routes_drive, "drive")
+rnet_drive = overline(routes_drive_joined, "drive")
 ```
 
 ## Visualizing Route Networks
@@ -192,13 +242,27 @@ Network centrality measures help identify critical infrastructure.
 ## Preparing Network Data
 
 ```{r}
-# Download road network data
-roads = oe_get("Isle of Wight", extra_tags = c("maxspeed", "oneway"))
+zones = zonebuilder::zb_zone("Leeds", n_circles = 3)
+study_area = zones |>
+  sf::st_union()
+extra_tags = c(
+  "maxspeed",
+  "lit",
+  "cycleway"
+)
+roads = osmextract::oe_get_network(
+  mode= "driving",
+  place = study_area,
+  boundary = study_area,
+  boundary_type = "clipsrc",
+  extra_tags = extra_tags
+)
 
 # Filter for main roads
 roads = roads |>
   filter(!is.na(highway)) |>
-  filter(highway %in% c("primary", "secondary", "tertiary", "residential", "unclassified"))
+  filter(highway %in% c("primary", "secondary", "tertiary", "residential", "unclassified")) |>
+  sf::st_cast("LINESTRING") 
 
 # Create network graph
 graph = weight_streetnet(roads)

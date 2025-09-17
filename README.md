@@ -1,4 +1,20 @@
+# Data Science for Transport Planning
+
+
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/tdscience/dstp?quickstart=1)
+
+
+**Note:** Tickets are now sold out
+
+## Learning Objectives
+
+- Understand the role of data science in transport planning.
+- Learn how to find, import, clean, and analyze transport data.
+- Develop skills in data visualization and reporting.
+
+## Registration
+
+See [store.leeds.ac.uk](https://store.leeds.ac.uk/conferences-and-events/environment/institute-of-transport-studies/0925dstp2-data-science-for-transport-planning) for registration details.
 
 # Data Science for Transport Planning
 
@@ -25,7 +41,11 @@ See the [prerequisites page](prerequisites.qmd) for detailed setup instructions.
 
 The course covers 7 sessions over 2 days. See the [schedule page](schedule.qmd) for details.
 
-## Repository Structure
+## Technical Information
+
+<details>
+
+The repository structure is as follows:
 
 - `s1.qmd` to `s7.qmd`: Course session materials
 - `data/`: Sample datasets used in the course
@@ -33,7 +53,7 @@ The course covers 7 sessions over 2 days. See the [schedule page](schedule.qmd) 
 - `.devcontainer/`: DevContainer configuration for consistent development environment
 - `.github/`: GitHub Actions workflows for publishing
 
-## Running Locally
+### Running Locally
 
 This project uses Quarto to generate the website. To run locally:
 
@@ -44,7 +64,7 @@ This project uses Quarto to generate the website. To run locally:
 
 Alternatively, use the "Open in Codespaces" button above for an instant cloud development environment.
 
-## Contributing
+### Contributing
 
 Contributions are welcome! Please:
 
@@ -61,3 +81,5 @@ This project is licensed under CC BY-SA 4.0. See [LICENSE](LICENSE) for details.
 For course inquiries: [Robin Lovelace](https://environment.leeds.ac.uk/transport/staff/953/professor-robin-lovelace)
 
 Repository maintainer: [Robin Lovelace](https://www.robinlovelace.net/)
+
+</details>

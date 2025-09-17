@@ -126,6 +126,8 @@ leeds_desire_lines = get_pct_lines(region = "west-yorkshire")
 
 For geographic boundaries and census data, use the ONS Geoportal or custom dataset tool.
 
+Get the data from https://geoportal.statistics.gov.uk/ as follows (see Exercises below for more details):
+
 ```{r}
 #| eval: false
 # Download Local Authority Districts
@@ -206,7 +208,30 @@ collisions_clean = collisions_clean |>
 ```
 -->
 
-## Data Quality Assessment
+## Importing official boundary data
+
+
+<!-- https://geoportal.statistics.gov.uk/search?q=local%20enterprise%20partnerships -->
+
+1. Navigate to the [ONS Geoportal](https://geoportal.statistics.gov.uk/) and search for Local Enterprise Partnerships (LEPs), using the checkboxes to find only 'Feature Services'.
+
+2. Get the URL of the endpoint for GeoJSON format of the 2021 LEP boundaries. Note: you need to click on the bottom right "I want to use this service" button and then on the "View API Resources" link to find the URL.
+
+3. Import the downloaded GeoJSON file into R using the `sf` package.
+
+4. Plot the result. It should look something like this:
+
+```{r}
+#| include: false
+lep_url = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Local_Enterprise_Partnerships_May_2021_EN_BFE_2022/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
+leps = sf::st_read(lep_url)
+```
+
+```{r}
+plot(sf::st_geometry(leps))
+```
+
+## Bonus: Data Quality Assessment
 
 1. Choose a dataset you've downloaded.
 2. Assess its quality by checking for:

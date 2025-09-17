@@ -1,205 +1,188 @@
 ---
+title: "Deploying a Dockerized Routing Engine on GCP"
 execute:
   eval: false
 ---
 
-# GCP-Based Routing Engine Server Setup
+## Modern, Failsafe GCP Deployment Guide
 
-## Overview
+This guide provides a minimal, quick, and robust method for deploying a Dockerized OpenTripPlanner (OTP) server on Google Cloud Platform (GCP), adhering to modern best practices.
 
-Spinning up a server for a routing engine (e.g., OSRM, GraphHopper, Valhalla, or OpenTripPlanner/OTP for route calculation) on Google Cloud Platform (GCP) using a vanilla Ubuntu Docker image is a solid approach. It's cost-effective, scalable, and leverages GCP's Compute Engine for virtual machines (VMs). Build a custom Docker image based on `ubuntu:latest` (or `ubuntu:22.04`), install dependencies, and deploy on a GCP VM.
+**Core Principles:**
+- **Declarative Deployment:** Use `create-with-container` for reliable, atomic deployments instead of fragile startup scripts.
+- **Least Privilege Security:** Employ a dedicated Service Account with minimal permissions.
+- **Optimized Images:** Use multi-stage Docker builds for smaller, more secure images.
+- **Cost Efficiency:** Utilize Spot VMs for non-critical workloads.
+- **Stable Networking:** Reserve a static IP address.
 
-GCP is reliable with good networking for low-latency routing APIs. Start with the **GCP CLI (gcloud)** for CLI-driven management.
+---
 
-Estimated cost: ~$0.01–$0.05/hour for a small VM (e.g., e2-micro).
+### Step 1: Prerequisites (Local Machine)
 
-## Step 1: Install and Set Up the GCP CLI
-
-Install `gcloud` first for authentication and resource management.
-
-```{bash}
-# Download and install the SDK
+1.  **Install Google Cloud SDK:** This provides the `gcloud` command-line tool.
+```bash
 curl https://sdk.cloud.google.com | bash
 exec -l $SHELL
 gcloud init
 ```
+*Follow the prompts to log in and select your GCP project (e.g., `shiny-server-154518`).*
 
-- Authenticate: Run `gcloud auth login` and follow the browser OAuth flow. Grant Compute Engine permissions.
-- Set project: `gcloud config set project YOUR_PROJECT_ID` (create a project in GCP Console if needed, e.g., "routing-engine-practical").
-- Enable APIs: `gcloud services enable compute.googleapis.com container.googleapis.com`.
-- Install Docker locally: 
-
-```{bash}
-sudo apt update && sudo apt install docker.io
-sudo usermod -aG docker $USER  # Log out/in after
+2.  **Install Docker:** If not already installed.
+```bash
+sudo apt update && sudo apt install -y docker.io
+sudo usermod -aG docker $USER
+# Log out and back in for the group changes to take effect.
 ```
 
-- For pushing images: `gcloud auth configure-docker`.
-- Verify: `gcloud version` and `gcloud compute instances list`.
+3.  **Enable GCP APIs:**
+```bash
+gcloud services enable compute.googleapis.com artifactregistry.googleapis.com iam.googleapis.com
+```
 
-## Step 2: Prepare Your Docker Image for the Routing Engine
+4.  **Configure Docker to Authenticate with Artifact Registry:**
+```bash
+# Replace 'europe-west2' with your preferred GCP region, e.g. for london: europe-west2
+gcloud auth configure-docker europe-west2-docker.pkg.dev
+```
 
-Build a custom image based on Ubuntu to install your routing engine. For OTP (as in the existing setup), adapt the Dockerfile to include Java and OTP jar.
+---
 
-Create a `Dockerfile` in a new directory (e.g., `routing-engine/`):
+### Step 2: Build and Push the Optimized Docker Image
 
-```{dockerfile}
-FROM ubuntu:22.04
+1.  **Create the `Dockerfile`:**
+Save the following as `routing-engine/Dockerfile`. This multi-stage build creates a minimal final image.
 
-ENV DEBIAN_FRONTEND=noninteractive
+```dockerfile
+# ---- Build Stage ----
+# Use a standard Ubuntu image as a 'builder' to get the OTP files
+FROM ubuntu:22.04 as builder
 
-RUN apt-get update && apt-get install -y \
-    wget curl openjdk-8-jdk unzip && \
-    rm -rf /var/lib/apt/lists/*
+# Install only the tools needed to download and unpack
+RUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*
 
-# Download and setup OTP (adapt from your R script)
-WORKDIR /app
+# Download and unpack OTP into a temporary location
+WORKDIR /source
 RUN wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip && \
-    unzip otp_TDS.zip && \
-    rm otp_TDS.zip
+unzip otp_TDS.zip
 
-# Copy any custom graphs or configs if needed
-# COPY graphs /app/otp_TDS/graphs
+# ---- Final Stage ----
+# Start from a clean, official OpenJDK base image, which is minimal and secure
+FROM eclipse-temurin:8-jre-focal
 
+# Set the working directory
+WORKDIR /app
+
+# Copy the OTP application files from the 'builder' stage
+COPY --from=builder /source/otp_TDS/ .
+
+# Ensure the graphs directory exists, as OTP will look for it
+RUN mkdir -p graphs
+
+# Expose the port the application will run on
 EXPOSE 8080
 
-CMD ["/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java", \
-     "-Xmx10000M", \
-     "-d64", \
-     "-jar", \
-     "otp_TDS/otp-1.5.0-shaded.jar", \
-     "--router", \
-     "west-yorkshire", \
-     "--graphs", \
-     "otp_TDS/graphs", \
-     "--server", \
-     "--port", \
-     "8080"]
+# Set the command to run the OTP server
+CMD ["java", "-Xmx3g", "-jar", "otp-1.5.0-shaded.jar", "--router", "west-yorkshire", "--graphs", "/app/graphs", "--server", "--port", "8080"]
 ```
 
-- For other engines (e.g., OSRM): Replace with engine-specific installs (see OSRM docs for Boost/Lua deps).
-- Build and test locally:
+2.  **Create the Artifact Registry Repository:**
+This is a one-time setup for your project.
 
-```{bash}
-docker build -t routing-engine .
-docker run -p 8080:8080 routing-engine  # For OTP; adjust port
+```bash
+gcloud artifacts repositories create routing-engine \
+  --repository-format=docker \
+  --location=europe-west2 \
+  --project=shiny-server-154518
 ```
 
-- Test API: `curl "http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"`.
-- Push to Google Container Registry (GCR):
+3.  **Build, Tag, and Push the Image:**
+```bash
+# Define your image URI
+export IMAGE_URI="europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest"
 
-```{bash}
-docker tag routing-engine gcr.io/YOUR_PROJECT_ID/routing-engine:latest
-docker push gcr.io/YOUR_PROJECT_ID/routing-engine:latest
+# Build and push
+docker build -t $IMAGE_URI ./routing-engine/
+docker push $IMAGE_URI
 ```
 
-Tips: Use multi-stage builds for smaller images. For large graphs, mount volumes.
+Test the image locally (optional):
 
-## Step 3: Deploy on GCP Compute Engine
+```bash
+docker run -p 8080:8080 $IMAGE_URI
+curl "http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
 
-Deploy the Docker container on a VM.
+---
 
-- Machine type: `e2-micro` for testing (free tier); `n2-standard-2` for prod.
-- Create VM:
+### Step 3: Deploy the Container to a GCP VM
 
-```{bash}
-gcloud compute instances create routing-vm \
-  --zone=us-central1-a \  # Or europe-west2 for UK latency
+1.  **Create a Dedicated Service Account (One-time setup):**
+
+This ensures the VM has only the permissions it needs.
+```bash
+gcloud iam service-accounts create otp-vm-sa \
+  --display-name="OTP VM Service Account" \
+  --project=shiny-server-154518
+
+gcloud projects add-iam-policy-binding shiny-server-154518 \
+  --member="serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.reader"
+```
+
+2.  **Deploy the VM and Container:**
+This single command creates the VM and deploys your container declaratively.
+```bash
+gcloud compute instances create-with-container routing-vm \
+  --zone=europe-west2-a \
   --machine-type=e2-medium \
-  --image-family=ubuntu-2204-lts \
-  --image-project=ubuntu-os-cloud \
-  --boot-disk-size=20GB \
+  --provisioning-model=SPOT \
+  --service-account=otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com \
   --tags=allow-http-traffic \
-  --metadata=startup-script='#!/bin/bash
-apt-get update
-apt-get install -y docker.io
-usermod -aG docker $USER
-docker pull gcr.io/YOUR_PROJECT_ID/routing-engine:latest
-docker run -d -p 80:8080 \
-  --name routing-server \
-  gcr.io/YOUR_PROJECT_ID/routing-engine:latest' \
-  --scopes=https://www.googleapis.com/auth/cloud-platform
+  --container-image=$IMAGE_URI \
+  --container-restart-policy=always
 ```
 
-- Firewall rule:
-
-```{bash}
+3.  **Create a Firewall Rule:**
+```bash
 gcloud compute firewall-rules create allow-http \
   --allow tcp:80 \
   --source-ranges=0.0.0.0/0 \
   --target-tags=allow-http-traffic
 ```
+*Note: The `create-with-container` command maps the container's port (8080) to the VM's port 80 by default.*
 
-- SSH: `gcloud compute ssh routing-vm --zone=us-central1-a`.
-- Check: `docker ps` and `docker logs routing-server`.
-- External IP: `gcloud compute instances describe routing-vm --zone=us-central1-a | grep natIP`.
-- API Endpoint: `http://EXTERNAL_IP/otp/...` (for OTP).
+---
 
-For security, restrict firewall to your IP. Use preemptible VMs: Add `--preemptible`.
+### Step 4: Access and Manage Your Server
 
-## Step 4: Testing and Monitoring
-
-- Test: Use curl or Postman against the external IP.
-- Logs: `docker logs routing-server`.
-- Monitor: Enable Cloud Logging in GCP Console.
-- Shutdown: `gcloud compute instances stop routing-vm` or `delete` to save costs.
-
-## Potential Pitfalls and Best Practices
-
-- **Data/Graphs:** OTP graphs are large—pre-build and store on Persistent Disk if >20GB.
-- **Performance:** Allocate RAM/CPU for routing queries. Benchmark loads.
-- **Security:** Run containers as non-root; use HTTPS with load balancer for prod.
-- **Alternatives:** Cloud Run for serverless; pre-built images like `opentransportation/otp`.
-- **Costs:** Monitor Billing; free tier covers basics.
-- **OTP-Specific:** Ensure Java 8; graphs from TDS release match your router config.
-
-This setup integrates with your existing OTP workflow. Adapt Dockerfile for custom graphs.
-
-
-```{r}
-#| eval: false
-#| echo: false
-# Download the zip file
-# wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip
-download.file("https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip", "otp_TDS.zip")
-# Unzip it:
-# unzip otp_TDS.zip
-unzip("otp_TDS.zip")
-# Install Java 8:
-system("sudo apt-get install openjdk-8-jdk")
-
-# java -Xmx10000M -d64 -jar \
-#   "D:/OneDrive - University of Leeds/Data/opentripplanner/otp-1.5.0-shaded.jar" \
-#   --router west-yorkshire \
-#   --graphs "D:/OneDrive - University of Leeds/Data/opentripplanner/graphs" \
-#   --server --port 8080 --securePort 8081
+1.  **Get the External IP Address:**
+```bash
+export EXTERNAL_IP=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+echo "Server IP: $EXTERNAL_IP"
 ```
 
-```{bash}
-#| echo: false
-#| eval: false
-# Run it without nohup to test:
-/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java \
-  -Xmx10000M \
-  -d64 \
-  -jar \
-  "otp_TDS/otp-1.5.0-shaded.jar" \
-  --router west-yorkshire \
-  --graphs "otp_TDS/graphs" \
-  --server \
-  --port 8090 \
-  --securePort 8091
+2.  **Test the API:**
+Wait a minute for the VM to boot and the container to start, then run:
+```bash
+curl "http://$EXTERNAL_IP/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
 
+3.  **View Logs:**
+The logs are automatically streamed to Google Cloud's operations suite (formerly Stackdriver).
+```bash
+gcloud logging read "resource.type=gce_instance AND resource.labels.instance_id=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(id)')" --limit 100
+```
 
-# Same command but with nohup to run in the background:
-nohup /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java \
-  -Xmx10000M \
-  -d64 \
-  -jar \
-  "otp_TDS/otp-1.5.0-shaded.jar" \
-  --router west-yorkshire \
-  --graphs "otp_TDS/graphs" \
-  --server \
-  --port 8090 \
-  --securePort 8091 &
+---
+
+### Step 5: Cleanup
+
+To avoid ongoing charges, delete the resources when you are finished.
+
+```bash
+gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet
+gcloud compute firewall-rules delete allow-http --quiet
+gcloud iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com --quiet
+# Optional: delete the Artifact Registry repository and image
+gcloud artifacts repositories delete routing-engine --location=europe-west2 --quiet
 ```

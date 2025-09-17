@@ -15,7 +15,7 @@ pagetitle: "Course Schedule"
 | 12:30 - 13:30 | Lunch                                                                  |   |
 | 13:30 - 15:00 | Origin-destination data analysis                                        | [{{< bi file-earmark-code size=1.5em >}}](s2.qmd)    |
 | 15:00 - 15:15 | Break and refreshments                                                 |    |
-| 15:15 - 17:00 | OD Transport data visualisation                                        | [{{< bi file-earmark-code size=1.5em >}}](s5.qmd) |
+| 15:15 - 17:00 | OD Transport data visualisation                                        | [{{< bi file-earmark-code size=1.5em >}}](s3.qmd) |
 
 : {tbl-colwidths="[20,75,5]" .striped}
 
@@ -29,7 +29,7 @@ pagetitle: "Course Schedule"
 |---------------|-------------------------------------------------------------------------|:---:|
 | 09:00 - 10:45 | Spatio-temporal data<br>- Demonstration of open-access OD data with hourly resolution<br>- Demonstration with stats19 data for road safety analysis | [{{< bi file-earmark-code size=1.5em >}}](s4.qmd) |
 | 10:45 - 11:15 | Break and refreshments                                                 | |
-| 11:15 - 12:30 | Routing and route network analysis<br>- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data | [{{< bi file-earmark-code size=1.5em >}}](s3.qmd)|
+| 11:15 - 12:30 | Routing and route network analysis<br>- Setting up an interface to a routing engine and using it to calculate routes and distances using GTFS data | [{{< bi file-earmark-code size=1.5em >}}](s5.qmd)|
 | 12:30 - 13:30 | Lunch                                                                  | |
 | 13:30 - 15:00 | Best practices for data science in transport planning<br>- Version control with Git and GitHub<br>- Reproducible research with Quarto | [{{< bi file-earmark-code size=1.5em >}}](s6.qmd) |
 | 15:00 - 16:00 | Advanced topics<br>- Visualising large datasets<br>- Route network integration (e.g., OSM networks)<br>- Deploying your work as web applications | [{{< bi file-earmark-code size=1.5em >}}](s7.qmd)  |

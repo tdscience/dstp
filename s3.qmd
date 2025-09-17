@@ -13,7 +13,7 @@ editor:
 
 # Introduction
 
-Building upon the previous session on "Origin-destination data analysis", we will advance this topic by examining "data visualisation* techniques for OD transport data.
+Building upon the previous session on "Origin-destination data analysis", we will advance this topic by examining *data visualisation* techniques for OD transport data.
 
 By the end of this session, you should be able to:
 
@@ -28,12 +28,13 @@ By the end of this session, you should be able to:
 Below are the packages we will use throughout this practical:
 
 ```{r}
-library(sf)        # vector data package
-library(tmap) 
-library(stplanr) 
-library(tidyverse)    
-library(ggspatial)
 
+
+library(sf)        # Simple Features - for reading, writing, and manipulating vector spatial data 
+library(tmap)      # Thematic Maps - for creating attractive static and interactive maps with layered geographic data
+library(stplanr)   # Sustainable Transport Planning - specialised tools for transport analysis and route planning
+library(tidyverse) # Grammar of Graphics - powerful and flexible data visualization package 
+library(ggspatial) # Spatial extensions for ggplot2
 ```
 
 ```{r}
@@ -41,7 +42,7 @@ library(ggspatial)
 tmap_mode("view")
 ```
 
-# Flow Map Visualization
+# Flow Map Visualisation
 
 Flow maps are useful for understanding the volume of travel between origins and destinations.
 In this section, we will:
@@ -189,7 +190,7 @@ Let's begin by loading the following two datasets
 # load the station location dataset
 bike_docking_stations = read_sf("https://github.com/itsleeds/tds/releases/download/2025/p3-london-bike_docking_stations.geojson")
 # load the bike trip origin and destination dataset
-bike_trips = read_csv("https://github.com/itsleeds/tds/releases/download/2025/p3-london-bike_trips.csv")
+bike_trips = read.csv("https://github.com/itsleeds/tds/releases/download/2025/p3-london-bike_trips.csv")
 ```
 
 Explore these datasets using the functions you have learnt (e.g. head, dim)

@@ -2,7 +2,7 @@
 title: "Data Science for Transport Planning: Day 1"
 author: "Professor Robin Lovelace"
 date: "September 18, 2025"
-format: revealjs
+format: clean-revealjs
 bibliography: references.bib
 ---
 
@@ -247,12 +247,7 @@ Press Ctrl+Tab to switch from IDE to browser with course content and other thing
 
 # Practical session 0
 
-## Setting-up your project
-
-:::: columns
-::: {.column width="50%"}
-
-### Creating a new project folder/repo 
+## Set-up: project folder/repo 
 
 Option 1: Create an empty folder on your computer (beginner level)
 
@@ -269,29 +264,27 @@ Option 2: Create a new repository on GitHub (more advanced, recommended)
 gh repo create dstp-rl --public --clone # replace 'rl' with your initials
 ```
 
-:::
-::: {.column width="50%"}
-
 ## Opening your project
 
 Option 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu
 
 Option 2 (RStudio - recommended): Open the folder you created in RStudio using the `rstudioapi` package, e.g. with the following command in R Console:
 
-``` r
+```r
 rstudioapi::openProject("C:/path/to/your/folder/dstp")
 ```
 
 Option 3: (VS Code): Open the folder you created in VS Code using the File > Open Folder menu
+
+```sh
+code path/to/your/folder/dstp
+```
 
 Option 4 (VS Code - recommended): 
 
 ```sh
 code path/to/your/folder/dstp
 ```
-
-:::
-::::
 
 ## Minimise context switching
 

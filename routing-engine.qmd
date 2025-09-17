@@ -9,9 +9,13 @@ execute:
 This guide provides a minimal and robust method for deploying a Dockerized OpenTripPlanner (OTP) server on Google Cloud Platform (GCP), adhering to modern best practices.
 
 **Core Principles:**
+
 - **Declarative Deployment:** Use `create-with-container` for reliable, atomic deployments.
+
 - **Least Privilege Security:** Employ a dedicated Service Account with minimal permissions.
+
 - **Optimized Images:** Use multi-stage Docker builds for smaller, more secure images.
+
 - **Cost Efficiency:** Utilize Spot VMs for non-critical workloads.
 
 ---
@@ -21,61 +25,75 @@ This guide provides a minimal and robust method for deploying a Dockerized OpenT
 Prepare your local environment and GCP project. This only needs to be done once.
 
 1.  **Install Local Tools & Configure GCP:**
+
     - Install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) and [Docker](https://docs.docker.com/engine/install/).
+
     - Log in to GCP and initialize your project:
-      ```bash
-      gcloud init
-      ```
+
+```bash
+gcloud init
+```
+
     - Enable required APIs:
-      ```bash
-      gcloud services enable compute.googleapis.com artifactregistry.googleapis.com iam.googleapis.com
-      ```
+
+```bash
+gcloud services enable compute.googleapis.com artifactregistry.googleapis.com iam.googleapis.com
+```
+
     - Configure Docker to authenticate with Artifact Registry (replace `europe-west2` with your region):
-      ```bash
-      gcloud auth configure-docker europe-west2-docker.pkg.dev
-      ```
+
+```bash
+gcloud auth configure-docker europe-west2-docker.pkg.dev
+```
 
 2.  **Create the Dockerfile:**
-    Save the following as `routing-engine/Dockerfile`. This version includes Nginx and Certbot to automatically handle HTTPS.
-    ```dockerfile
-    # ---- Build Stage ----
-    FROM ubuntu:22.04 as builder
-    RUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*
-    WORKDIR /source
-    RUN wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip && unzip otp_TDS.zip
 
-    # ---- Final Stage ----
-    FROM eclipse-temurin:8-jre-focal
-    RUN apt-get update && apt-get install -y nginx certbot python3-certbot-nginx supervisor && rm -rf /var/lib/apt/lists/*
-    WORKDIR /app
-    COPY --from=builder /source/otp_TDS/ .
-    RUN mkdir -p graphs
-    RUN rm -f /etc/nginx/sites-enabled/default
-    COPY nginx.conf /etc/nginx/sites-available/otp
-    RUN ln -s /etc/nginx/sites-available/otp /etc/nginx/sites-enabled/
-    COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-    COPY startup.sh /startup.sh
-    RUN chmod +x /startup.sh
-    EXPOSE 80 443 8080
-    CMD ["/startup.sh"]
-    ```
+    Save the following as `routing-engine/Dockerfile`. This version includes Nginx and Certbot to automatically handle HTTPS.
+
+```dockerfile
+# ---- Build Stage ----
+FROM ubuntu:22.04 as builder
+RUN apt-get update && apt-get install -y wget unzip && rm -rf /var/lib/apt/lists/*
+WORKDIR /source
+RUN wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip && unzip otp_TDS.zip
+
+# ---- Final Stage ----
+FROM eclipse-temurin:8-jre-focal
+RUN apt-get update && apt-get install -y nginx certbot python3-certbot-nginx supervisor && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY --from=builder /source/otp_TDS/ .
+RUN mkdir -p graphs
+RUN rm -f /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/sites-available/otp
+RUN ln -s /etc/nginx/sites-available/otp /etc/nginx/sites-enabled/
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY startup.sh /startup.sh
+RUN chmod +x /startup.sh
+EXPOSE 80 443 8080
+CMD ["/startup.sh"]
+```
+
     *Note: You will also need to create `nginx.conf`, `supervisord.conf`, and `startup.sh` in your project directory.*
 
 3.  **Create GCP Resources:**
+
     - **Artifact Registry Repository:**
-      ```bash
-      gcloud artifacts repositories create routing-engine \
-        --repository-format=docker \
-        --location=europe-west2 \
-        --project=shiny-server-154518
-      ```
+
+```bash
+gcloud artifacts repositories create routing-engine \
+  --repository-format=docker \
+  --location=europe-west2 \
+  --project=shiny-server-154518
+```
+
     - **Service Account:**
-      ```bash
-      gcloud iam service-accounts create otp-vm-sa --display-name="OTP VM Service Account" --project=shiny-server-154518
-      gcloud projects add-iam-policy-binding shiny-server-154518 \
-        --member="serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com" \
-        --role="roles/artifactregistry.reader"
-      ```
+
+```bash
+gcloud iam service-accounts create otp-vm-sa --display-name="OTP VM Service Account" --project=shiny-server-154518
+gcloud projects add-iam-policy-binding shiny-server-154518 \
+  --member="serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.reader"
+```
 
 ---
 
@@ -84,30 +102,32 @@ Prepare your local environment and GCP project. This only needs to be done once.
 Now, build the Docker image and deploy it to a new VM.
 
 1.  **Build and Push the Docker Image:**
-    ```bash
-    export IMAGE_URI="europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest"
-    docker build -t $IMAGE_URI ./routing-engine/
-    docker push $IMAGE_URI
-    ```
+
+```bash
+export IMAGE_URI="europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest"
+docker build -t $IMAGE_URI ./routing-engine/
+docker push $IMAGE_URI
+```
 
 2.  **Deploy the VM and Create Firewall Rule:**
-    ```bash
-    # Create the VM with the container
-    gcloud compute instances create-with-container routing-vm \
-      --zone=europe-west2-a \
-      --machine-type=e2-medium \
-      --provisioning-model=SPOT \
-      --service-account=otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com \
-      --tags=allow-http-traffic \
-      --container-image=$IMAGE_URI \
-      --container-restart-policy=always
 
-    # Create a firewall rule to allow traffic
-    gcloud compute firewall-rules create allow-otp-traffic \
-      --allow tcp:80,tcp:443,tcp:8080 \
-      --source-ranges=0.0.0.0/0 \
-      --target-tags=allow-http-traffic
-    ```
+```bash
+# Create the VM with the container
+gcloud compute instances create-with-container routing-vm \
+  --zone=europe-west2-a \
+  --machine-type=e2-medium \
+  --provisioning-model=SPOT \
+  --service-account=otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com \
+  --tags=allow-http-traffic \
+  --container-image=$IMAGE_URI \
+  --container-restart-policy=always
+
+# Create a firewall rule to allow traffic
+gcloud compute firewall-rules create allow-otp-traffic \
+  --allow tcp:80,tcp:443,tcp:8080 \
+  --source-ranges=0.0.0.0/0 \
+  --target-tags=allow-http-traffic
+```
 
 ---
 
@@ -116,47 +136,54 @@ Now, build the Docker image and deploy it to a new VM.
 After deployment, verify that the server is running correctly.
 
 1.  **Get the External IP Address:**
-    ```bash
-    export EXTERNAL_IP=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
-    echo "Server IP: $EXTERNAL_IP"
-    ```
+
+```bash
+export EXTERNAL_IP=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
+echo "Server IP: $EXTERNAL_IP"
+```
 
 2.  **Test the API:**
+
     - **Via HTTPS (recommended):**
-      ```bash
-      curl "https://otp.robinlovelace.net/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
-      ```
+
+```bash
+curl "https://otp.robinlovelace.net/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
+
     - **Via direct IP and port (for teaching/debugging):**
-      ```bash
-      curl "http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
-      ```
+
+```bash
+curl "http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"
+```
+
     - **Interactive Map:** Open `https://otp.robinlovelace.net` in your browser.
 
 3.  **View Logs:**
-    ```bash
-    gcloud logging read "resource.type=gce_instance AND resource.labels.instance_id=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(id)')" --limit 100
-    ```
+
+```bash
+gcloud logging read "resource.type=gce_instance AND resource.labels.instance_id=$(gcloud compute instances describe routing-vm --zone=europe-west2-a --format='get(id)')" --limit 100
+```
 
 ---
 
 ### Step 4: Managing the Deployment
 
 **Updating the Server:**
+
 To apply changes (e.g., an updated `Dockerfile`), you must rebuild the image and redeploy the VM.
 
 1.  **Delete the existing VM:**
-    ```bash
-    gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet
-    ```
-2.  **Follow Step 2 again** to build the new image and deploy the VM.
 
 ```bash
-# And for Ports 80 and 443
-gcloud compute firewall-rules update allow-otp --allow tcp:80,tcp:443,tcp:8080
+gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet
 ```
 
+2.  **Follow Step 2 again** to build the new image and deploy the VM.
+
 **Cleaning Up Resources:**
+
 To avoid ongoing charges, delete the resources when you are finished.
+
 ```bash
 # Delete the VM instance
 gcloud compute instances delete routing-vm --zone=europe-west2-a --quiet

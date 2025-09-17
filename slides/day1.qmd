@@ -124,18 +124,15 @@ osm_network |>
 
 ## The DSTP Team
 
-::: {layout-ncol=3}
-
+::: {layout-ncol="3"}
 ![](images/paste-9.png)
 
 ![](images/paste-8.png)
 
 ![](images/paste-10.png)
-
 :::
 
 Source: GitHub
-
 
 ```{=html}
 <!-- ### Robin Lovelace
@@ -184,8 +181,7 @@ Imagine a workflow that enabled:
 
 ![](images/paste-3.png)
 
----
-
+------------------------------------------------------------------------
 
 ::::: columns
 ::: {.column width="40%"}
@@ -197,7 +193,7 @@ Imagine a workflow that enabled:
 
 3.  Open access to the code
 
-4.  Fully reproducible 
+4.  Fully reproducible
 
 5.  Project deployed in web app
 :::
@@ -207,7 +203,7 @@ Imagine a workflow that enabled:
 :::
 :::::
 
----
+------------------------------------------------------------------------
 
 ## Example: networkmerge
 
@@ -248,6 +244,58 @@ Source: "Dependency" by Randall Munroe: [xkcd.com/2347/](https://xkcd.com/2347/)
 ::: callout-tip
 Press Ctrl+Tab to switch from IDE to browser with course content and other things for an efficient workflow
 :::
+
+# Practical session 0
+
+## Setting-up your project
+
+:::: columns
+::: {.column width="50%"}
+
+### Creating a new project folder/repo 
+
+Option 1: Create an empty folder on your computer (beginner level)
+
+- Via Windows Explore or other GUI
+- Via command line (e.g., `mkdir dstp-rl`, but replace 'rl' with your initials)
+- Via RStudio or VS Code
+
+Option 2: Create a new repository on GitHub (more advanced, recommended)
+
+- Via GitHub Desktop (beginner level)
+- Via `gh` command line tool (more advanced, recommended)
+
+```sh 
+gh repo create dstp-rl --public --clone # replace 'rl' with your initials
+```
+
+:::
+::: {.column width="50%"}
+
+## Opening your project
+
+Option 1 (RStudio): Open the folder you created in RStudio using the New Project graphical interface menu
+
+Option 2 (RStudio - recommended): Open the folder you created in RStudio using the `rstudioapi` package, e.g. with the following command in R Console:
+
+``` r
+rstudioapi::openProject("C:/path/to/your/folder/dstp")
+```
+
+Option 3: (VS Code): Open the folder you created in VS Code using the File > Open Folder menu
+
+Option 4 (VS Code - recommended): 
+
+```sh
+code path/to/your/folder/dstp
+```
+
+:::
+::::
+
+## Minimise context switching
+
+![](images/paste-11.png)
 
 ## Any questions before we move to the first practical session?
 

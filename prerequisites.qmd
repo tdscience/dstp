@@ -61,10 +61,7 @@ pkgs = c(
     "osmextract",
     "zonebuilder"
 )
-pkgs_to_install = pkgs[!pkgs %in% installed.packages()[, "Package"]]
-if (length(pkgs_to_install) > 0) {
-  pak::pak(pkgs_to_install)
-}
+pak::pak(pkgs)
 library(tidyverse)
 zones = zonebuilder::zb_zone("Leeds", n_circles = 3)
 study_area = zones |>

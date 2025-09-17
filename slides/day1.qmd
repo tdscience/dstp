@@ -73,6 +73,7 @@ To check you have the necessary software installed, try running the following co
 #| echo: true
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 if (!require("pak")) install.packages("pak")
+if (!require("pak")) install.packages("pak")
 pkgs = c(
     "sf",
     "tidyverse",
@@ -82,10 +83,7 @@ pkgs = c(
     "osmextract",
     "zonebuilder"
 )
-pkgs_to_install = pkgs[!pkgs %in% installed.packages()[, "Package"]]
-if (length(pkgs_to_install) > 0) {
-  pak::pak(pkgs_to_install)
-}
+pak::pak(pkgs)
 ```
 
 You should be able to generate the map on the next slide.
@@ -144,7 +142,7 @@ osm_network |>
 ### Me
 
 -   Currently using VS Code, Quarto, R, Google Gemini etc, Devcontainers
--   From Herefordshire, UK, work at the University of Leeds   
+-   From Herefordshire, UK, work at the University of Leeds\
 -   Random fact: I run 5 km every Saturday with double buggy
 :::
 
@@ -155,7 +153,6 @@ osm_network |>
 ### "If only I was told this earlier in my career"
 
 ::: incremental
-
 Imagine a workflow that enabled:
 
 -   Fewer context switches
@@ -164,10 +161,9 @@ Imagine a workflow that enabled:
 -   Automatic generation of results that update when the data change
 -   Control over how you export and publish your work 😎
 -   Full reproducibility and control for maximum benefit 🚀
-
 :::
 
-## Reproducible research
+## Reproducible workflows
 
 "Research is considered to be reproducible when the exact results can be reproduced if given access to the original data, software, or code." Source: [displayr.com](https://www.displayr.com/what-is-reproducible-research/)
 

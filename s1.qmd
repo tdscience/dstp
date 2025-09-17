@@ -4,7 +4,7 @@ title: "Finding, importing and cleaning transport datasets"
 
 # Introduction
 
-In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We will learn practical techniques using R to access and prepare these data for analysis.
+In this session, we will explore how to find, download, import, and clean transport-related datasets. Transport data comes from various sources such as government agencies, open data portals, and crowd-sourced platforms. We will learn practical techniques using R to access and prepare this data for analysis.
 
 This session covers:
 

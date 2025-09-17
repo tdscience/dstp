@@ -570,7 +570,7 @@
     "href": "slides/day1.html#housekeeping-ii",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Housekeeping II",
-    "text": "Housekeeping II\n\nFire Alarm\n\nIf the alarm sounds, leave the building via the 3 fire exits on the ground floor.\nThe assembly point is the grassed area to the side of ITS building.\n\nUse of Extension Leads & Adapters\n\nThe use of cube adapters is strictly prohibited at the University of Leeds.\nInternational chargers are advised against.\nAlternative plugs can be logged/loaned out from the Facilities Office."
+    "text": "Housekeeping II\n\nFire Alarm\n\nIf the alarm sounds, leave the building via the ground floor.\nThe assembly point is the grassed area outside\n\nUse of Extension Leads & Adapters\n\nCube adapters are prohibited.\nInternational chargers are advised against.\nAlternative plugs can be logged/loaned out from the Facilities Office."
   },
   {
     "objectID": "slides/day1.html#wifi",
@@ -594,11 +594,11 @@
     "text": "Setup check: The result"
   },
   {
-    "objectID": "slides/day1.html#about-us",
-    "href": "slides/day1.html#about-us",
+    "objectID": "slides/day1.html#the-dstp-team",
+    "href": "slides/day1.html#the-dstp-team",
     "title": "Data Science for Transport Planning: Day 1",
-    "section": "About us",
-    "text": "About us\nRobin Lovelace\n\nProfessor of Transport Data Science\nFocus: influencing decision-making, to make it more evidence-based\nR package developer and data scientist\nNew methods for more reproducible, data-driven and participatory transport planning"
+    "section": "The DSTP Team",
+    "text": "The DSTP Team\n\n\n\n\n\n\n\n\n\n\n\n\n\nSource: GitHub"
   },
   {
     "objectID": "slides/day1.html#about-you",

@@ -1,0 +1,223 @@
+---
+title: "Data Science for Transport Planning: Day 1"
+author: "Professor Robin Lovelace"
+date: "September 18, 2025"
+format: revealjs
+bibliography: references.bib
+---
+
+## Welcome!
+
+Data Science for Transport Planning
+
+**2-day course**
+
+18-19 September 2025
+
+## Agenda
+
+-   **10:00-11:00** Introduction to Data Science for Transport Planning
+-   11:00-12:30 Finding, importing and cleaning transport datasets
+-   12:30-13:30 Lunch
+-   13:30-15:00 Origin-destination data analysis
+-   15:00-15:15 Break and refreshments
+-   15:15-17:00 OD Transport data visualisation
+
+## Prerequisites
+
+### To run the code
+
+-   Computer to run the code
+    -   Either: A laptop with R, RStudio or VS Code and Docker or similar installed to run the code locally
+    -   Or: Access to a cloud-based environment for data science (e.g., GitHub Codespaces or Posit Cloud)
+
+## Learn and share
+
+The following will help:
+
+-   An interest in transport planning and knowledge of transport datasets
+-   A willingness to learn and share (LinkedIn, BlueSky, etc)
+-   A GitHub account (to ask questions on the Discussions page and share your own code)
+-   Familiarity with data science tools, e.g. R, Python, RStudio, VS Code
+
+## Housekeeping
+
+-   Connect to the UoL-Guest Wi-Fi network and enter your details.
+-   GitHub account sign-up if not done already.
+-   R and RStudio installation check, locally or in cloud environment.
+-   Coffee will be downstairs
+-   Toilets: Women's in front of Room 2.1, Men's by the stairs
+
+## WiFi
+
+![](../course/slides/images/paste-2.png)
+
+## Setup check
+
+To check you have the necessary software installed, try running the following code.
+
+```{r}
+#| eval: false
+#| echo: true
+pkgs = c("tidyverse", "stats19")
+if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak")
+pak::pkg_install(pkgs)
+```
+
+You should be able to generate the map on the next slide.
+
+## Setup check: The result
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| echo: false
+#| output: false
+library(tidyverse)
+library(stats19)
+theme_set(theme_minimal())
+collisions_2023 = stats19::get_stats19(year = 2023, type = "collision")
+collisions_2023_sf = stats19::format_sf(collisions_2023)
+collisions_west_yorkshire_sf = collisions_2023_sf |>
+  filter(police_force == "West Yorkshire") |>
+  arrange(desc(accident_severity))
+```
+
+```{r}
+#| label: plot
+#| echo: false
+ggplot() +
+  geom_sf(
+    data = collisions_west_yorkshire_sf,
+    aes(colour = accident_severity, alpha = accident_severity)
+  ) +
+  scale_alpha_manual(values = c(0.8, 0.4, 0.2))
+```
+
+## About us
+
+### Robin Lovelace
+
+-   Professor of Transport Data Science
+-   Focus: influencing decision-making, to make it more evidence-based
+-   R package developer and data scientist
+-   New methods for more reproducible, data-driven and participatory transport planning
+
+## About you
+
+::: incremental
+-   Name
+-   What tools you currently use for research
+-   Where you're from
+-   What's your favourite animal
+-   A random fact about you
+
+### Me
+
+-   Currently using VS Code, Quarto, R, Google Gemini etc, Devcontainers
+-   From Herefordshire, UK
+-   Favourite animal: Red kite
+-   Random fact: I run 5 km every Saturday with double buggy
+:::
+
+### Over to you
+
+## The origins of the course
+
+### "If only I was told this earlier in my career"
+
+Imagine a workflow that enabled:
+
+-   Fewer context switches
+-   More focus on *the content* and not style of the work
+-   Integration of code into your research manuscript
+-   Automatic generation of results, including figures and tables...
+    -   That change seamlessly when input datasets or code changes
+-   Control over how you export and publish your work
+    -   Including publication-quality PDFs, website, blogs, slides
+-   Full reproducibility
+-   You to share your work for maximum benefit to others
+
+## Reproducible research
+
+"Research is considered to be reproducible when the exact results can be reproduced if given access to the original data, software, or code." Source: [displayr.com](https://www.displayr.com/what-is-reproducible-research/)
+
+![](../course/slides/images/paste-3.png)
+
+## Stages of open and reproducible science
+
+::::: columns
+::: {.column width="40%"}
+1.  Open access to the publications
+
+2.  Open access to sample (synthetic if sensitive) data
+
+3.  Open access to the code
+
+4.  Fully reproducible paper published with documentation
+
+5.  Project deployed in tool for non-specialist use
+:::
+
+::: {.column width="60%"}
+![](../course/slides/images/paste-12.png)
+:::
+:::::
+
+## Example: networkmerge
+
+![](../course/slides/images/paste-5.png)
+
+See paper website: https://nptscot.github.io/networkmerge/ Source: [github.com/nptscot](https://github.com/nptscot)
+
+## Example: biclaR
+
+![](../course/slides/images/paste-6.png)
+
+See [biclar.tmobilidade.pt source](https://biclar.tmlmobilidade.pt/index/) code: [github.com/u-shift](#0) [@félix2025].
+
+## Course principles
+
+::: incremental
+-   "Learn by doing"
+-   "Learn by teaching"
+-   "Learn from each other"
+-   "We're all learning"
+-   "Growth mindset"
+-   "Can-do" and "Go for It" attitude
+-   "Every error is a learning opportunity"
+-   "No such thing as a bad question"
+-   "Fail fast"
+-   Balance between focused work and comms
+-   Bring you own principles (BYOP)
+:::
+
+## The practical sessions
+
+-   Time of in-depth work
+-   Use the course website as a reference point but spend most of the time in your own environment
+-   I will support people 1-2-1 and do 'live demos' now and then
+
+::: callout-tip
+Press Ctrl+Tab to switch from IDE to browser with course content and other things for an efficient workflow
+:::
+
+## Any questions before we move to the first practical session?
+
+# Session 1 introduction (see [Session 1 workbook](../s1.qmd))
+
+## Session 1 in context
+
+-   **10:00-11:00 Introduction to Data Science for Transport Planning**
+-   11:00-12:30 Finding, importing and cleaning transport datasets
+-   12:30-13:30 Lunch
+-   13:30-15:00 Origin-destination data analysis
+-   15:00-15:15 Break and refreshments
+-   15:15-17:00 OD Transport data visualisation
+
+## Solo working through the practical (until ~12:30)
+
+Any questions before the lunch break?
+
+Put your hands up, ask another participant, or use the [github.com/tdscience/dstp/discussions](https://github.com/tdscience/dstp/discussions)

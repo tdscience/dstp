@@ -1,38 +1,47 @@
-# Next Steps to Improve the Course Website
+# Next Steps for Slides
 
-The Quarto website for "Data Science for Transport Planning" has been successfully created with minimal placeholder content and rendered to the `docs/` directory. The site is functional, but here are suggestions to enhance it:
+Here are suggestions for enhancing the slides for the Data Science for Transport Planning course:
 
-## 1. Add Images and Assets
-- Create an `images/` directory and copy essential images from `../course/images/`, such as `icon.png` for favicon and a logo (e.g., update `tsrtr.png` to a DSTP-specific logo).
-- Uncomment the `favicon` and `logo` lines in `_quarto.yml` once assets are added to avoid broken references.
+## Day 1 Slides Enhancements
 
-## 2. Expand Placeholder Content
-- Fill in session pages (s1.qmd to s8.qmd) with actual teaching materials adapted from `../course/` (e.g., s1.qmd: content on importing data using stats19, osmextract for Leeds).
-- Update examples: adapt `collisions.qmd` and `peoplemap.qmd` for Leeds UK using local data (e.g., stats19 for West Yorkshire).
-- Enhance `materials.qmd` with links to datasets, code repositories, and readings from dstp.qmd schedule.
+- Add more detailed session introductions linking to the specific workbooks (s1.qmd, s2.qmd, etc.)
+- Include images from the course slides (e.g., paste-3.png for reproducible research)
+- Add code examples or snippets for setup checks
+- Include a slide on course objectives and learning outcomes
+- Add contact information and GitHub links prominently
 
-## 3. Integrate Schedule Links
-- Add hyperlinks in `schedule.qmd` to corresponding session pages, e.g., `[Finding, importing and cleaning transport datasets](s1.qmd)`.
-- Ensure session titles in s*.qmd match schedule exactly for consistency.
+## Day 2 Slides Expansions
 
-## 4. Test and Refine Prerequisites
-- Verify the R and Python test code in `prerequisites.qmd` runs without errors for Leeds (e.g., use `execute_command` to test `Rscript -e "source('prerequisites.R')"` if extracted).
-- Add screenshots or outputs for the test plots (e.g., Leeds road network visualization).
+- Expand the recap section with key takeaways from Day 1
+- Add content on spatio-temporal data analysis with examples
+- Include routing and network analysis demonstrations
+- Add best practices section with Git/GitHub workflows
+- Include advanced topics overview with links to s7.qmd
+- Add a feedback slide with QR code for course evaluation
 
-## 5. Add Supporting Directories and Files
-- Copy `slides/` from `../course/` and adapt for DSTP topics (e.g., day1.qmd on introduction to data science).
-- Copy `data/` with Leeds-specific files (e.g., leeds_study_area.geojson generated from prerequisites).
-- Add `references.bib` copied from `../course/` and integrate citations in pages.
-- Copy `_extensions/` from `../course/` for custom Quarto features like bsicons.
+## General Improvements
 
-## 6. Deployment and CI/CD
-- Commit changes and push to GitHub to trigger `publish.yml` for automatic deployment to gh-pages.
-- Test the live site at `https://tdscience.github.io/dstp/` and fix any broken links.
+- Add consistent branding and color scheme
+- Include more transport-specific examples and datasets
+- Add interactive elements like polls or questions
+- Include references and bibliography sections
+- Add a final thank you slide with contact info and next course info
+- Ensure all images are properly sourced and credited
+- Add navigation aids and table of contents
+- Include accessibility features (alt text for images)
 
-## 7. Additional Improvements
-- Add a forum link in sidebar if discussions are enabled on GitHub.
-- Include alignment with learning outcomes from dstp.qmd in index.qmd.
-- Add navigation to examples section and ensure mobile responsiveness.
-- Review for accessibility and add alt text to future images.
+## Content Additions
 
-These steps will transform the minimal site into a comprehensive course resource.
+- Add slides on data sources specific to transport planning (Stats19, OSM, OD data)
+- Include case studies from Leeds or UK transport projects
+- Add slides on ethical considerations in transport data science
+- Include career development and networking opportunities
+- Add slides on publishing and sharing transport research
+
+## Technical Enhancements
+
+- Add reveal.js plugins for better interactivity
+- Include code highlighting and execution
+- Add transition effects and animations
+- Ensure mobile responsiveness
+- Add PDF export options

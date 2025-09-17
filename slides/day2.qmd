@@ -1,0 +1,37 @@
+---
+title: "Data Science for Transport Planning: Day 2"
+author: "Professor Robin Lovelace"
+date: "September 19, 2025"
+format: revealjs
+bibliography: references.bib
+---
+
+## Welcome to Day 2!
+
+Data Science for Transport Planning
+
+**2-day course**
+
+18-19 September 2025
+
+## Agenda
+
+-   **09:00-10:45** Spatio-temporal data
+-   10:45-11:15 Break and refreshments
+-   11:15-12:30 Routing and route network analysis
+-   12:30-13:30 Lunch
+-   13:30-15:00 Best practices for data science in transport planning
+-   15:00-16:00 Advanced topics
+
+## Recap of Day 1
+
+-   Introduction to Data Science for Transport Planning
+-   Finding, importing and cleaning transport datasets
+-   Origin-destination data analysis
+-   OD Transport data visualisation
+
+## Let's move to the practical sessions
+
+See the [schedule](../schedule.qmd) for details.
+
+Any questions before we start?

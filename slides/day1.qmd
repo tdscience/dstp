@@ -36,7 +36,7 @@ Data Science for Transport Planning
 The following will help:
 
 -   An interest in transport planning and knowledge of transport datasets
--   A willingness to learn and share (LinkedIn, BlueSky, etc)
+-   A willingness to learn and share 
 -   A GitHub account (to ask questions on the Discussions page and share your own code)
 -   Familiarity with data science tools, e.g. R, Python, RStudio, VS Code
 
@@ -45,12 +45,12 @@ The following will help:
 -   Connect to the UoL-Guest Wi-Fi network and enter your details.
 -   GitHub account sign-up if not done already.
 -   R and RStudio installation check, locally or in cloud environment.
--   Coffee will be downstairs
--   Toilets: Women's in front of Room 2.1, Men's by the stairs
+-   Coffee and lunch: in the social space just outside this room
+-   Toilets: Along the corridor and then left
 
 ## WiFi
 
-![](../course/slides/images/paste-2.png)
+![](images/paste-2.png)
 
 ## Setup check
 
@@ -143,7 +143,7 @@ Imagine a workflow that enabled:
 
 "Research is considered to be reproducible when the exact results can be reproduced if given access to the original data, software, or code." Source: [displayr.com](https://www.displayr.com/what-is-reproducible-research/)
 
-![](../course/slides/images/paste-3.png)
+![](images/paste-3.png)
 
 ## Stages of open and reproducible science
 
@@ -161,19 +161,19 @@ Imagine a workflow that enabled:
 :::
 
 ::: {.column width="60%"}
-![](../course/slides/images/paste-12.png)
+![](images/paste-12.png)
 :::
 :::::
 
 ## Example: networkmerge
 
-![](../course/slides/images/paste-5.png)
+![](images/paste-5.png)
 
 See paper website: https://nptscot.github.io/networkmerge/ Source: [github.com/nptscot](https://github.com/nptscot)
 
 ## Example: biclaR
 
-![](../course/slides/images/paste-6.png)
+![](images/paste-6.png)
 
 See [biclar.tmobilidade.pt source](https://biclar.tmlmobilidade.pt/index/) code: [github.com/u-shift](#0) [@félix2025].
 

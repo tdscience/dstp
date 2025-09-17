@@ -184,19 +184,22 @@ Imagine a workflow that enabled:
 
 ![](images/paste-3.png)
 
-## Stages of open and reproducible science
+---
+
 
 ::::: columns
 ::: {.column width="40%"}
+#### Stages of open and reproducible science
+
 1.  Open access to the publications
 
-2.  Open access to sample (synthetic if sensitive) data
+2.  Open access to data
 
 3.  Open access to the code
 
-4.  Fully reproducible paper published with documentation
+4.  Fully reproducible 
 
-5.  Project deployed in tool for non-specialist use
+5.  Project deployed in web app
 :::
 
 ::: {.column width="60%"}
@@ -204,13 +207,15 @@ Imagine a workflow that enabled:
 :::
 :::::
 
+---
+
 ## Example: networkmerge
 
 ![](images/paste-5.png)
 
 See paper website: https://nptscot.github.io/networkmerge/ Source: [github.com/nptscot](https://github.com/nptscot)
 
-## Example: biclaR
+## Example: PCT, NPT, biclaR etc.
 
 ![](images/paste-6.png)
 
@@ -221,15 +226,11 @@ See [biclar.tmobilidade.pt source](https://biclar.tmlmobilidade.pt/index/) code:
 ::: incremental
 -   "Learn by doing"
 -   "Learn by teaching"
--   "Learn from each other"
 -   "We're all learning"
--   "Growth mindset"
 -   "Can-do" and "Go for It" attitude
 -   "Every error is a learning opportunity"
 -   "No such thing as a bad question"
--   "Fail fast"
 -   Balance between focused work and comms
--   Bring you own principles (BYOP)
 :::
 
 ## Computational infrastructure
@@ -250,12 +251,12 @@ Press Ctrl+Tab to switch from IDE to browser with course content and other thing
 
 ## Any questions before we move to the first practical session?
 
-# Session 1 introduction (see [Session 1 workbook](../s1.qmd))
+# Session 1 (see [Session 1 workbook](../s1.qmd))
 
 ## Session 1 in context
 
--   **10:00-11:00 Introduction to Data Science for Transport Planning**
--   11:00-12:30 Finding, importing and cleaning transport datasets
+-   10:00-11:00 Introduction to Data Science for Transport Planning
+-   **11:00-12:30 Finding, importing and cleaning transport datasets**
 -   12:30-13:30 Lunch
 -   13:30-15:00 Origin-destination data analysis
 -   15:00-15:15 Break and refreshments
@@ -266,3 +267,5 @@ Press Ctrl+Tab to switch from IDE to browser with course content and other thing
 Any questions before the lunch break?
 
 Put your hands up, ask another participant, or use the [github.com/tdscience/dstp/discussions](https://github.com/tdscience/dstp/discussions)
+
+## References

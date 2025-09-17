@@ -1,0 +1,205 @@
+---
+execute:
+  eval: false
+---
+
+# GCP-Based Routing Engine Server Setup
+
+## Overview
+
+Spinning up a server for a routing engine (e.g., OSRM, GraphHopper, Valhalla, or OpenTripPlanner/OTP for route calculation) on Google Cloud Platform (GCP) using a vanilla Ubuntu Docker image is a solid approach. It's cost-effective, scalable, and leverages GCP's Compute Engine for virtual machines (VMs). Build a custom Docker image based on `ubuntu:latest` (or `ubuntu:22.04`), install dependencies, and deploy on a GCP VM.
+
+GCP is reliable with good networking for low-latency routing APIs. Start with the **GCP CLI (gcloud)** for CLI-driven management.
+
+Estimated cost: ~$0.01–$0.05/hour for a small VM (e.g., e2-micro).
+
+## Step 1: Install and Set Up the GCP CLI
+
+Install `gcloud` first for authentication and resource management.
+
+```{bash}
+# Download and install the SDK
+curl https://sdk.cloud.google.com | bash
+exec -l $SHELL
+gcloud init
+```
+
+- Authenticate: Run `gcloud auth login` and follow the browser OAuth flow. Grant Compute Engine permissions.
+- Set project: `gcloud config set project YOUR_PROJECT_ID` (create a project in GCP Console if needed, e.g., "routing-engine-practical").
+- Enable APIs: `gcloud services enable compute.googleapis.com container.googleapis.com`.
+- Install Docker locally: 
+
+```{bash}
+sudo apt update && sudo apt install docker.io
+sudo usermod -aG docker $USER  # Log out/in after
+```
+
+- For pushing images: `gcloud auth configure-docker`.
+- Verify: `gcloud version` and `gcloud compute instances list`.
+
+## Step 2: Prepare Your Docker Image for the Routing Engine
+
+Build a custom image based on Ubuntu to install your routing engine. For OTP (as in the existing setup), adapt the Dockerfile to include Java and OTP jar.
+
+Create a `Dockerfile` in a new directory (e.g., `routing-engine/`):
+
+```{dockerfile}
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    wget curl openjdk-8-jdk unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download and setup OTP (adapt from your R script)
+WORKDIR /app
+RUN wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip && \
+    unzip otp_TDS.zip && \
+    rm otp_TDS.zip
+
+# Copy any custom graphs or configs if needed
+# COPY graphs /app/otp_TDS/graphs
+
+EXPOSE 8080
+
+CMD ["/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java", \
+     "-Xmx10000M", \
+     "-d64", \
+     "-jar", \
+     "otp_TDS/otp-1.5.0-shaded.jar", \
+     "--router", \
+     "west-yorkshire", \
+     "--graphs", \
+     "otp_TDS/graphs", \
+     "--server", \
+     "--port", \
+     "8080"]
+```
+
+- For other engines (e.g., OSRM): Replace with engine-specific installs (see OSRM docs for Boost/Lua deps).
+- Build and test locally:
+
+```{bash}
+docker build -t routing-engine .
+docker run -p 8080:8080 routing-engine  # For OTP; adjust port
+```
+
+- Test API: `curl "http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&toPlace=53.8008,-1.5497&mode=CAR"`.
+- Push to Google Container Registry (GCR):
+
+```{bash}
+docker tag routing-engine gcr.io/YOUR_PROJECT_ID/routing-engine:latest
+docker push gcr.io/YOUR_PROJECT_ID/routing-engine:latest
+```
+
+Tips: Use multi-stage builds for smaller images. For large graphs, mount volumes.
+
+## Step 3: Deploy on GCP Compute Engine
+
+Deploy the Docker container on a VM.
+
+- Machine type: `e2-micro` for testing (free tier); `n2-standard-2` for prod.
+- Create VM:
+
+```{bash}
+gcloud compute instances create routing-vm \
+  --zone=us-central1-a \  # Or europe-west2 for UK latency
+  --machine-type=e2-medium \
+  --image-family=ubuntu-2204-lts \
+  --image-project=ubuntu-os-cloud \
+  --boot-disk-size=20GB \
+  --tags=allow-http-traffic \
+  --metadata=startup-script='#!/bin/bash
+apt-get update
+apt-get install -y docker.io
+usermod -aG docker $USER
+docker pull gcr.io/YOUR_PROJECT_ID/routing-engine:latest
+docker run -d -p 80:8080 \
+  --name routing-server \
+  gcr.io/YOUR_PROJECT_ID/routing-engine:latest' \
+  --scopes=https://www.googleapis.com/auth/cloud-platform
+```
+
+- Firewall rule:
+
+```{bash}
+gcloud compute firewall-rules create allow-http \
+  --allow tcp:80 \
+  --source-ranges=0.0.0.0/0 \
+  --target-tags=allow-http-traffic
+```
+
+- SSH: `gcloud compute ssh routing-vm --zone=us-central1-a`.
+- Check: `docker ps` and `docker logs routing-server`.
+- External IP: `gcloud compute instances describe routing-vm --zone=us-central1-a | grep natIP`.
+- API Endpoint: `http://EXTERNAL_IP/otp/...` (for OTP).
+
+For security, restrict firewall to your IP. Use preemptible VMs: Add `--preemptible`.
+
+## Step 4: Testing and Monitoring
+
+- Test: Use curl or Postman against the external IP.
+- Logs: `docker logs routing-server`.
+- Monitor: Enable Cloud Logging in GCP Console.
+- Shutdown: `gcloud compute instances stop routing-vm` or `delete` to save costs.
+
+## Potential Pitfalls and Best Practices
+
+- **Data/Graphs:** OTP graphs are large—pre-build and store on Persistent Disk if >20GB.
+- **Performance:** Allocate RAM/CPU for routing queries. Benchmark loads.
+- **Security:** Run containers as non-root; use HTTPS with load balancer for prod.
+- **Alternatives:** Cloud Run for serverless; pre-built images like `opentransportation/otp`.
+- **Costs:** Monitor Billing; free tier covers basics.
+- **OTP-Specific:** Ensure Java 8; graphs from TDS release match your router config.
+
+This setup integrates with your existing OTP workflow. Adapt Dockerfile for custom graphs.
+
+
+```{r}
+#| eval: false
+#| echo: false
+# Download the zip file
+# wget https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip
+download.file("https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip", "otp_TDS.zip")
+# Unzip it:
+# unzip otp_TDS.zip
+unzip("otp_TDS.zip")
+# Install Java 8:
+system("sudo apt-get install openjdk-8-jdk")
+
+# java -Xmx10000M -d64 -jar \
+#   "D:/OneDrive - University of Leeds/Data/opentripplanner/otp-1.5.0-shaded.jar" \
+#   --router west-yorkshire \
+#   --graphs "D:/OneDrive - University of Leeds/Data/opentripplanner/graphs" \
+#   --server --port 8080 --securePort 8081
+```
+
+```{bash}
+#| echo: false
+#| eval: false
+# Run it without nohup to test:
+/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java \
+  -Xmx10000M \
+  -d64 \
+  -jar \
+  "otp_TDS/otp-1.5.0-shaded.jar" \
+  --router west-yorkshire \
+  --graphs "otp_TDS/graphs" \
+  --server \
+  --port 8090 \
+  --securePort 8091
+
+
+# Same command but with nohup to run in the background:
+nohup /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java \
+  -Xmx10000M \
+  -d64 \
+  -jar \
+  "otp_TDS/otp-1.5.0-shaded.jar" \
+  --router west-yorkshire \
+  --graphs "otp_TDS/graphs" \
+  --server \
+  --port 8090 \
+  --securePort 8091 &
+```

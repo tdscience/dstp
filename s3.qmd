@@ -13,39 +13,27 @@ editor:
 
 # Introduction
 
-In this session, we will build on the **routing techniques** from Session 3 by exploring **data visualisation** methods for transport analysis.
-By the end of this practical, you should be able to:
+Building upon the previous session on "Origin-destination data analysis", we will advance this topic by examining "data visualisation* techniques for OD transport data.
 
--   Load and preprocess OD flow data
--   Visualise OD lines and proportional symbol maps
--   Compare walking, driving, and cycling flows
--   Aggregate flows along the road network
--   Identify critical road segments via network centrality
+By the end of this session, you should be able to:
+
+- Load and preprocess origin-destination flow data
+- Create visualisations using OD desire lines and proportional symbol maps
+- Compare transport flows across different modes (walking, driving, and cycling)
+- Aggregate flows along road network infrastructure
+- Analyse and temporal variations in OD flows across different time periods
 
 # Setup
 
 Below are the packages we will use throughout this practical:
 
 ```{r}
-knitr::opts_chunk$set(
-  message = FALSE,
-  warning = FALSE,
-  fig.width = 7,
-  fig.height = 5,
-  out.width = "700px"
-)
+library(sf)        # vector data package
+library(tmap) 
+library(stplanr) 
+library(tidyverse)    
+library(ggspatial)
 
-# Load necessary libraries
-pkgs = c(
-  "sf",           # Spatial data handling
-  "tmap",         # Thematic mapping
-  "stplanr",      # Transport data functions
-  "dplyr",        # Data manipulation
-  "osmextract",   # OSM data handling
-  "dodgr"         # Network analysis
-)
-pak::pak(pkgs)
-lapply(pkgs, library, character.only = TRUE)
 ```
 
 ```{r}
@@ -176,107 +164,357 @@ tm_shape(routes_drive) +
   tm_title("Road Congestion (drive_total)")
 ```
 
-# Network Centrality Analysis
 
-Betweenness centrality indicates how often a road (or node) lies on the shortest path between other points in a network.
-Roads with high centrality are typically crucial for overall connectivity.
 
-Here, we demonstrate how to:
+# Analyisng origin-destination data in London Cycle Hire System 
 
-1.  Download roads from OpenStreetMap (OSM) for the Isle of Wight.
-2.  Weight the network for motor vehicle usage.
-3.  Compute betweenness centrality with dodgr.
-4.  Convert the results back to sf for mapping.
+In this section, we will be working with origin-destination data in London Cycle Hire System (LCHS). We will specifically examine how a London Tube (Underground) strike influenced cyclists' origin-destination travel patterns.
 
-```{r}
-#| eval: false
-# Get Isle of Wight road network
-# We choose 'primary', 'secondary', 'tertiary' roads for demonstration
-roads = oe_get("Isle of Wight", 
-                extra_tags = c("maxspeed", "oneway")) |>
-  filter(highway %in% c("primary", "secondary", "tertiary"))
+Public transport disruptions are becoming increasingly common, triggered by various factors including:
 
-# Weight the street network for motorcar usage
-graph = weight_streetnet(
-  roads,
-  wt_profile = "motorcar",
-  type_col = "highway",
-  id_col = "osm_id",
-  keep_cols = c("maxspeed", "oneway")
-)
+* Infrastructure maintenance requirements
+* Natural disasters
+* Large-scale events (festivals, strikes, etc.)
 
-# Calculate betweenness centrality
-centrality = dodgr_centrality(graph)
+By analyzing how people adapt their travel patterns during such events, we can better inform urban transport planning and decision-making strategies.
 
-# Convert to sf for visualization
-centrality_sf = dodgr_to_sf(centrality)
+For this section, we'll be using cleaned cycling data originally sourced from TfL's open data portal (cycling.data.tfl.gov.uk). 
 
-# Visualize critical links
-tm_shape(centrality_sf) +
-  tm_lines(
-    col = "centrality",
-    col.scale = tm_scale_intervals(style = "fisher", values = "-viridis"),
-    col.legend = tm_legend(title = "Betweenness Centrality"),
-    lwd = 3
-  ) 
-```
-
-The code above should generate a map that looks something like this:
-
-![](https://github.com/itsleeds/tds/blob/main/p5/images/paste-1.png?raw=true)
-
-High values in the centrality column indicate roads that act as vital connectors in the regional transport network.
-
-# Extra Exercises: 3D Visualization
-
-A 3D perspective can often reveal relationships between travel flows and the underlying topography more effectively.
-Below, we demonstrate how to retrieve elevation data and render a 3D hillshade using the rayshader package.
-You may also be interested in overlaying flow lines onto a 3D terrain model to enhance visualization.
-
-Note: the following code requires you to install the `rayshader` `elevatr` `gifski` `rgl` package.
-Results not shown in website.
+Let's begin by loading the following two datasets
 
 ```{r}
-#| eval: false
-library(rayshader)        # 3D data visualization
-library(elevatr)          # Elevation data
-library(gifski)           # Creating GIF animations
-library(rgl)              # 3D visualization device
+#| echo: true
+#| output: false
 
-assign("has_internet_via_proxy", TRUE, environment(curl::has_internet))
-curl::has_internet()
-# Example: Elevation data near a location in the UK
-coords = data.frame(x = -2.087918, y = 53.71534)
-coords_sf = st_as_sf(coords, coords = c("x", "y"), crs = 4326)
-# Get an elevation raster at zoom level 11 (~ 10m resolution, depending on region)
-elevation = elevatr::get_elev_raster(
-  locations = coords_sf,
-  z = 11
-)
-# Convert the raster to a matrix for rayshader
-elev_matrix = rayshader::raster_to_matrix(elevation)
-# Create a hillshade layer
-hillshade_matrix = rayshader::ray_shade(elev_matrix, zscale = 15)
-# Clear existing rgl device
-rgl::rgl.clear()
-# Render a 3D plot of the terrain
-rayshader::plot_3d(
-  heightmap = elev_matrix,
-  hillshade = hillshade_matrix,
-  zscale = 15,
-  windowsize = c(1000, 800)
-)
-# Adjust camera view
-rgl::view3d(theta = 30, phi = 30, zoom = 0.75)
-rgl::rglwidget()
-
+# load the station location dataset
+bike_docking_stations = read_sf("https://github.com/itsleeds/tds/releases/download/2025/p3-london-bike_docking_stations.geojson")
+# load the bike trip origin and destination dataset
+bike_trips = read_csv("https://github.com/itsleeds/tds/releases/download/2025/p3-london-bike_trips.csv")
 ```
 
-# Conclusions
+Explore these datasets using the functions you have learnt (e.g. head, dim)
+```{r}
+head(bike_docking_stations)
+dim(bike_docking_stations)
+head(bike_trips)
+dim(bike_trips)
+```
 
-In this practical, you learned how to:
+Let's examine our `bike_trips` data, which covers three specific Thursdays: July 2nd, July 9th, and July 16th, 2015. July 9th marks the London Underground strike, while the other two dates serve as comparison points one week before and after the strike. 
 
-1.  Create flow maps to visualize travel demand from an OD dataset.
-2.  Compare flows by mode (driving, walking, cycling) to understand differences in spatial patterns.
-3.  Aggregate routes along the road network (using stplanr::overline) to highlight heavily used corridors.
-4.  Compute betweenness centrality (using dodgr) to pinpoint critical road segments crucial for connectivity.
+During the Tube Strike, some people adopted bikeshare to replace the Tube travel, hence we should be able to observe some different in trip account.
+
+```{r}
+bike_trips = bike_trips |>
+  mutate(date = date(start_time)) |>
+  mutate(type_day = case_when(
+    date == as.Date("2015-07-09") ~ "Strike Day",
+    TRUE ~ "Non-Strike Day"
+  ))
+bike_trips |>
+  group_by(date, type_day) |>
+  summarise(count = n()) |>
+  ggplot() +
+  geom_bar(aes(
+    x = as.factor(date),
+    y = count,
+    fill = type_day
+  ), stat = "identity") +
+  xlab("Date") +
+  ylab("Count of bike trips") +
+  labs(fill = "Type of day")
+```
+
+The increase in trips is likely unevenly distributed by time, so it would be useful to examine the changes and differences by hour. This will help us identify when the most significant changes occur.
+
+```{r}
+bike_trips |>
+  mutate(
+    hour = hour(start_time),
+    date = as.factor(date)
+  ) |>
+  group_by(date, hour) |>
+  summarise(count = n()) |>
+  ggplot() +
+  geom_line(aes(x = hour, y = count, color = date, group = date), size = 1, alpha = .6) +
+  geom_point(aes(x = hour, y = count, color = date), size = 2) +
+  scale_x_continuous(breaks = seq(0, 23, by = 4))
+```
+
+Whist above temporal analysis provide useful summaries, visual analysis of the origin-destination changes allow us to characterise with greater richness the nature of changes in response to the strike events. Let' try to calculate the changes in o-d and map them!
+
+To break the task down, we will
+1. Calculate the frequeny of each origin-destination pair on the strike day
+2. Calculate the average frequancy of each origin-destination pair on the non-strike day
+3. find out the difference
+
+```{r}
+# 1. Calculate the frequeny of each origin-destination pair on the strike day
+od_strike = bike_trips |>
+  filter(type_day == "Strike Day") |>
+  group_by(start_station_id, end_station_id) |>
+  summarise(count_strike = n())
+
+# 2. Calculate the average frequancy of each origin-destination pair on the non-strike day
+od_non_strike = bike_trips |>
+  filter(type_day == "Non-Strike Day") |>
+  group_by(start_station_id, end_station_id) |>
+  summarise(count_non_strike = n() / 2) # we have two non-strike days, hence /2 can help get the mean value
+```
+
+To obtain the changes, we will need to join the origin-destination pairs in the two dataframe we just created. 
+
+The **`dplyr` package** provides a family of intuitive join functions:
+
+| Join Type   | Function                                    | Description |
+|------------|---------------------------------|-------------|
+| **Inner Join** | `inner_join(df1, df2, by = "key")` | Keeps only matching rows in both datasets. |
+| **Left Join** | `left_join(df1, df2, by = "key")` | Keeps all rows from `df1`, adds matching rows from `df2`. |
+| **Right Join** | `right_join(df1, df2, by = "key")` | Keeps all rows from `df2`, adds matching rows from `df1`. |
+| **Full Join** | `full_join(df1, df2, by = "key")` | Keeps all rows from both datasets. |
+| **Semi Join** | `semi_join(df1, df2, by = "key")` | Keeps rows from `df1` that have matches in `df2`. |
+| **Anti Join** | `anti_join(df1, df2, by = "key")` | Keeps rows from `df1` that do **not** have matches in `df2`. |
+
+```{r}
+# join the two dataframes
+od_change = full_join(od_strike, od_non_strike, by = c("start_station_id", "end_station_id")) |>
+  replace_na(list(count_strike = 0, count_non_strike = 0))
+
+# create(mutate) a new column of changes in od count
+od_change = filter(od_change, start_station_id != end_station_id) |>
+  mutate(count_change = count_strike - count_non_strike) |>
+  arrange(desc(count_change))
+```
+
+Let have a look at the joined result:
+
+```{r}
+head(od_change)
+```
+
+We have succesfully joined the data, and the output `od_change` has both the trip count on strike day (`count_strike`) and non-strike day (`count_non_strike`), in addition, a new variable of `count_change` is created. Next, let clean the output further and create the od lines
+
+```{r}
+# focusing on not self-loop trips
+od_inter_change = filter(od_change, start_station_id != end_station_id) |> arrange(desc(count_change))
+
+# create the od lines
+change_desire_lines = od2line(od_change, bike_docking_stations)
+```
+
+We are particularly interested in identifying origin-destination pairs where the number of trips has increased. To focus on these, we use the filter function to select desire lines with at least one additional trip on the strike day. You can adjust the threshold (currently set to 1) as needed.
+```{r}
+change_to_plot = change_desire_lines |>
+  filter(count_change >= 1) |>
+  arrange(count_change)
+```
+
+
+
+```{r}
+ggplot() +
+  geom_sf(
+    data = change_to_plot, # Define the data frame used to make the map
+    aes(
+      colour = count_change, # We want to map lines, the colour  is based on the "count_change" column
+      alpha = count_change, # Make lines slightly transparent and based on the "count_change" column
+      linewidth = count_change # The line width is based on the "count_change" column
+    )
+  ) +
+  scale_colour_viridis_c(option = "C") + # Select a colour palette
+  scale_linewidth_binned(range = c(0.01, 1.6), guide = "legend") + # Set max and min ranges for line width
+  scale_alpha(range = c(0.001, 0.7), guide = "legend") + # Set max and min ranges for transparency
+  annotation_scale(location = "br", width_hint = 0.3) + # Map scale bar (bottom right)
+  annotation_north_arrow(
+    location = "tl", which_north = "true",
+    style = north_arrow_fancy_orienteering()
+  ) + # North arrow (top left)
+  theme_void()
+```
+
+To enhance the map, adding some background context could be useful. Let’s try incorporating the River Thames and green spaces (parks) in central London.
+
+Let’s check how the background looks. You can also customize the colors of the rivers and parks by modifying the values assigned to `fill` and `color`.
+```{r}
+# load the river and parks
+rivers = st_read("https://github.com/itsleeds/tds/releases/download/2025/p3-london-rivers.geojson")
+parks = st_read("https://github.com/itsleeds/tds/releases/download/2025/p3-london-parks.geojson")
+
+ggplot() +
+  geom_sf(data = parks, fill = "#d9f5e0", color = "#d9f5e0") + # add parks in central London to the map
+  geom_sf(data = rivers, color = "#08D9D6", linewidth = 3) + # add river Thames in central London to the map
+  theme_void()
+```
+
+Now, let’s bring the origin-destination desire lines and the base map together! Can you identify key locations where bike trip origin-destination changes are most significant?
+
+```{r}
+# Define the data frame used to visualise the od
+change_to_plot = change_desire_lines |>
+  filter(count_change >= 1) |>
+  arrange(count_change)
+
+ggplot() +
+  # add parks in central London to the map:
+  geom_sf(data = parks, fill = "#d9f5e0", color = "#d9f5e0") +
+  # add river Thames in central London to the map:
+  geom_sf(data = rivers, color = "#08D9D6", linewidth = 3) +
+  geom_sf(
+    data = change_to_plot,
+    aes(
+      colour = count_change, # We want to map lines, the colour is based on the "count_change" column
+      alpha = count_change, # Make lines slightly transparent and based on the "count_change" column
+      linewidth = count_change # The line width is based on the "count_change" column
+    )
+  ) +
+  scale_colour_viridis_c(option = "C") + # Select a colour palette
+  scale_linewidth_binned(range = c(0.01, 1.6), guide = "legend") + # Set max and min ranges for line width
+  scale_alpha(range = c(0.001, 0.7), guide = "legend") + # Set max and min ranges for transparency
+  annotation_scale(location = "br", width_hint = 0.3) + # Scale bar (bottom left)y
+  annotation_north_arrow(
+    location = "tl", which_north = "true",
+    style = north_arrow_fancy_orienteering()
+  ) + # North arrow (top left)
+  theme_void()
+```
+# Spatial Analyis on bike trip departures
+
+During the Tube strike, bike docking stations closer to Tube stations are likely to experience higher travel activity than those farther away. 
+
+To quickly assess whether there is a difference, we can create a buffer around Tube stations and calculate the number of trips originating from bike docking stations within the buffer zone. We can then compare these figures to those from docking stations outside the buffer zone.
+
+First, let create the buffer zones for tube stations in central london
+
+```{r}
+# import the tube station data
+tube_stations = read_sf("https://github.com/itsleeds/tds/releases/download/2025/p3-london-tube_stations.geojson")
+
+# use the bounding box of the bike docking stations to crop the tube stations
+# this can help us focus on central London - which is covered by the LCHS
+tube_stations_central_london = st_crop(tube_stations, st_bbox(bike_docking_stations))
+
+# create the buffer zones, we set the buffer radius to 250m
+# you may adjust the value if you would like to create smaller or larger buffer zones.
+tube_stations_central_london_buffer = st_buffer(tube_stations_central_london %>% st_transform(27700), dist = 250)
+```
+
+
+You may have noticed that we created a buffer for each Tube station. We can merge all the buffers geometry into a single geometry.
+
+`st_union()` is a function in the `sf` package in R, used to merge or dissolve geometries into a single geometry. It is commonly used in spatial data processing when you need to combine multiple polygons, lines, or points into one.
+
+```{r}
+tube_stations_central_london_buffer_merged = st_union(tube_stations_central_london_buffer)
+```
+
+::: {.panel-tabset}
+## tmap
+```{r}
+tmap_mode("view")
+
+tm_shape(tube_stations_central_london_buffer_merged) +
+  tm_fill(col = "#3ba2c7", alpha = 0.3, border.col = "#3ba2c7", border.alpha = 0.5) +
+tm_shape(tube_stations_central_london) +
+  tm_dots(col = "#3ba2c7", size = 0.3, shape = 21, border.col = "white") +
+tm_shape(bike_docking_stations) +
+  tm_dots(fill = "#d45b70", size = 0.3, shape = 19) +
+tm_layout(
+  frame = FALSE,
+  title = "Tube Station Catchment Areas and Bike Docking Stations"
+)
+```
+
+## ggplot
+```{r}
+ggplot()+
+  geom_sf(data = tube_stations_central_london_buffer_merged, fill ="#3ba2c7", color = NA, alpha =0.3)+
+  geom_sf(data = tube_stations_central_london, color = "#3ba2c7")+
+  geom_sf(data = bike_docking_stations, color = "#d45b70", size = 0.5)
+```
+
+
+
+:::
+
+
+
+Since we have obtained the merged buffer, let's find out which bike docking stations fall inside the buffer. To achieve this, we can use the `st_within()` function. `st_within()` checks if one geometry is completely inside another geometry.
+
+We also need to create a new column for the `bike_docking_stations` to store the result from `st_within()`
+
+```{r}
+bike_docking_stations = bike_docking_stations |>
+  mutate(inside_tube_buffer = st_within(bike_docking_stations,tube_stations_central_london_buffer_merged %>% st_transform(4326), sparse = FALSE))
+head(bike_docking_stations)
+```
+
+As you can see, the `bike_docking_stations` now has a column named `inside_tube_buffer`, which contains binary outcome. 
+
+Let's plot them and use `inside_tube_buffer` for the colour of the bike docking staions. 
+
+::: {.panel-tabset}
+
+## tmap
+```{r}
+tm_shape(tube_stations_central_london_buffer_merged) +
+  tm_fill(col = "#3ba2c7", alpha = 0.3) +
+tm_shape(bike_docking_stations) +
+  tm_dots(
+    col = "inside_tube_buffer",
+    size = 0.3,
+    palette = c("FALSE" = "#d45b70", "TRUE" = "#2E8B57"),
+    title = "Inside Buffer"
+  ) +
+tm_layout(frame = FALSE)
+
+```
+## ggplot
+```{r}
+ggplot()+
+  geom_sf(data = tube_stations_central_london_buffer_merged, fill ="#3ba2c7", color = NA, alpha =0.3)+
+  geom_sf(data = bike_docking_stations,
+  # use "inside_tube_buffer" for the colour of the bike docking staions
+          aes(color = inside_tube_buffer), 
+          size = 1)
+```
+
+
+:::
+
+Finally, let’s compare the average number of trips (by trip origin) between the two types of bike docking stations: those inside the buffer and those outside the buffer.
+
+What pattern did you observe?
+
+```{r}
+bike_trips |> 
+  group_by(start_station_id, date, type_day) |> 
+  summarise(count = n(), .groups = "drop") |> 
+  
+  # Join with docking station data to get station attributes (excluding geometry)
+  left_join(
+    bike_docking_stations |> st_drop_geometry(), 
+    by = c("start_station_id" = "station_id")
+  ) |> 
+  
+  # Group by whether the station is inside the Tube buffer and by type_day (strike day or non-strike day)
+  group_by(inside_tube_buffer, type_day) |> 
+  summarise(mean_count = mean(count), .groups = "drop") |> 
+  
+  # Plot the average trip count by type_day, bar fill colour by buffer status
+  ggplot(aes(x = type_day, y = mean_count, fill = inside_tube_buffer)) +
+  geom_bar(stat = "identity", position = position_dodge2()) +
+  labs(
+    x = "Type of Day",
+    y = "Average Trip Count",
+    fill = "Inside Tube Buffer",
+    title = "Comparison of Average Trip Count by Bike Docking Stations"
+  )
+```
+
+## Summary
+
+In this session, we explored how to effectively visualise origin-destination transport data to understand travel patterns and flows. You learned to create compelling flow maps using desire lines and proportional symbols, compare travel patterns across different transport modes, and aggregate flows along realistic road networks rather than simple straight-line connections.
+
+Through hands-on analysis of the London Cycle Hire System during a Tube strike, we learned how transport disruptions create measurable changes in travel behavior. The spatial analysis techniques covered—including buffer analysis and geometric operations—provide essential tools for understanding the relationship between transport infrastructure and user behavior. You developed skills in data manipulation, joining datasets across time periods, and creating publication-quality maps that effectively communicate complex spatial patterns.
+
+These OD transport data visualisation and analysis capabilities are fundamental for evidence-based transport planning, and related skills can support decision-making for infrastructure development and policy interventions in real-world transport systems.

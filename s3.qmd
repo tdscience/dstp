@@ -24,7 +24,7 @@ By the end of this practical, you should be able to:
 
 # Setup
 
-Below are the libraries we will use throughout this practical:
+Below are the packages we will use throughout this practical:
 
 ```{r}
 knitr::opts_chunk$set(
@@ -36,13 +36,16 @@ knitr::opts_chunk$set(
 )
 
 # Load necessary libraries
-library(opentripplanner)  # Routing engine (OpenTripPlanner client)
-library(sf)               # Spatial data handling
-library(tmap)             # Thematic mapping
-library(stplanr)          # Transport data functions
-library(dplyr)            # Data manipulation
-library(osmextract)       # OSM data handling
-library(dodgr)            # Network analysis
+pkgs = c(
+  "sf",           # Spatial data handling
+  "tmap",         # Thematic mapping
+  "stplanr",      # Transport data functions
+  "dplyr",        # Data manipulation
+  "osmextract",   # OSM data handling
+  "dodgr"         # Network analysis
+)
+pak::pak(pkgs)
+lapply(pkgs, library, character.only = TRUE)
 ```
 
 ```{r}

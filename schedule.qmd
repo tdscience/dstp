@@ -5,6 +5,8 @@ pagetitle: "Course Schedule"
 ---
 
 ## Day 1: Introduction to R/RStudio
+[Day 1 Slides](slides/day1.qmd)
+
 
 | Time          | Session                                                                 |   |
 |---------------|-------------------------------------------------------------------------|:---:|
@@ -17,7 +19,11 @@ pagetitle: "Course Schedule"
 
 : {tbl-colwidths="[20,75,5]" .striped}
 
+
 ## Day 2
+
+[Day 2 Slides](slides/day2.qmd)
+
 
 | Time          | Session                                                                 |   |
 |---------------|-------------------------------------------------------------------------|:---:|

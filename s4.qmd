@@ -3,4 +3,16 @@ title: "Spatio-temporal data"
 pagetitle: "Session 4"
 ---
 
-Placeholder for session 4 content.
+
+
+# Spatio-temporal data with OD data
+
+This exercise is based on the tutorial "Analysing massive open human mobility data in R using spanishoddata, duckdb and flowmaps" by Egor Kotov [@kotov2025].
+
+This is a more advanced exercise that benefits from having a fast internet connection, decent compute resources, and an interest in the Iberian Peninsula.
+
+There are three main parts, all of which can be found at [ekotov.pro](https://www.ekotov.pro/agit-2025-spanishoddata/):
+
+- [Setting up the software](https://www.ekotov.pro/agit-2025-spanishoddata/software-setup.html)
+- [Importing the data](https://www.ekotov.pro/agit-2025-spanishoddata/1-mobility-data.html)
+- [Visualising the data with flowmaps](https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html)

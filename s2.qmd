@@ -18,7 +18,7 @@ Origin-destination (OD) data forms the backbone of transportation planning, urba
 
 In this session, we will how to use and analyse geographic and origin-destination data. It includes:
 
-- A short lecture on geographic and origin-destination data (see [slides](https://docs.google.com/presentation/d/1fKXK1ocCSkTQkTQn0eoYWURIfQuFgQwICFiDGVetMek/edit?usp=sharing)) 
+- A short lecture on geographic and origin-destination data (see [slides](https://docs.google.com/presentation/d/1hmgQRm4WnVoysnrqrOIDejNaSIrTgRts5D-ZNrHQhoc/edit?usp=sharing)) 
 - Hands-on analysis: Working with various geographic and OD datasets
 
 ## Pre-requisites {-}

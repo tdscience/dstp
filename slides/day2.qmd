@@ -35,3 +35,36 @@ Data Science for Transport Planning
 See the [schedule](../schedule.qmd) for details.
 
 Any questions before we start?
+
+## Practical session 4: Spatio-temporal data
+
+## Practical session 5: Routing and route network analysis
+
+## Routing infrastructure
+
+![](images/paste-16.png)
+
+## Routing costs
+
+![](images/paste-18.png)
+
+## Routing Server Cost Summary
+
+**VM Configuration:**
+- e2-medium instance (2 vCPUs, 4 GB RAM)
+- Spot pricing (60-90% discount)
+- Europe-west2 region
+
+**Estimated Daily Cost:**
+- On-demand: ~$0.034/hour
+- Spot discount: ~70% = ~$0.010/hour
+- **Per day (24h):** ~$0.24
+
+**Monthly Estimate:** ~$7-8
+
+**Additional Costs:**
+- Disk storage: ~$0.04/month
+- Network egress: Free for 1 GB/day, then ~$0.12/GB
+- Spot interruptions possible but cost-effective for non-critical workloads
+
+*Prices approximate; use GCP Pricing Calculator for current rates.*

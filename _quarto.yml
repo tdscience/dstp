@@ -31,6 +31,8 @@ website:
         contents:
           - href: collisions.qmd
             text: Road traffic collisions
+          - href: routing-engine.qmd
+            text: Routing engine deployment
       - href: https://github.com/tdscience/dstp/discussions
         text: Forum
 

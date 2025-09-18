@@ -42,11 +42,11 @@ Any questions before we start?
 
 ## Routing infrastructure
 
-![](images/paste-16.png)
+![](images/routing-code-live.png)
 
 ## Routing costs
 
-![](images/paste-18.png)
+![](images/routing-costs.png)
 
 ## Routing Server Cost Summary
 
@@ -68,3 +68,9 @@ Any questions before we start?
 - Spot interruptions possible but cost-effective for non-critical workloads
 
 *Prices approximate; use GCP Pricing Calculator for current rates.*
+
+## Feedback on the course
+
+Please provide feedback on this [link](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fforms.office.com%2FPages%2FDesignPageV2.aspx%3Fsubpage%3Ddesign%26FormId%3DqO3qvR3IzkWGPlIypTW3y6qk-ZYPTG1DiNS3q47P2WxUOEE4QlBJMzY2SVc1N1U4V0JFOENBWVkxRy4u&data=05%7C02%7CR.Lovelace%40leeds.ac.uk%7C0362bb76cd5646cee42508ddf6b23180%7Cbdeaeda8c81d45ce863e5232a535b7cb%7C0%7C0%7C638937967369975168%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=EFx3kuinwGFn4HpvaxOm%2FaCB3sbpAj8mde4Q3Y484V8%3D&reserved=0) (should take less than 5 minutes):
+
+![](images/qr-code.png)

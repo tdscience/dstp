@@ -598,6 +598,13 @@
     "text": "6.6 Exercise 6: Advanced Routing\n\nRead over the routing engine setup example and (as a bonus) try to set up your own instance of OpenTripPlanner using Java or Docker."
   },
   {
+    "objectID": "s5.html#exercise-7-vehicle-routing-with-traffic-azuremapsr",
+    "href": "s5.html#exercise-7-vehicle-routing-with-traffic-azuremapsr",
+    "title": "Routing and route network analysis",
+    "section": "6.7 Exercise 7: Vehicle routing with traffic (azuremapsr)",
+    "text": "6.7 Exercise 7: Vehicle routing with traffic (azuremapsr)"
+  },
+  {
     "objectID": "collisions.html",
     "href": "collisions.html",
     "title": "Road traffic collisions",

@@ -235,6 +235,12 @@ Source: "Dependency" by Randall Munroe: [xkcd.com/2347/](https://xkcd.com/2347/)
 
 ![](images/paste-7.png)
 
+## Software stack
+
+![](images/paste-17.png)
+
+![](images/paste-16.png)
+
 ## Which IDE to use? Source: tdscience/course
 
 ![](images/ide-table.png)

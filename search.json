@@ -574,7 +574,7 @@
     "href": "s5.html#exercise-4-route-network-creation",
     "title": "Routing and route network analysis",
     "section": "6.4 Exercise 4: Route Network Creation",
-    "text": "6.4 Exercise 4: Route Network Creation\n\nLoad route data for a specific mode\nCreate a route network using overline()\nCompare the route network visualization with individual routes\n\n\n# Your code here"
+    "text": "6.4 Exercise 4: Route Network Creation\n\nLoad route data for a specific mode with osmextract::oe_get_network() (hint: run ?oe_get_network to find out which modes are available), the osmnx Python package, or any other source\nAssign values to links and visualise the route network\nCompare the route network visualization with individual routes\n\n\n# Your code here"
   },
   {
     "objectID": "s5.html#exercise-5-network-centrality",
@@ -582,6 +582,13 @@
     "title": "Routing and route network analysis",
     "section": "6.5 Exercise 5: Network Centrality",
     "text": "6.5 Exercise 5: Network Centrality\n\nDownload road network data for a small area\nCalculate betweenness centrality\nIdentify the most critical roads in the network\n\n\n# Your code here"
+  },
+  {
+    "objectID": "s5.html#exercise-6-advanced-routing",
+    "href": "s5.html#exercise-6-advanced-routing",
+    "title": "Routing and route network analysis",
+    "section": "6.6 Exercise 6: Advanced Routing",
+    "text": "6.6 Exercise 6: Advanced Routing\n\nRead over the routing engine setup example and (as a bonus) try to set up your own instance of OpenTripPlanner using Java or Docker."
   },
   {
     "objectID": "collisions.html",

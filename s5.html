@@ -237,6 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercise-3-desire-lines-analysis" id="toc-exercise-3-desire-lines-analysis" class="nav-link" data-scroll-target="#exercise-3-desire-lines-analysis"><span class="header-section-number">6.3</span> Exercise 3: Desire Lines Analysis</a></li>
   <li><a href="#exercise-4-route-network-creation" id="toc-exercise-4-route-network-creation" class="nav-link" data-scroll-target="#exercise-4-route-network-creation"><span class="header-section-number">6.4</span> Exercise 4: Route Network Creation</a></li>
   <li><a href="#exercise-5-network-centrality" id="toc-exercise-5-network-centrality" class="nav-link" data-scroll-target="#exercise-5-network-centrality"><span class="header-section-number">6.5</span> Exercise 5: Network Centrality</a></li>
+  <li><a href="#exercise-6-advanced-routing" id="toc-exercise-6-advanced-routing" class="nav-link" data-scroll-target="#exercise-6-advanced-routing"><span class="header-section-number">6.6</span> Exercise 6: Advanced Routing</a></li>
   </ul></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7</span> Further Reading</a></li>
   <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">8</span> Homework</a></li>
@@ -557,8 +558,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exercise-4-route-network-creation" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="exercise-4-route-network-creation"><span class="header-section-number">6.4</span> Exercise 4: Route Network Creation</h2>
 <ol type="1">
-<li>Load route data for a specific mode</li>
-<li>Create a route network using <code>overline()</code></li>
+<li>Load route data for a specific mode with <code>osmextract::oe_get_network()</code> (hint: run <code>?oe_get_network</code> to find out which modes are available), the <code>osmnx</code> Python package, or any other source</li>
+<li>Assign values to links and visualise the route network</li>
 <li>Compare the route network visualization with individual routes</li>
 </ol>
 <div class="cell">
@@ -575,6 +576,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="exercise-6-advanced-routing" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="exercise-6-advanced-routing"><span class="header-section-number">6.6</span> Exercise 6: Advanced Routing</h2>
+<ul>
+<li>Read over the <a href="./routing-engine.html">routing engine setup example</a> and (as a bonus) try to set up your own instance of OpenTripPlanner using Java or Docker.</li>
+</ul>
 </section>
 </section>
 <section id="further-reading" class="level1" data-number="7">

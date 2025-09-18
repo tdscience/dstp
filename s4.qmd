@@ -17,9 +17,10 @@ There are three main parts, all of which can be found at [ekotov.pro](https://ww
 -   Run the code below for Seville and as a bonus for a different part of Spain
 -   Bonus: try visualising the cycle flows for the London Cycle Hire data used in [session 3](s3.qmd) using the `flowmapblue` package.
 
-An example of code using the package is shown below, which results in an interactive flow map for Seville, as shown below and in the interactive HTML file [seville_flowmap.html](https://github.com/tdscience/dstp/releases/download/v1/seville_flowmap.html).
+An example of code using the package is shown below, which results in an interactive flow map for Seville, as shown below and in the interactive HTML file [seville_flowmap.html](https://github.com/tdscience/dstp/releases/download/v1/seville_flowmap.html) in the releases section of this repository.
 
-![](images/paste-1.png)
+![](images/seville-flowmap.png)
+
 
 ```{r}
 #| label: flowmap-seville

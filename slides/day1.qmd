@@ -399,7 +399,7 @@ plt.show()
 ![](images/world-facet-py.png)
 :::
 
-See Yang's [slides](https://docs.google.com/presentation/d/1fKXK1ocCSkTQkTQn0eoYWURIfQuFgQwICFiDGVetMek/edit?usp=sharing) in link at [tdscience.github.io/dstp/s2](https://tdscience.github.io/dstp/s2)
+See Yang's slides in link at [tdscience.github.io/dstp/s2](https://tdscience.github.io/dstp/s2)
 
 ## Exercises
 

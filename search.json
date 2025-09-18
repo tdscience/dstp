@@ -668,7 +668,7 @@
     "href": "slides/day1.html#example-pct-npt-biclar-etc.",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Example: PCT, NPT, biclaR etc.",
-    "text": "Example: PCT, NPT, biclaR etc.\n\nSee biclar.tmobilidade.pt source code: github.com/u-shift (Félix, Moura, and Lovelace 2025)."
+    "text": "Example: PCT, NPT, biclaR etc.\n\nSee biclar.tmobilidade.pt source code: github.com/u-shift (félix2025?)."
   },
   {
     "objectID": "slides/day1.html#course-principles",
@@ -738,13 +738,27 @@
     "href": "slides/day1.html#solo-working-through-the-practical-until-1230",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Solo working through the practical (until ~12:30)",
-    "text": "Solo working through the practical (until ~12:30)\nAny questions before the lunch break?\nPut your hands up, ask another participant, or use the github.com/tdscience/dstp/discussions"
+    "text": "Solo working through the practical (until ~12:30)\nSee practical at tdscience.github.io/dstp/s1\nAny questions before the lunch break?\nPut your hands up, ask another participant, or use the github.com/tdscience/dstp/discussions"
+  },
+  {
+    "objectID": "slides/day1.html#lunch-break-1230-1330",
+    "href": "slides/day1.html#lunch-break-1230-1330",
+    "title": "Data Science for Transport Planning: Day 1",
+    "section": "Lunch break (12:30-13:30)",
+    "text": "Lunch break (12:30-13:30)\nSee you back here at 13:30"
+  },
+  {
+    "objectID": "slides/day1.html#lecture-on-session-2-od-and-geographic-data",
+    "href": "slides/day1.html#lecture-on-session-2-od-and-geographic-data",
+    "title": "Data Science for Transport Planning: Day 1",
+    "section": "Lecture on Session 2: OD and geographic data",
+    "text": "Lecture on Session 2: OD and geographic data\n\nOD data is implicitly geographic (Lovelace, Félix, and Carlino 2022)\nSee Yang’s slides in link at tdscience.github.io/dstp/s2"
   },
   {
     "objectID": "slides/day1.html#references",
     "href": "slides/day1.html#references",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "References",
-    "text": "References\n\n\n\n\nFélix, Rosa, Filipe Moura, and Robin Lovelace. 2025. “Reproducible Methods for Modeling Combined Public Transport and Cycling Trips and Associated Benefits: Evidence from the biclaR Tool.” Computers, Environment and Urban Systems 117 (April): 102230. https://doi.org/10.1016/j.compenvurbsys.2024.102230."
+    "text": "References\n\n\n\n\nLovelace, Robin, Rosa Félix, and Dustin Carlino. 2022. “Jittering: A Computationally Efficient Method for Generating Realistic Route Networks from Origin-Destination Data.” Findings, April, 33873. https://doi.org/10.32866/001c.33873."
   }
 ]

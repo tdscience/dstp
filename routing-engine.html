@@ -195,13 +195,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#modern-failsafe-gcp-deployment-guide" id="toc-modern-failsafe-gcp-deployment-guide" class="nav-link active" data-scroll-target="#modern-failsafe-gcp-deployment-guide"><span class="header-section-number">1</span> Modern, Failsafe GCP Deployment Guide</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
   <ul class="collapse">
-  <li><a href="#step-1-prerequisites-local-machine" id="toc-step-1-prerequisites-local-machine" class="nav-link" data-scroll-target="#step-1-prerequisites-local-machine"><span class="header-section-number">1.1</span> Step 1: Prerequisites (Local Machine)</a></li>
-  <li><a href="#step-2-build-and-push-the-optimized-docker-image" id="toc-step-2-build-and-push-the-optimized-docker-image" class="nav-link" data-scroll-target="#step-2-build-and-push-the-optimized-docker-image"><span class="header-section-number">1.2</span> Step 2: Build and Push the Optimized Docker Image</a></li>
-  <li><a href="#step-3-deploy-the-container-to-a-gcp-vm" id="toc-step-3-deploy-the-container-to-a-gcp-vm" class="nav-link" data-scroll-target="#step-3-deploy-the-container-to-a-gcp-vm"><span class="header-section-number">1.3</span> Step 3: Deploy the Container to a GCP VM</a></li>
-  <li><a href="#step-4-access-and-manage-your-server" id="toc-step-4-access-and-manage-your-server" class="nav-link" data-scroll-target="#step-4-access-and-manage-your-server"><span class="header-section-number">1.4</span> Step 4: Access and Manage Your Server</a></li>
-  <li><a href="#step-5-cleanup" id="toc-step-5-cleanup" class="nav-link" data-scroll-target="#step-5-cleanup"><span class="header-section-number">1.5</span> Step 5: Cleanup</a></li>
+  <li><a href="#step-1-one-time-setup-local-gcp" id="toc-step-1-one-time-setup-local-gcp" class="nav-link" data-scroll-target="#step-1-one-time-setup-local-gcp"><span class="header-section-number">1.1</span> Step 1: One-Time Setup (Local &amp; GCP)</a></li>
+  <li><a href="#step-2-build-and-deploy-the-routing-engine" id="toc-step-2-build-and-deploy-the-routing-engine" class="nav-link" data-scroll-target="#step-2-build-and-deploy-the-routing-engine"><span class="header-section-number">1.2</span> Step 2: Build and Deploy the Routing Engine</a></li>
+  <li><a href="#step-3-access-and-verify" id="toc-step-3-access-and-verify" class="nav-link" data-scroll-target="#step-3-access-and-verify"><span class="header-section-number">1.3</span> Step 3: Access and Verify</a></li>
+  <li><a href="#step-4-managing-the-deployment" id="toc-step-4-managing-the-deployment" class="nav-link" data-scroll-target="#step-4-managing-the-deployment"><span class="header-section-number">1.4</span> Step 4: Managing the Deployment</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -228,176 +227,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="modern-failsafe-gcp-deployment-guide" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="modern-failsafe-gcp-deployment-guide"><span class="header-section-number">1</span> Modern, Failsafe GCP Deployment Guide</h2>
-<p>This guide provides a minimal, quick, and robust method for deploying a Dockerized OpenTripPlanner (OTP) server on Google Cloud Platform (GCP), adhering to modern best practices.</p>
-<p><strong>Core Principles:</strong> - <strong>Declarative Deployment:</strong> Use <code>create-with-container</code> for reliable, atomic deployments instead of fragile startup scripts. - <strong>Least Privilege Security:</strong> Employ a dedicated Service Account with minimal permissions. - <strong>Optimized Images:</strong> Use multi-stage Docker builds for smaller, more secure images. - <strong>Cost Efficiency:</strong> Utilize Spot VMs for non-critical workloads. - <strong>Stable Networking:</strong> Reserve a static IP address.</p>
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>This guide provides a minimal and robust method for deploying a Dockerized OpenTripPlanner (OTP) server on Google Cloud Platform (GCP), adhering to modern best practices.</p>
+<p><strong>Core Principles:</strong></p>
+<ul>
+<li><p><strong>Declarative Deployment:</strong> Use <code>create-with-container</code> for reliable, atomic deployments.</p></li>
+<li><p><strong>Least Privilege Security:</strong> Employ a dedicated Service Account with minimal permissions.</p></li>
+<li><p><strong>Optimized Images:</strong> Use multi-stage Docker builds for smaller, more secure images.</p></li>
+<li><p><strong>Cost Efficiency:</strong> Utilize Spot VMs for non-critical workloads.</p></li>
+</ul>
 <hr>
-<section id="step-1-prerequisites-local-machine" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="step-1-prerequisites-local-machine"><span class="header-section-number">1.1</span> Step 1: Prerequisites (Local Machine)</h3>
+<section id="step-1-one-time-setup-local-gcp" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="step-1-one-time-setup-local-gcp"><span class="header-section-number">1.1</span> Step 1: One-Time Setup (Local &amp; GCP)</h3>
+<p>Prepare your local environment and GCP project. This only needs to be done once.</p>
 <ol type="1">
-<li><strong>Install Google Cloud SDK:</strong> This provides the <code>gcloud</code> command-line tool.</li>
+<li><p><strong>Install Local Tools &amp; Configure GCP:</strong></p>
+<ul>
+<li><p>Install the <a href="https://cloud.google.com/sdk/docs/install">Google Cloud SDK</a> and <a href="https://docs.docker.com/engine/install/">Docker</a>.</p></li>
+<li><p>Log in to GCP and initialize your project:</p></li>
+</ul></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://sdk.cloud.google.com <span class="kw">|</span> <span class="fu">bash</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> <span class="at">-l</span> <span class="va">$SHELL</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Follow the prompts to log in and select your GCP project (e.g., <code>shiny-server-154518</code>).</em></p>
-<ol start="2" type="1">
-<li><strong>Install Docker:</strong> If not already installed.</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install <span class="at">-y</span> docker.io</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> docker <span class="va">$USER</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Log out and back in for the group changes to take effect.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="3" type="1">
-<li><strong>Enable GCP APIs:</strong></li>
-</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>- Enable required APIs:</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> services enable compute.googleapis.com artifactregistry.googleapis.com iam.googleapis.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="4" type="1">
-<li><strong>Configure Docker to Authenticate with Artifact Registry:</strong></li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace 'europe-west2' with your preferred GCP region, e.g. for london: europe-west2</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> auth configure-docker europe-west2-docker.pkg.dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
-</section>
-<section id="step-2-build-and-push-the-optimized-docker-image" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="step-2-build-and-push-the-optimized-docker-image"><span class="header-section-number">1.2</span> Step 2: Build and Push the Optimized Docker Image</h3>
-<ol type="1">
-<li><strong>Create the <code>Dockerfile</code>:</strong> Save the following as <code>routing-engine/Dockerfile</code>. This multi-stage build creates a minimal final image.</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Build Stage ----</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a standard Ubuntu image as a 'builder' to get the OTP files</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ubuntu:22.04 as builder</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Install only the tools needed to download and unpack</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> wget unzip <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Download and unpack OTP into a temporary location</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /source</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">wget</span> https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> otp_TDS.zip</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Final Stage ----</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Start from a clean, official OpenJDK base image, which is minimal and secure</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> eclipse-temurin:8-jre-focal</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the working directory</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /app</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the OTP application files from the 'builder' stage</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> <span class="op">--from=builder</span> /source/otp_TDS/ .</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure the graphs directory exists, as OTP will look for it</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> <span class="at">-p</span> graphs</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Expose the port the application will run on</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 8080</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the command to run the OTP server</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"java"</span>, <span class="st">"-Xmx3g"</span>, <span class="st">"-jar"</span>, <span class="st">"otp-1.5.0-shaded.jar"</span>, <span class="st">"--router"</span>, <span class="st">"west-yorkshire"</span>, <span class="st">"--graphs"</span>, <span class="st">"/app/graphs"</span>, <span class="st">"--server"</span>, <span class="st">"--port"</span>, <span class="st">"8080"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>- Configure Docker to authenticate with Artifact Registry (replace `europe-west2` with your region):</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> auth configure-docker europe-west2-docker.pkg.dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li><strong>Create the Artifact Registry Repository:</strong> This is a one-time setup for your project.</li>
+<li><p><strong>Create the Dockerfile:</strong></p>
+<p>Save the following as <code>routing-engine/Dockerfile</code>. This version includes Nginx and Certbot to automatically handle HTTPS.</p></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> artifacts repositories create routing-engine <span class="dt">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repository-format</span><span class="op">=</span>docker <span class="dt">\</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--location</span><span class="op">=</span>europe-west2 <span class="dt">\</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span><span class="op">=</span>shiny-server-154518</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Build Stage ----</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ubuntu:22.04 as builder</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> wget unzip <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /source</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">wget</span> https://github.com/ITSLeeds/TDS/releases/download/0.20.1/otp_TDS.zip <span class="kw">&amp;&amp;</span> <span class="fu">unzip</span> otp_TDS.zip</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Final Stage ----</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> eclipse-temurin:8-jre-focal</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> nginx certbot python3-certbot-nginx supervisor <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> <span class="at">-rf</span> /var/lib/apt/lists/<span class="pp">*</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /app</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> <span class="op">--from=builder</span> /source/otp_TDS/ .</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> <span class="at">-p</span> graphs</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">rm</span> <span class="at">-f</span> /etc/nginx/sites-enabled/default</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> nginx.conf /etc/nginx/sites-available/otp</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">ln</span> <span class="at">-s</span> /etc/nginx/sites-available/otp /etc/nginx/sites-enabled/</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> supervisord.conf /etc/supervisor/conf.d/supervisord.conf</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> startup.sh /startup.sh</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> +x /startup.sh</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80 443 8080</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"/startup.sh"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>*Note: You will also need to create `nginx.conf`, `supervisord.conf`, and `startup.sh` in your project directory.*</code></pre>
 <ol start="3" type="1">
-<li><strong>Build, Tag, and Push the Image:</strong></li>
+<li><p><strong>Create GCP Resources:</strong></p>
+<ul>
+<li><strong>Artifact Registry Repository:</strong></li>
+</ul></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your image URI</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">IMAGE_URI</span><span class="op">=</span><span class="st">"europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build and push</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> <span class="va">$IMAGE_URI</span> ./routing-engine/</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> push <span class="va">$IMAGE_URI</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Test the image locally (optional):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-p</span> 8080:8080 <span class="va">$IMAGE_URI</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">"http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&amp;toPlace=53.8008,-1.5497&amp;mode=CAR"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> artifacts repositories create routing-engine <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repository-format</span><span class="op">=</span>docker <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--location</span><span class="op">=</span>europe-west2 <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span><span class="op">=</span>shiny-server-154518</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>- **Service Account:**</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> iam service-accounts create otp-vm-sa <span class="at">--display-name</span><span class="op">=</span><span class="st">"OTP VM Service Account"</span> <span class="at">--project</span><span class="op">=</span>shiny-server-154518</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> projects add-iam-policy-binding shiny-server-154518 <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--member</span><span class="op">=</span><span class="st">"serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com"</span> <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--role</span><span class="op">=</span><span class="st">"roles/artifactregistry.reader"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="step-3-deploy-the-container-to-a-gcp-vm" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="step-3-deploy-the-container-to-a-gcp-vm"><span class="header-section-number">1.3</span> Step 3: Deploy the Container to a GCP VM</h3>
+<section id="step-2-build-and-deploy-the-routing-engine" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="step-2-build-and-deploy-the-routing-engine"><span class="header-section-number">1.2</span> Step 2: Build and Deploy the Routing Engine</h3>
+<p>Now, build the Docker image and deploy it to a new VM.</p>
 <ol type="1">
-<li><strong>Create a Dedicated Service Account (One-time setup):</strong></li>
+<li><strong>Build and Push the Docker Image:</strong></li>
 </ol>
-<p>This ensures the VM has only the permissions it needs.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> iam service-accounts create otp-vm-sa <span class="dt">\</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--display-name</span><span class="op">=</span><span class="st">"OTP VM Service Account"</span> <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span><span class="op">=</span>shiny-server-154518</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> projects add-iam-policy-binding shiny-server-154518 <span class="dt">\</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--member</span><span class="op">=</span><span class="st">"serviceAccount:otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com"</span> <span class="dt">\</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--role</span><span class="op">=</span><span class="st">"roles/artifactregistry.reader"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">IMAGE_URI</span><span class="op">=</span><span class="st">"europe-west2-docker.pkg.dev/shiny-server-154518/routing-engine/routing-engine:latest"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> <span class="va">$IMAGE_URI</span> ./routing-engine/</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> push <span class="va">$IMAGE_URI</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li><strong>Deploy the VM and Container:</strong> This single command creates the VM and deploys your container declaratively.</li>
+<li><strong>Deploy the VM and Create Firewall Rule:</strong></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute instances create-with-container routing-vm <span class="dt">\</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="dt">\</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--machine-type</span><span class="op">=</span>e2-medium <span class="dt">\</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provisioning-model</span><span class="op">=</span>SPOT <span class="dt">\</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span><span class="op">=</span>otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com <span class="dt">\</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--tags</span><span class="op">=</span>allow-http-traffic <span class="dt">\</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--container-image</span><span class="op">=</span><span class="va">$IMAGE_URI</span> <span class="dt">\</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--container-restart-policy</span><span class="op">=</span>always</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="3" type="1">
-<li><strong>Create a Firewall Rule:</strong></li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute firewall-rules create allow-otp <span class="dt">\</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--allow</span> tcp:8080 <span class="dt">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--source-ranges</span><span class="op">=</span>0.0.0.0/0 <span class="dt">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--target-tags</span><span class="op">=</span>allow-http-traffic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>To update the firewall rule later (if needed):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute firewall-rules update allow-otp <span class="at">--allow</span> tcp:8080</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the VM with the container</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute instances create-with-container routing-vm <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--machine-type</span><span class="op">=</span>e2-medium <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provisioning-model</span><span class="op">=</span>SPOT <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span><span class="op">=</span>otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com <span class="dt">\</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--tags</span><span class="op">=</span>allow-http-traffic <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--container-image</span><span class="op">=</span><span class="va">$IMAGE_URI</span> <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--container-restart-policy</span><span class="op">=</span>always</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a firewall rule to allow traffic</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute firewall-rules create allow-otp-traffic <span class="dt">\</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--allow</span> tcp:80,tcp:443,tcp:8080 <span class="dt">\</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--source-ranges</span><span class="op">=</span>0.0.0.0/0 <span class="dt">\</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--target-tags</span><span class="op">=</span>allow-http-traffic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="step-4-access-and-manage-your-server" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="step-4-access-and-manage-your-server"><span class="header-section-number">1.4</span> Step 4: Access and Manage Your Server</h3>
+<section id="step-3-access-and-verify" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="step-3-access-and-verify"><span class="header-section-number">1.3</span> Step 3: Access and Verify</h3>
+<p>After deployment, verify that the server is running correctly.</p>
 <ol type="1">
 <li><strong>Get the External IP Address:</strong></li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">EXTERNAL_IP</span><span class="op">=</span><span class="va">$(</span><span class="ex">gcloud</span> compute instances describe routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="at">--format</span><span class="op">=</span><span class="st">'get(networkInterfaces[0].accessConfigs[0].natIP)'</span><span class="va">)</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Server IP: </span><span class="va">$EXTERNAL_IP</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li><strong>Test the API:</strong> Wait a minute for the VM to boot and the container to start, then run:</li>
+<li><p><strong>Test the API:</strong></p>
+<ul>
+<li><strong>Via HTTPS (recommended):</strong></li>
+</ul></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">"http://</span><span class="va">$EXTERNAL_IP</span><span class="st">:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&amp;toPlace=53.8008,-1.5497&amp;mode=CAR"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You can also see an interactive map by navigating to:</p>
-<pre><code>curl "http://$EXTERNAL_IP:8080/otp/routers/west-yorkshire/plan"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">"https://otp.robinlovelace.net/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&amp;toPlace=53.8008,-1.5497&amp;mode=CAR"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>- **Via direct IP and port (for teaching/debugging):**</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">"http://</span><span class="va">$EXTERNAL_IP</span><span class="st">:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&amp;toPlace=53.8008,-1.5497&amp;mode=CAR"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>- **Interactive Map:** Open `https://otp.robinlovelace.net` in your browser.</code></pre>
 <ol start="3" type="1">
-<li><strong>View Logs:</strong> The logs are automatically streamed to Google Cloud’s operations suite (formerly Stackdriver).</li>
+<li><strong>View Logs:</strong></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> logging read <span class="st">"resource.type=gce_instance AND resource.labels.instance_id=</span><span class="va">$(</span><span class="ex">gcloud</span> compute instances describe routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="at">--format</span><span class="op">=</span><span class="st">'get(id)'</span><span class="va">)</span><span class="st">"</span> <span class="at">--limit</span> 100</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> logging read <span class="st">"resource.type=gce_instance AND resource.labels.instance_id=</span><span class="va">$(</span><span class="ex">gcloud</span> compute instances describe routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="at">--format</span><span class="op">=</span><span class="st">'get(id)'</span><span class="va">)</span><span class="st">"</span> <span class="at">--limit</span> 100</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<p>Connect to the VM via SSH (if needed):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute ssh routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Debug with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it's running</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> ps</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check endpoint:</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">"http://localhost:8080/otp/routers/west-yorkshire/plan?fromPlace=53.8003,-1.5491&amp;toPlace=53.8008,-1.5497&amp;mode=CAR"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute firewall-rules list <span class="at">--filter</span><span class="op">=</span><span class="st">"name=allow-otp"</span> <span class="at">--format</span><span class="op">=</span><span class="st">"table(name,allowed,targetTags)"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># NAME        ALLOWED                                     TARGET_TAGS</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># allow-otp   [{'IPProtocol': 'tcp', 'ports': ['8080']}]  ['allow-http-traffic']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Update firewall rules (if needed)</p>
-<p>Test the network connectivity on local machine:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nc</span> <span class="at">-zv</span> <span class="va">$EXTERNAL_IP</span> 8080</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># If nc -zv 34.39.7.234 8080  # Or telnet 34.39.7.234 8080 -- should say "Connected"</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># nc: connect to 34.39.7.234 port 8080 (tcp) failed: Connection refused:</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If connection refused, check firewall rules and VM status</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Firewall checks on remote</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On VM (via SSH)</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> iptables <span class="at">-L</span> <span class="at">-n</span> <span class="kw">|</span> <span class="fu">grep</span> 8080  <span class="co"># Should be empty or ACCEPT for port 8080</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw status  <span class="co"># If UFW is enabled, it might block; disable if needed: sudo ufw disable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="step-5-cleanup" class="level3" data-number="1.5">
-<h3 data-number="1.5" class="anchored" data-anchor-id="step-5-cleanup"><span class="header-section-number">1.5</span> Step 5: Cleanup</h3>
+<section id="step-4-managing-the-deployment" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="step-4-managing-the-deployment"><span class="header-section-number">1.4</span> Step 4: Managing the Deployment</h3>
+<p><strong>Updating the Server:</strong></p>
+<p>To apply changes (e.g., an updated <code>Dockerfile</code>), you must rebuild the image and redeploy the VM.</p>
+<ol type="1">
+<li><strong>Delete the existing VM:</strong></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute instances delete routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="at">--quiet</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li><strong>Follow Step 2 again</strong> to build the new image and deploy the VM.</li>
+</ol>
+<p><strong>Cleaning Up Resources:</strong></p>
 <p>To avoid ongoing charges, delete the resources when you are finished.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute instances delete routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="at">--quiet</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute firewall-rules delete allow-otp <span class="at">--quiet</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com <span class="at">--quiet</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: delete the Artifact Registry repository and image</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> artifacts repositories delete routing-engine <span class="at">--location</span><span class="op">=</span>europe-west2 <span class="at">--quiet</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the VM instance</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute instances delete routing-vm <span class="at">--zone</span><span class="op">=</span>europe-west2-a <span class="at">--quiet</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the firewall rule</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> compute firewall-rules delete allow-otp-traffic <span class="at">--quiet</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the service account</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceaccount.com <span class="at">--quiet</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Delete the Docker image from Artifact Registry</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> artifacts repositories delete routing-engine <span class="at">--location</span><span class="op">=</span>europe-west2 <span class="at">--quiet</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

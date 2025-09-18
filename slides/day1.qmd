@@ -3,7 +3,7 @@ title: "Data Science for Transport Planning: Day 1"
 author: "Professor Robin Lovelace"
 date: "September 18, 2025"
 format: clean-revealjs
-bibliography: references.bib
+bibliography: ../references.bib
 ---
 
 ## Welcome!
@@ -247,34 +247,33 @@ Press Ctrl+Tab to switch from IDE to browser with course content and other thing
 
 # Practical session 0
 
-## Set-up: project folder/repo 
+## Set-up: project folder/repo
 
 Option 1: Create an empty folder on your computer (beginner level)
 
-- Via Windows Explore or other GUI
-- Via command line (e.g., `mkdir dstp-rl`, but replace 'rl' with your initials)
-- Via RStudio or VS Code
+-   Via Windows Explore or other GUI
+-   Via command line (e.g., `mkdir dstp-rl`, but replace 'rl' with your initials)
+-   Via RStudio or VS Code
 
 Option 2: Create a new repository on GitHub (more advanced, recommended)
 
-- Via GitHub Desktop (beginner level)
-- Via `gh` command line tool (more advanced, recommended)
+-   Via GitHub Desktop (beginner level)
+-   Via `gh` command line tool (more advanced, recommended)
 
-```sh 
+``` sh
 gh repo create dstp-rl --public --clone # replace 'rl' with your initials
 ```
 
 ## Tabsets
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### gh CLI tool
 
 The following creates a fresh GitHub repo with GitHub CLI (recommended)
 
 Note: you need to have installed the [GitHub CLI](https://cli.github.com/) and authenticated it with your GitHub account.
 
-```sh
+``` sh
 cd path/to/your/folder # e.g. cd C:/Users/YourName/Documents
 gh repo create dstp-rl --public --clone # replace 'rl' with your initials
 code path/to/your/folder/dstp-rl # or open in RStudio
@@ -282,7 +281,7 @@ code path/to/your/folder/dstp-rl # or open in RStudio
 
 ### R
 
-```r
+``` r
 dir.create("C:/path/to/your/folder/dstp") # replace with your path
 rstudioapi::openProject("C:/path/to/your/folder/dstp")
 ```
@@ -291,13 +290,12 @@ rstudioapi::openProject("C:/path/to/your/folder/dstp")
 
 The following creates an empty folder with PowerShell or RStudio/VS Code terminal
 
-```sh
+``` sh
 # After opening a terminal in your chosen IDE/shell
 cd path/to/your/folder # e.g. cd C:/Users/YourName/Documents
 mkdir dstp-rl # replace 'rl' with your initials
 # Then open the folder in your IDE
 ```
-
 :::
 
 ## Opening your project
@@ -306,19 +304,19 @@ Option 1 (RStudio): Open the folder you created in RStudio using the New Project
 
 Option 2 (RStudio - recommended): Open the folder you created in RStudio using the `rstudioapi` package, e.g. with the following command in R Console:
 
-```r
+``` r
 rstudioapi::openProject("C:/path/to/your/folder/dstp")
 ```
 
-Option 3: (VS Code): Open the folder you created in VS Code using the File > Open Folder menu
+Option 3: (VS Code): Open the folder you created in VS Code using the File \> Open Folder menu
 
-```sh
+``` sh
 code path/to/your/folder/dstp
 ```
 
-Option 4 (VS Code - recommended): 
+Option 4 (VS Code - recommended):
 
-```sh
+``` sh
 code path/to/your/folder/dstp
 ```
 
@@ -341,8 +339,24 @@ code path/to/your/folder/dstp
 
 ## Solo working through the practical (until \~12:30)
 
+See practical at [tdscience.github.io/dstp/s1](https://tdscience.github.io/dstp/s1)
+
 Any questions before the lunch break?
 
 Put your hands up, ask another participant, or use the [github.com/tdscience/dstp/discussions](https://github.com/tdscience/dstp/discussions)
+
+## Lunch break (12:30-13:30)
+
+See you back here at 13:30
+
+# Session 2 (see [Session 2 workbook](../s2.qmd))
+
+## Lecture on Session 2: OD and geographic data
+
+![](images/paste-13.png)
+
+OD data is implicitly geographic [@lovelace2022]
+
+See Yang's [slides](https://docs.google.com/presentation/d/1fKXK1ocCSkTQkTQn0eoYWURIfQuFgQwICFiDGVetMek/edit?usp=sharing) in link at [tdscience.github.io/dstp/s2](https://tdscience.github.io/dstp/s2)
 
 ## References

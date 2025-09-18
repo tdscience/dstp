@@ -3,7 +3,7 @@ title: "Data Science for Transport Planning: Day 2"
 author: "Professor Robin Lovelace"
 date: "September 19, 2025"
 format: clean-revealjs
-bibliography: references.bib
+bibliography: ../references.bib
 ---
 
 ## Welcome to Day 2!

@@ -483,14 +483,14 @@
     "href": "s5.html",
     "title": "Routing and route network analysis",
     "section": "",
-    "text": "This session demonstrates routing and network analysis techniques. By the end of this session, you should be able to:\n\nUnderstand the principles of routing and network analysis\nUse routing services such as OpenTripPlanner for multi-modal routing\nCreate and analyze route networks\nApply network centrality measures\n\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"stplanr\", \"dodgr\", \"opentripplanner\", \"tmap\", \"osmextract\", \"lwgeom\"))\n\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(stplanr)\nlibrary(dodgr)\nlibrary(opentripplanner)\nlibrary(tmap)\nlibrary(osmextract)\nlibrary(lwgeom)\ntmap_mode(\"plot\")"
+    "text": "This session demonstrates routing and network analysis techniques. By the end of this session, you should be able to:\n\nUnderstand the principles of routing and network analysis\nUse routing services such as OpenTripPlanner for multi-modal routing\nCreate and analyze route networks\nApply network centrality measures\n\n\n\n\nif (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"stplanr\", \"dodgr\", \"opentripplanner\", \"tmap\", \"osmextract\", \"lwgeom\"))\n\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(stplanr)\nlibrary(dodgr)\nlibrary(opentripplanner)\nlibrary(tmap)\nlibrary(osmextract)\nlibrary(lwgeom)\ntmap_mode(\"view\")"
   },
   {
     "objectID": "s5.html#prerequisites",
     "href": "s5.html#prerequisites",
     "title": "Routing and route network analysis",
     "section": "",
-    "text": "if (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"stplanr\", \"dodgr\", \"opentripplanner\", \"tmap\", \"osmextract\", \"lwgeom\"))\n\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(stplanr)\nlibrary(dodgr)\nlibrary(opentripplanner)\nlibrary(tmap)\nlibrary(osmextract)\nlibrary(lwgeom)\ntmap_mode(\"plot\")"
+    "text": "if (!require(\"pak\")) install.packages(\"pak\")\npak::pkg_install(c(\"sf\", \"tidyverse\", \"stplanr\", \"dodgr\", \"opentripplanner\", \"tmap\", \"osmextract\", \"lwgeom\"))\n\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(stplanr)\nlibrary(dodgr)\nlibrary(opentripplanner)\nlibrary(tmap)\nlibrary(osmextract)\nlibrary(lwgeom)\ntmap_mode(\"view\")"
   },
   {
     "objectID": "s5.html#connecting-to-otp",
@@ -504,7 +504,7 @@
     "href": "s5.html#basic-routing",
     "title": "Routing and route network analysis",
     "section": "2.2 Basic Routing",
-    "text": "2.2 Basic Routing\n\n# Create a simple walking route\nroute_walk = otp_plan(\n  otpcon = otpcon,\n  fromPlace = c(-1.55555, 53.81005), # Longitude, Latitude\n  toPlace = c(-1.54710, 53.79519),\n  mode = \"WALK\"\n)"
+    "text": "2.2 Basic Routing\n\n# Create a simple walking route from ITS Leeds to Leeds Railway Station\nfrom = stplanr::geo_code(\"Institute for Transport Studies, Leeds\")\nto = stplanr::geo_code(\"Leeds Railway Station\")\n\nroute_walk = otp_plan(\n  otpcon = otpcon,\n  fromPlace = from, # c(-1.555, 53.810), # Longitude, Latitude\n  toPlace = to, # c(-1.54710, 53.79519),\n  mode = \"WALK\"\n)\nqtm(route_walk)\n\nYou should see something like this, a good route from ITS to the train station. Zoom into the interactive map at leeds_walk_route.html in the releases to see if it’s the same route you would take.\n\n\n\n\n\n\n\nNote\n\n\n\nYou can download and view the resulting map with the following code:\n\ndownload.file(\"https://github.com/tdscience/dstp/releases/download/v1/leeds_walk_route.html\")\nbrowseURL(\"leeds_walk_route.html\", browser = \"firefox\")"
   },
   {
     "objectID": "s5.html#multi-modal-routing",

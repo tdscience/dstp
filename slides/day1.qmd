@@ -235,17 +235,21 @@ Source: "Dependency" by Randall Munroe: [xkcd.com/2347/](https://xkcd.com/2347/)
 
 ![](images/paste-7.png)
 
+## Which IDE to use? Source: tdscience/course
+
+![](images/ide-table.png)
+
 ## The practical sessions
 
 -   Time of in-depth work
 -   Use the course website as a reference point but spend most of the time in your own environment
--   I will support people 1-2-1 and do 'live demos' now and then
+-   We will support people one-to-one and can do 'live demos'
 
 ::: callout-tip
 Press Ctrl+Tab to switch from IDE to browser with course content and other things for an efficient workflow
 :::
 
----
+------------------------------------------------------------------------
 
 #### What are transport datasets? A geo typology
 
@@ -253,7 +257,7 @@ Source: [Geocomputation with R](https://r.geocompx.org) [@lovelace2025]
 
 ![](images/paste-15.png)
 
----
+------------------------------------------------------------------------
 
 # Practical session 0
 

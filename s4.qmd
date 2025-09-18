@@ -3,8 +3,6 @@ title: "Spatio-temporal data"
 pagetitle: "Session 4"
 ---
 
-
-
 # Spatio-temporal data with OD data
 
 This exercise is based on the tutorial "Analysing massive open human mobility data in R using spanishoddata, duckdb and flowmaps" by Egor Kotov [@kotov2025].
@@ -13,11 +11,15 @@ This is a more advanced exercise that benefits from having a fast internet conne
 
 There are three main parts, all of which can be found at [ekotov.pro](https://www.ekotov.pro/agit-2025-spanishoddata/):
 
-- [Setting up the software](https://www.ekotov.pro/agit-2025-spanishoddata/software-setup.html)
-- [Importing the data](https://www.ekotov.pro/agit-2025-spanishoddata/1-mobility-data.html)
-- [Visualising the data with flowmaps](https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html)
+-   [Setting up the software](https://www.ekotov.pro/agit-2025-spanishoddata/software-setup.html)
+-   [Importing the data](https://www.ekotov.pro/agit-2025-spanishoddata/1-mobility-data.html)
+-   [Visualising the data with flowmaps](https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html)
+-   Run the code below for Seville and as a bonus for a different part of Spain
+-   Bonus: try visualising the cycle flows for the London Cycle Hire data used in [session 3](s3.qmd) using the `flowmapblue` package.
 
-An example of code using the package is shown below.
+An example of code using the package is shown below, which results in an interactive flow map for Seville, as shown below and in the interactive HTML file [seville_flowmap.html](https://github.com/tdscience/dstp/releases/download/v1/seville_flowmap.html).
+
+![](images/paste-1.png)
 
 ```{r}
 #| label: flowmap-seville
@@ -57,17 +59,20 @@ od_data_time <- flows |>
   group_by(origin = id_origin, dest = id_destination, time) |>
   summarise(count = sum(n_trips, na.rm = TRUE), .groups = "drop") |>
   collect()
-    
+
 # --- 5. Filter data for the Seville region ---
 
 # Identify zones corresponding to Seville
-zones_seville <- district_zones |>
-  filter(grepl("Sevilla", district_names_in_v2, ignore.case = TRUE))
+zones_seville <- zones |>
+  filter(grepl("^Sevilla distrito", name, ignore.case = TRUE))
+mapview::mapview(zones_seville)
 
 # Create a 10km buffer to define the Functional Urban Area (FUA)
-zones_seville_fua <- district_zones[st_buffer(zones_seville, dist = 10000), ]
+zones_seville_fua <- zones[st_buffer(zones_seville, dist = 10000), ]
+plot(st_geometry(zones_seville_fua))
 
 # Prepare the location data (centroids) for the flow map
+sf::sf_use_s2(FALSE)
 locations_seville <- zones_seville_fua |>
   st_transform(crs = 4326) |>
   st_centroid() |>
@@ -89,11 +94,16 @@ flowmap_seville_interactive <- flowmapblue(
   flows = flows_seville_time,
   mapboxAccessToken = Sys.getenv("MAPBOX_TOKEN"),
   darkMode = TRUE,
-  animation = TRUE,
+  animation = FALSE,
   clustering = TRUE
 )
 
 # Display the map
 flowmap_seville_interactive
+# Save the map as an HTML file
+htmlwidgets::saveWidget(flowmap_seville_interactive, "seville_flowmap.html")
+system("firefox seville_flowmap.html")
+fs::file_size("seville_flowmap.html")
+system("gh release create")
+system("gh release upload v1 seville_flowmap.html")
 ```
-

@@ -718,7 +718,7 @@
     "href": "slides/day1.html#example-pct-npt-biclar-etc.",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "Example: PCT, NPT, biclaR etc.",
-    "text": "Example: PCT, NPT, biclaR etc.\n\nSee biclar.tmobilidade.pt source code: github.com/u-shift (félix2025?)."
+    "text": "Example: PCT, NPT, biclaR etc.\nSource: Félix, Moura, and Lovelace (2025). Also see PCT paper and follow-ons, e.g. Lovelace et al. (2024)\n\nSee biclar.tmobilidade.pt source code: github.com/u-shift"
   },
   {
     "objectID": "slides/day1.html#course-principles",
@@ -844,6 +844,6 @@
     "href": "slides/day1.html#references",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "References",
-    "text": "References\n\n\n\n\nLovelace, Robin, Rosa Félix, and Dustin Carlino. 2022. “Jittering: A Computationally Efficient Method for Generating Realistic Route Networks from Origin-Destination Data.” Findings, April, 33873. https://doi.org/10.32866/001c.33873.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Münchow. 2025. Geocomputation with R. CRC Press. https://r.geocompx.org/."
+    "text": "References\n\n\n\n\nFélix, Rosa, Filipe Moura, and Robin Lovelace. 2025. “Reproducible Methods for Modeling Combined Public Transport and Cycling Trips and Associated Benefits: Evidence from the biclaR Tool.” Computers, Environment and Urban Systems 117 (April): 102230. https://doi.org/10.1016/j.compenvurbsys.2024.102230.\n\n\nLovelace, Robin, Rosa Félix, and Dustin Carlino. 2022. “Jittering: A Computationally Efficient Method for Generating Realistic Route Networks from Origin-Destination Data.” Findings, April, 33873. https://doi.org/10.32866/001c.33873.\n\n\nLovelace, Robin, Jakub Nowosad, and Jannes Münchow. 2025. Geocomputation with R. CRC Press. https://r.geocompx.org/.\n\n\nLovelace, Robin, Joey Talbot, Eugeni Vidal-Tortosa, Hussein Mahfouz, Elaine Brick, Peter Wright, Gary O’Toole, Dan Brennan, and Suzanne Meade. 2024. “Cycle Route Uptake and Scenario Estimation (CRUSE): An Approach for Developing Strategic Cycle Network Planning Tools.” European Transport Research Review 16 (1): 55. https://doi.org/10.1186/s12544-024-00668-8."
   }
 ]

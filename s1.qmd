@@ -89,7 +89,9 @@ library(osmextract)
 library(sf)
 library(tidyverse)
 # Set timeout options to avoid download issues
+getOption("timeout")
 options(timeout = 300) # Increase timeout to 5 minutes
+getOption("timeout")
 # Download cycleways in West Yorkshire
 west_yorkshire_cycleways = oe_get(
   # force_download = TRUE,
@@ -134,7 +136,15 @@ vehicles = get_stats19(year = 2020, type = "veh")
 
 ## Origin-Destination Data
 
-The `pct` package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.
+Origin-destination (OD) datasets can be collected using a variety of methods, including surveys, mobile phone data, and GPS tracking.
+
+A source of open OD data in England is commuter flows at the level of administrative zones, including small Output Areas (OAs) and larger Middle Layer Super Output Areas (MSOAs).
+See [wicid.ukdataservice.ac.uk](https://wicid.ukdataservice.ac.uk/) and [github.com/itsleeds/2021-census-od-data](https://github.com/itsleeds/2021-census-od-data) for more information.
+
+In terms of software, the `od` package and `simodels` packages provide functions for processing OD data and estimating flows using spatial interaction models in R.
+Python packages in this space include `momepy` and `pysal`.
+
+The `pct` package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows from the 2011 Census for England and Wales.
 
 ```{r}
 #| eval: false

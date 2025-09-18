@@ -213,9 +213,11 @@ See paper website: https://nptscot.github.io/networkmerge/ Source: [github.com/n
 
 ## Example: PCT, NPT, biclaR etc.
 
+Source: @félix2025. Also see PCT paper and follow-ons, e.g. @lovelace2024
+
 ![](images/paste-6.png)
 
-See [biclar.tmobilidade.pt source](https://biclar.tmlmobilidade.pt/index/) code: [github.com/u-shift](#0) [@félix2025].
+See [biclar.tmobilidade.pt source](https://biclar.tmlmobilidade.pt/index/) code: [github.com/u-shift](#0)
 
 ## Course principles
 
@@ -237,9 +239,7 @@ Source: "Dependency" by Randall Munroe: [xkcd.com/2347/](https://xkcd.com/2347/)
 
 ## Software stack
 
-![](images/paste-17.png)
-
-![](images/paste-16.png)
+![](images/software-stack.png)
 
 ## Which IDE to use? Source: tdscience/course
 
@@ -262,8 +262,6 @@ Press Ctrl+Tab to switch from IDE to browser with course content and other thing
 Source: [Geocomputation with R](https://r.geocompx.org) [@lovelace2025]
 
 ![](images/paste-15.png)
-
-------------------------------------------------------------------------
 
 # Practical session 0
 

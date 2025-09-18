@@ -145,6 +145,7 @@ Note that this makes a map of each column in the data frame. Try some other plot
 ::: {.panel-tabset}
 ## R
 ```{r}
+world = spData::world
 plot(world[3:6])
 plot(world["pop"])
 ```
@@ -154,12 +155,16 @@ plot(world["pop"])
 #| eval: false
 # Since world is a GeoDataFrame, we can select columns by position
 # However, GeoPandas plots the geometry, so we need to specify columns
+world = gpd.read_file('https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip')
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 world.plot(column='POP_EST', ax=axes[0])
 world.plot(column='GDP_YEAR', ax=axes[1])
 world.plot(column='CONTINENT', ax=axes[2])
 plt.show()
 ```
+
+![](slides/images/world-facet-py.png)
+
 :::
 
 ## Basic spatial operations
@@ -375,7 +380,7 @@ Exercises
 2. Subset (filter) the data to only include OD pairs in which at least one person (`> 0`) person walks (bonus: on what % of the OD pairs does at least 1 person walk?)
 3. Calculate the percentage who cycle in each OD pair in which at least 1 person cycles
 4. Is there a positive relationship between walking and cycling in the data?
-5. Bonus: use the function `od2line()` in to convert the OD dataset into geographic desire lines
+5. Bonus: use the function `od::od_to_sf()` to convert the OD dataset into geographic desire lines
 
 Code for Exercises (click to reveal, but try to do them yourself first)
 

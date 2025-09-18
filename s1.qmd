@@ -86,6 +86,10 @@ Use the `osmextract` package to download and extract specific features.
 ```{r}
 #| eval: false
 library(osmextract)
+library(sf)
+library(tidyverse)
+# Set timeout options to avoid download issues
+options(timeout = 300) # Increase timeout to 5 minutes
 # Download cycleways in West Yorkshire
 west_yorkshire_cycleways = oe_get(
   # force_download = TRUE,

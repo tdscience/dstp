@@ -6,12 +6,13 @@ execute:
 
 # Introduction
 
-This session demonstrates routing and network analysis techniques. By the end of this session, you should be able to:
+This session demonstrates routing and network analysis techniques.
+By the end of this session, you should be able to:
 
-- Understand the principles of routing and network analysis
-- Use routing services such as OpenTripPlanner for multi-modal routing
-- Create and analyze route networks
-- Apply network centrality measures
+-   Understand the principles of routing and network analysis
+-   Use routing services such as OpenTripPlanner for multi-modal routing
+-   Create and analyze route networks
+-   Apply network centrality measures
 
 ## Prerequisites
 
@@ -30,7 +31,7 @@ library(opentripplanner)
 library(tmap)
 library(osmextract)
 library(lwgeom)
-tmap_mode("plot")
+tmap_mode("view")
 ```
 
 # OpenTripPlanner Routing
@@ -53,14 +54,43 @@ otpcon = otp_connect(
 
 ```{r}
 #| eval: false
-# Create a simple walking route
+# Create a simple walking route from ITS Leeds to Leeds Railway Station
+from = stplanr::geo_code("Institute for Transport Studies, Leeds")
+to = stplanr::geo_code("Leeds Railway Station")
+
 route_walk = otp_plan(
   otpcon = otpcon,
-  fromPlace = c(-1.55555, 53.81005), # Longitude, Latitude
-  toPlace = c(-1.54710, 53.79519),
+  fromPlace = from, # c(-1.555, 53.810), # Longitude, Latitude
+  toPlace = to, # c(-1.54710, 53.79519),
   mode = "WALK"
 )
+qtm(route_walk)
 ```
+
+```{r}
+#| echo: false
+#| eval: false
+# save and upload pre-calculated route for reproducibility
+tmap_save(qtm(route_walk), "leeds_walk_route.html")
+system("gh release upload v1 leeds_walk_route.html --repo tdscience/dstp")
+```
+
+You should see something like this, a good route from ITS to the train station.
+Zoom into the interactive map at [leeds_walk_route.html in the releases](https://github.com/tdscience/dstp/releases/download/v1/leeds_walk_route.html) to see if it's the same route you would take.
+
+![](images/paste-4.png)
+
+::: {.callout-note}
+
+You can download and view the resulting map with the following code:
+
+```{r}
+#| eval: false
+download.file("https://github.com/tdscience/dstp/releases/download/v1/leeds_walk_route.html")
+browseURL("leeds_walk_route.html", browser = "firefox")
+```
+
+:::
 
 ## Multi-Modal Routing
 
@@ -216,7 +246,6 @@ routes_transit_joined = dplyr::left_join(
 )
 ```
 
-
 ## Aggregating Routes
 
 ```{r}
@@ -293,9 +322,9 @@ tm_shape(centrality_sf) +
 
 ## Exercise 1: Basic Routing
 
-1. Connect to the OpenTripPlanner server
-2. Calculate a walking route between two points in Leeds
-3. Visualize the route on a map
+1.  Connect to the OpenTripPlanner server
+2.  Calculate a walking route between two points in Leeds
+3.  Visualize the route on a map
 
 ```{r}
 #| eval: false
@@ -304,9 +333,9 @@ tm_shape(centrality_sf) +
 
 ## Exercise 2: Multi-Modal Routing
 
-1. Calculate routes using different modes (walk, transit, bicycle+transit)
-2. Compare the travel times and distances
-3. Visualize the different route options
+1.  Calculate routes using different modes (walk, transit, bicycle+transit)
+2.  Compare the travel times and distances
+3.  Visualize the different route options
 
 ```{r}
 #| eval: false
@@ -315,9 +344,9 @@ tm_shape(centrality_sf) +
 
 ## Exercise 3: Desire Lines Analysis
 
-1. Load the desire lines dataset
-2. Filter for the top 5 desire lines by total trips
-3. Create a map showing the desire lines colored by mode share
+1.  Load the desire lines dataset
+2.  Filter for the top 5 desire lines by total trips
+3.  Create a map showing the desire lines colored by mode share
 
 ```{r}
 #| eval: false
@@ -326,9 +355,9 @@ tm_shape(centrality_sf) +
 
 ## Exercise 4: Route Network Creation
 
-1. Load route data for a specific mode with `osmextract::oe_get_network()` (hint: run `?oe_get_network` to find out which modes are available), the `osmnx` Python package, or any other source
-2. Assign values to links and visualise the route network
-3. Compare the route network visualization with individual routes
+1.  Load route data for a specific mode with `osmextract::oe_get_network()` (hint: run `?oe_get_network` to find out which modes are available), the `osmnx` Python package, or any other source
+2.  Assign values to links and visualise the route network
+3.  Compare the route network visualization with individual routes
 
 ```{r}
 #| eval: false
@@ -337,9 +366,9 @@ tm_shape(centrality_sf) +
 
 ## Exercise 5: Network Centrality
 
-1. Download road network data for a small area
-2. Calculate betweenness centrality
-3. Identify the most critical roads in the network
+1.  Download road network data for a small area
+2.  Calculate betweenness centrality
+3.  Identify the most critical roads in the network
 
 ```{r}
 #| eval: false
@@ -348,7 +377,7 @@ tm_shape(centrality_sf) +
 
 ## Exercise 6: Advanced Routing
 
-- Read over the [routing engine setup example](routing-engine.qmd) and (as a bonus) try to set up your own instance of OpenTripPlanner using Java or Docker.
+-   Read over the [routing engine setup example](routing-engine.qmd) and (as a bonus) try to set up your own instance of OpenTripPlanner using Java or Docker.
 
 ## Exercise 7: Vehicle routing with traffic (azuremapsr)
 
@@ -356,12 +385,12 @@ tm_shape(centrality_sf) +
 
 # Further Reading
 
-- [OpenTripPlanner Documentation](https://docs.opentripplanner.org/)
-- [dodgr Network Analysis](https://urbananalyst.github.io/dodgr/)
-- [stplanr Transport Analysis](https://docs.ropensci.org/stplanr/)
+-   [OpenTripPlanner Documentation](https://docs.opentripplanner.org/)
+-   [dodgr Network Analysis](https://urbananalyst.github.io/dodgr/)
+-   [stplanr Transport Analysis](https://docs.ropensci.org/stplanr/)
 
 # Homework
 
-1. Experiment with different routing modes and parameters
-2. Create a route network for your local area
-3. Analyze network centrality for a transport network
+1.  Experiment with different routing modes and parameters
+2.  Create a route network for your local area
+3.  Analyze network centrality for a transport network

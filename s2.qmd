@@ -51,7 +51,6 @@ library(spData)    # spatial data package
 #| eval: false
 # Install necessary packages (uncomment if not already installed)
 # !pip install geopandas pandas matplotlib seaborn
-
 import geopandas as gpd       # vector data package
 import pandas as pd           # data manipulation
 import matplotlib.pyplot as plt  # plotting
@@ -63,8 +62,14 @@ import geopandas.datasets
 
 :::
 
+::: {.callout-note}
+Note: this session assumes you have run the code in the [prerequisites](prerequisites.qmd) and [Session 1](s1.qmd) workbooks.
+
+Ensure you have set-up a project folder and have that open in RStudio or VS Code, as described in [Session 1](s1.qmd#project-setup).
+
+:::
+
 1. Check your packages are up-to-date with `update.packages()` in R (or equivalent in Python)
-1. Create a project folder with an appropriate name for this session (e.g. `session2`)
 1. Create appropriate folders for code, data and anything else (e.g. images)
 1. Create a script called `learning-OD.R` (or `learning-OD.py` if you are using python), e.g. with the following command:
 

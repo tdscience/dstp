@@ -320,15 +320,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set timeout options to avoid download issues</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">300</span>) <span class="co"># Increase timeout to 5 minutes</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Download cycleways in West Yorkshire</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>west_yorkshire_cycleways <span class="ot">=</span> <span class="fu">oe_get</span>(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># force_download = TRUE,</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">place =</span> <span class="st">"West Yorkshire"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">extra_tags =</span> <span class="fu">c</span>(<span class="st">"maxspeed"</span>, <span class="st">"lit"</span>, <span class="st">"cycleway"</span>),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">query =</span> <span class="st">"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')"</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(west_yorkshire_cycleways))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">getOption</span>(<span class="st">"timeout"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">300</span>) <span class="co"># Increase timeout to 5 minutes</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">getOption</span>(<span class="st">"timeout"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Download cycleways in West Yorkshire</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>west_yorkshire_cycleways <span class="ot">=</span> <span class="fu">oe_get</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># force_download = TRUE,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">place =</span> <span class="st">"West Yorkshire"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">extra_tags =</span> <span class="fu">c</span>(<span class="st">"maxspeed"</span>, <span class="st">"lit"</span>, <span class="st">"cycleway"</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">query =</span> <span class="st">"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')"</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(west_yorkshire_cycleways))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You might also be interested in other spatial data in West Yorkshire. For example, you can use the following code to extract amenities in the region:</p>
 <div class="cell">
@@ -359,7 +361,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="origin-destination-data" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="origin-destination-data"><span class="header-section-number">3.3</span> Origin-Destination Data</h2>
-<p>The <code>pct</code> package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows.</p>
+<p>Origin-destination (OD) datasets can be collected using a variety of methods, including surveys, mobile phone data, and GPS tracking.</p>
+<p>A source of open OD data in England is commuter flows at the level of administrative zones, including small Output Areas (OAs) and larger Middle Layer Super Output Areas (MSOAs). See <a href="https://wicid.ukdataservice.ac.uk/">wicid.ukdataservice.ac.uk</a> and <a href="https://github.com/itsleeds/2021-census-od-data">github.com/itsleeds/2021-census-od-data</a> for more information.</p>
+<p>In terms of software, the <code>od</code> package and <code>simodels</code> packages provide functions for processing OD data and estimating flows using spatial interaction models in R. Python packages in this space include <code>momepy</code> and <code>pysal</code>.</p>
+<p>The <code>pct</code> package provides access to the Propensity to Cycle Tool data, which includes origin-destination flows from the 2011 Census for England and Wales.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pct)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download desire lines for Leeds</span></span>

@@ -16,3 +16,84 @@ There are three main parts, all of which can be found at [ekotov.pro](https://ww
 - [Setting up the software](https://www.ekotov.pro/agit-2025-spanishoddata/software-setup.html)
 - [Importing the data](https://www.ekotov.pro/agit-2025-spanishoddata/1-mobility-data.html)
 - [Visualising the data with flowmaps](https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html)
+
+An example of code using the package is shown below.
+
+```{r}
+#| label: flowmap-seville
+#| eval: false
+#| echo: true
+#| code-summary: "Reproducible example of an interactive flow map for Seville"
+
+# This code chunk creates an interactive flow map for Seville,
+# demonstrating animation and time-filtering capabilities.
+# It is based on the vignette from the rOpenSpain/spanishoddata package.
+
+# --- 1. Load necessary libraries ---
+library(spanishoddata)
+library(flowmapblue)
+library(tidyverse)
+library(sf)
+
+# --- 2. Set up Mapbox Access Token (required for the basemap) ---
+# Get a free token from https://account.mapbox.com/access-tokens/
+# Sys.setenv(MAPBOX_TOKEN = "YOUR_MAPBOX_ACCESS_TOKEN")
+
+# --- 3. Download and prepare the data ---
+
+# Get OD data for a typical day in 2021
+zones <- spod_get_zones(zones = "distr", ver = 2)
+valid_dates <- spod_get_valid_dates(2)
+recent_dates = tail(valid_dates, 3)
+flows <- spod_get(
+  type = "origin-destination",
+  zones = "districts",
+  dates = recent_dates
+)
+
+# Process the OD data to create a timestamp for each flow
+od_data_time <- flows |>
+  mutate(time = as.POSIXct(paste0(date, "T", hour, ":00:00"))) |>
+  group_by(origin = id_origin, dest = id_destination, time) |>
+  summarise(count = sum(n_trips, na.rm = TRUE), .groups = "drop") |>
+  collect()
+    
+# --- 5. Filter data for the Seville region ---
+
+# Identify zones corresponding to Seville
+zones_seville <- district_zones |>
+  filter(grepl("Sevilla", district_names_in_v2, ignore.case = TRUE))
+
+# Create a 10km buffer to define the Functional Urban Area (FUA)
+zones_seville_fua <- district_zones[st_buffer(zones_seville, dist = 10000), ]
+
+# Prepare the location data (centroids) for the flow map
+locations_seville <- zones_seville_fua |>
+  st_transform(crs = 4326) |>
+  st_centroid() |>
+  st_coordinates() |>
+  as.data.frame() |>
+  mutate(id = zones_seville_fua$id) |>
+  rename(lon = X, lat = Y)
+
+# Filter the time-based OD data to include only flows within the Seville FUA
+flows_seville_time <- od_data_time |>
+  filter(origin %in% zones_seville_fua$id & dest %in% zones_seville_fua$id)
+
+# --- 6. Generate the interactive flow map ---
+
+# Create the plot with animation and clustering enabled.
+# The resulting map will have a time slider to filter flows by hour.
+flowmap_seville_interactive <- flowmapblue(
+  locations = locations_seville,
+  flows = flows_seville_time,
+  mapboxAccessToken = Sys.getenv("MAPBOX_TOKEN"),
+  darkMode = TRUE,
+  animation = TRUE,
+  clustering = TRUE
+)
+
+# Display the map
+flowmap_seville_interactive
+```
+

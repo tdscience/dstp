@@ -221,7 +221,7 @@
     "href": "s4.html",
     "title": "Spatio-temporal data",
     "section": "",
-    "text": "Placeholder for session 4 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "1 Spatio-temporal data with OD data\nThis exercise is based on the tutorial “Analysing massive open human mobility data in R using spanishoddata, duckdb and flowmaps” by Egor Kotov [@kotov2025].\nThis is a more advanced exercise that benefits from having a fast internet connection, decent compute resources, and an interest in the Iberian Peninsula.\nThere are three main parts, all of which can be found at ekotov.pro:\n\nSetting up the software\nImporting the data\nVisualising the data with flowmaps\n\n\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
   },
   {
     "objectID": "s7.html",

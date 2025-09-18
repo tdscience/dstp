@@ -350,6 +350,10 @@ tm_shape(centrality_sf) +
 
 - Read over the [routing engine setup example](routing-engine.qmd) and (as a bonus) try to set up your own instance of OpenTripPlanner using Java or Docker.
 
+## Exercise 7: Vehicle routing with traffic (azuremapsr)
+
+<!-- Bonus: compare with google's routing engine using the `googleway` package or Microsoft's Azure Maps using the `azuremapsr` package. -->
+
 # Further Reading
 
 - [OpenTripPlanner Documentation](https://docs.opentripplanner.org/)

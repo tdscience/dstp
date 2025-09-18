@@ -357,7 +357,8 @@ file.edit("code/learning-OD.R") -->
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(world[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">=</span> spData<span class="sc">::</span>world</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(world[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -379,12 +380,14 @@ file.edit("code/learning-OD.R") -->
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since world is a GeoDataFrame, we can select columns by position</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># However, GeoPandas plots the geometry, so we need to specify columns</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">5</span>))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>world.plot(column<span class="op">=</span><span class="st">'POP_EST'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>world.plot(column<span class="op">=</span><span class="st">'GDP_YEAR'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>world.plot(column<span class="op">=</span><span class="st">'CONTINENT'</span>, ax<span class="op">=</span>axes[<span class="dv">2</span>])</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>world <span class="op">=</span> gpd.read_file(<span class="st">'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">5</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>world.plot(column<span class="op">=</span><span class="st">'POP_EST'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>world.plot(column<span class="op">=</span><span class="st">'GDP_YEAR'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>world.plot(column<span class="op">=</span><span class="st">'CONTINENT'</span>, ax<span class="op">=</span>axes[<span class="dv">2</span>])</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><img src="slides/images/world-facet-py.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -615,7 +618,7 @@ file.edit("code/learning-OD.R") -->
 <li>Subset (filter) the data to only include OD pairs in which at least one person (<code>&gt; 0</code>) person walks (bonus: on what % of the OD pairs does at least 1 person walk?)</li>
 <li>Calculate the percentage who cycle in each OD pair in which at least 1 person cycles</li>
 <li>Is there a positive relationship between walking and cycling in the data?</li>
-<li>Bonus: use the function <code>od2line()</code> in to convert the OD dataset into geographic desire lines</li>
+<li>Bonus: use the function <code>od::od_to_sf()</code> to convert the OD dataset into geographic desire lines</li>
 </ol>
 <p>Code for Exercises (click to reveal, but try to do them yourself first)</p>
 <details>

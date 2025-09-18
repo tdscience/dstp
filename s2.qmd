@@ -47,6 +47,13 @@ library(spData)    # spatial data package
 
 ## Python
 
+```{r}
+#| eval: false
+#| echo: false
+# Install python reqs with reticulate:
+reticulate::py_install(c("geopandas", "pandas", "matplotlib", "seaborn", "statsmodels"))
+```
+
 ```{python}
 #| eval: false
 # Install necessary packages (uncomment if not already installed)
@@ -117,6 +124,9 @@ plot(world)
 ## Python
 ```{python}
 #| eval: false
+world = gpd.read_file(
+    'https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip'
+)
 print(type(world))       # Equivalent to class(world)
 print(world.shape)       # Equivalent to dim(world)
 print(world.head())      # Equivalent to head(world)
@@ -127,7 +137,9 @@ world.plot(figsize=(12, 8))
 plt.title('World Map')
 plt.show()
 ```
+
 :::
+
 Note that this makes a map of each column in the data frame. Try some other plotting options
 
 ::: {.panel-tabset}

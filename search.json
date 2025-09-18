@@ -685,11 +685,18 @@
     "text": "Computational infrastructure\nSource: “Dependency” by Randall Munroe: xkcd.com/2347/"
   },
   {
+    "objectID": "slides/day1.html#which-ide-to-use-source-tdsciencecourse",
+    "href": "slides/day1.html#which-ide-to-use-source-tdsciencecourse",
+    "title": "Data Science for Transport Planning: Day 1",
+    "section": "Which IDE to use? Source: tdscience/course",
+    "text": "Which IDE to use? Source: tdscience/course"
+  },
+  {
     "objectID": "slides/day1.html#the-practical-sessions",
     "href": "slides/day1.html#the-practical-sessions",
     "title": "Data Science for Transport Planning: Day 1",
     "section": "The practical sessions",
-    "text": "The practical sessions\n\nTime of in-depth work\nUse the course website as a reference point but spend most of the time in your own environment\nI will support people 1-2-1 and do ‘live demos’ now and then\n\n\n\n\n\n\n\nTip\n\n\nPress Ctrl+Tab to switch from IDE to browser with course content and other things for an efficient workflow"
+    "text": "The practical sessions\n\nTime of in-depth work\nUse the course website as a reference point but spend most of the time in your own environment\nWe will support people one-to-one and can do ‘live demos’\n\n\n\n\n\n\n\nTip\n\n\nPress Ctrl+Tab to switch from IDE to browser with course content and other things for an efficient workflow"
   },
   {
     "objectID": "slides/day1.html#set-up-project-folderrepo",

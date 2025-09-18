@@ -113,6 +113,13 @@
     "text": "Routing Server Cost Summary\nVM Configuration: - e2-medium instance (2 vCPUs, 4 GB RAM) - Spot pricing (60-90% discount) - Europe-west2 region\nEstimated Daily Cost: - On-demand: ~$0.034/hour - Spot discount: ~70% = ~$0.010/hour - Per day (24h): ~$0.24\nMonthly Estimate: ~$7-8\nAdditional Costs: - Disk storage: ~$0.04/month - Network egress: Free for 1 GB/day, then ~$0.12/GB - Spot interruptions possible but cost-effective for non-critical workloads\nPrices approximate; use GCP Pricing Calculator for current rates."
   },
   {
+    "objectID": "slides/day2.html#feedback-on-the-course",
+    "href": "slides/day2.html#feedback-on-the-course",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Feedback on the course",
+    "text": "Feedback on the course\nPlease provide feedback on this forms.office.com/e/m102aC23ZD (should take less than 5 minutes):"
+  },
+  {
     "objectID": "session1.html",
     "href": "session1.html",
     "title": "1 Importing data from OSM",
@@ -312,7 +319,7 @@
     "href": "s1.html#openstreetmap-data",
     "title": "Finding, importing and cleaning transport datasets",
     "section": "3.1 OpenStreetMap Data",
-    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))\n\nYou might also be interested in other spatial data in West Yorkshire. For example, you can use the following code to extract amenities in the region:\n\nlibrary(osmextract)\n# Download amenities in West Yorkshire\nwest_yorkshire_amenities = oe_get(\n  layer = \"points\", # We want the point location\n  place = \"West Yorkshire\",\n  extra_tags = c(\"amenity\") \n)\nplot(st_geometry(west_yorkshire_amenities))\n\nwest_yorkshire_amenities$amenity |&gt; table()"
+    "text": "3.1 OpenStreetMap Data\nOpenStreetMap (OSM) provides global geographic data with a focus on human-made entities, including roads. It is therefore very useful for quickly obtaining road network data for transport analysis. A disadvantage of OSM data is that it can be inconsistent in quality and coverage, depending on the area, but for many applications these disadvantages are outweighed by the ease of access and free availability of the data.\nUse the osmextract package to download and extract specific features.\n\nlibrary(osmextract)\nlibrary(sf)\nlibrary(tidyverse)\n# Set timeout options to avoid download issues\noptions(timeout = 300) # Increase timeout to 5 minutes\n# Download cycleways in West Yorkshire\nwest_yorkshire_cycleways = oe_get(\n  # force_download = TRUE,\n  place = \"West Yorkshire\",\n  extra_tags = c(\"maxspeed\", \"lit\", \"cycleway\"),\n  query = \"SELECT * FROM lines WHERE highway IN ('cycleway', 'path')\"\n)\nplot(st_geometry(west_yorkshire_cycleways))\n\nYou might also be interested in other spatial data in West Yorkshire. For example, you can use the following code to extract amenities in the region:\n\nlibrary(osmextract)\n# Download amenities in West Yorkshire\nwest_yorkshire_amenities = oe_get(\n  layer = \"points\", # We want the point location\n  place = \"West Yorkshire\",\n  extra_tags = c(\"amenity\") \n)\nplot(st_geometry(west_yorkshire_amenities))\n\nwest_yorkshire_amenities$amenity |&gt; table()"
   },
   {
     "objectID": "s1.html#road-traffic-casualty-data-stats19",

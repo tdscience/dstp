@@ -40,6 +40,44 @@ Any questions before we start?
 
 ## Practical session 5: Routing and route network analysis
 
+## Practical session 6: Version control (Git+GitHub)
+
+### Version Control
+
+We do not need that for sure!
+
+### Version Control
+
+Yes, you do...
+
+![Version control. From: [programmerhumor.io](https://programmerhumor.io/)](images/version_control_humour.jpg)
+
+### How does it look?
+
+![From [20i.com](https://docs.20i.com/reseller-hosting/git-version-control-my20i)](images/paste-18.png)
+
+### Key terms
+
+- Fork: Making a personal copu of a repository
+- Clone: Downloading a full copy of a repository to your computer
+- Pull : Fetches changes from the cloud to your local copy
+- Commit: Saves a snapshot of your changes
+- Push: Uploads your local ***commits***
+- Branch: A separate line of development in a repository.
+- Pull request: Proposes your changes from a branch to be merged into the main project.
+
+### What we will be doing
+
+1. Fork
+2. Clone (for those working locally)
+3. Creating an issue
+3. Making changes
+4. Committing changes
+5. Pushing
+6. Creating a PR
+
+
+
 ## Routing infrastructure
 
 ![](images/routing-code-live.png)
@@ -65,4 +103,3 @@ Any questions before we start?
 Please provide feedback on this [forms.office.com/e/m102aC23ZD](https://forms.office.com/e/m102aC23ZD) (should take less than 5 minutes):
 
 ![](images/paste-16.png)
-

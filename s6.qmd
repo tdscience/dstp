@@ -497,3 +497,18 @@ See the full details on execution options [here](https://quarto.org/docs/computa
 Quarto enables you to generate a wide range of output formats from your project, whether you need an HTML report, a PDF article, a slideshow, or an entire website (like this one). From the command line, you can run `quarto render` to produce the rendered version of your project, or `quarto preview` to inspect your edits interactively.
 
 Combining Quarto and GitHub helps you make your research transparent, collaborative, and easy to share, ensuring that your work is not just published, but also verifiable and ready for future use.
+
+## Exercise
+
+For this exercise you will not be creating a repository. Instead you will contribute to an existing repository. You may use the `gh` command line or the web interface from GitHub.
+
+Follow the following steps
+
+1. Fork the following repository: `juanfonsecaLS1/dstp-jf-git-exercise`, and,  **If you have `gh` or GitHub Desktop installed**, clone it in your machine.
+2. Create an issue in your repository.
+3. Create a branch related to that issue in your repository.
+3. **In the new branch** Make a change in the file you are assigned during the session. Then commit the changes.
+4. **If you are working locally,** push the changes to GitHub
+5. Create a pull request
+
+

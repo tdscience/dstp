@@ -42,6 +42,8 @@ Any questions before we start?
 
 ## Practical session 5: Routing and route network analysis
 
+![](images/paste-20.png)
+
 ## Practical session 6: Version control (Git+GitHub)
 
 ### Version Control

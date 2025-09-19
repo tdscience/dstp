@@ -92,13 +92,6 @@
     "text": "Practical session 5: Routing and route network analysis"
   },
   {
-    "objectID": "slides/day2.html#practical-session-6-version-control-gitgithub",
-    "href": "slides/day2.html#practical-session-6-version-control-gitgithub",
-    "title": "Data Science for Transport Planning: Day 2",
-    "section": "Practical session 6: Version control (Git+GitHub)",
-    "text": "Practical session 6: Version control (Git+GitHub)\nVersion Control\nWe do not need that for sure!\nVersion Control\nYes, you do…\n\n\n\nVersion control. From: programmerhumor.io\n\n\nHow does it look?\n\n\n\nFrom 20i.com\n\n\nKey terms\n\nFork: Making a personal copu of a repository\nClone: Downloading a full copy of a repository to your computer\nPull : Fetches changes from the cloud to your local copy\nCommit: Saves a snapshot of your changes\nPush: Uploads your local commits\nBranch: A separate line of development in a repository.\nPull request: Proposes your changes from a branch to be merged into the main project.\n\nWhat we will be doing\n\nFork\nClone (for those working locally)\nCreating an issue\nMaking changes\nCommitting changes\nPushing\nCreating a PR"
-  },
-  {
     "objectID": "slides/day2.html#routing-infrastructure",
     "href": "slides/day2.html#routing-infrastructure",
     "title": "Data Science for Transport Planning: Day 2",
@@ -118,6 +111,13 @@
     "title": "Data Science for Transport Planning: Day 2",
     "section": "Routing Server Cost Summary",
     "text": "Routing Server Cost Summary\nVM Configuration: - e2-medium instance (2 vCPUs, 4 GB RAM) - Spot pricing (60-90% discount) - Europe-west2 region\nEstimated Daily Cost: - On-demand: ~$0.034/hour - Spot discount: ~70% = ~$0.010/hour - Per day (24h): ~$0.24\nMonthly Estimate: ~$7-8\nAdditional Costs: - Disk storage: ~$0.04/month - Network egress: Free for 1 GB/day, then ~$0.12/GB - Spot interruptions possible but cost-effective for non-critical workloads\nPrices approximate; use GCP Pricing Calculator for current rates."
+  },
+  {
+    "objectID": "slides/day2.html#practical-session-6-version-control-gitgithub",
+    "href": "slides/day2.html#practical-session-6-version-control-gitgithub",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Practical session 6: Version control (Git+GitHub)",
+    "text": "Practical session 6: Version control (Git+GitHub)\nVersion Control\nWe do not need that for sure!\nVersion Control\nYes, you do…\n\n\n\nVersion control. From: programmerhumor.io\n\n\nHow does it look?\n\n\n\nFrom 20i.com\n\n\nKey terms\n\nFork: Making a personal copu of a repository\nClone: Downloading a full copy of a repository to your computer\nPull : Fetches changes from the cloud to your local copy\nCommit: Saves a snapshot of your changes\nPush: Uploads your local commits\nBranch: A separate line of development in a repository.\nPull request: Proposes your changes from a branch to be merged into the main project.\n\nWhat we will be doing\n\nFork\nClone (for those working locally)\nCreating an issue\nMaking changes\nCommitting changes\nPushing\nCreating a PR"
   },
   {
     "objectID": "slides/day2.html#feedback-on-the-course",
@@ -546,14 +546,14 @@
     "href": "s5.html#joining-routes-to-create-a-route-network",
     "title": "Routing and route network analysis",
     "section": "4.1 Joining routes to create a route network",
-    "text": "4.1 Joining routes to create a route network\nThe full dataset can be loaded as follows:\n\n# Load more comprehensive route data\nroutes_drive = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson\")\nroutes_transit = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson\")\n\nWe’ll join this with the desire lines data to get trip counts associated with each route.\n\nnames(desire_lines)\nnrow(desire_lines)\nnames(routes_drive)\nnrow(routes_drive)\nnrow(routes_transit)\n\n\nroutes_drive_joined = dplyr::left_join(\n  routes_drive |&gt;\n    rename(from = fromPlace, to = toPlace),\n  desire_lines |&gt;\n    sf::st_drop_geometry()\n)\n\n\nroutes_transit_joined = dplyr::left_join(\n  routes_transit |&gt;\n    rename(from = fromPlace, to = toPlace),\n  desire_lines |&gt;\n    sf::st_drop_geometry()\n)"
+    "text": "4.1 Joining routes to create a route network\nThe full dataset can be loaded as follows:\n\n# Load more comprehensive route data\nroutes_drive = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson\")\nroutes_transit = read_sf(\"https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson\")\n# Check the dimensions of these datasets\nnames(desire_lines)\ndim(desire_lines)\nnames(routes_drive)\ndim(routes_drive)\ndim(routes_transit)\n\nWe’ll join this with the desire lines data to get trip counts associated with each route.\n\nroutes_drive_joined = dplyr::left_join(\n  routes_drive |&gt;\n    rename(from = fromPlace, to = toPlace),\n  desire_lines |&gt;\n    sf::st_drop_geometry()\n)\n\n\nroutes_transit_joined = dplyr::left_join(\n  routes_transit |&gt;\n    rename(from = fromPlace, to = toPlace),\n  desire_lines |&gt;\n    sf::st_drop_geometry()\n)"
   },
   {
     "objectID": "s5.html#aggregating-routes",
     "href": "s5.html#aggregating-routes",
     "title": "Routing and route network analysis",
     "section": "4.2 Aggregating Routes",
-    "text": "4.2 Aggregating Routes\n\n# Create route network by aggregating overlapping routes\nrnet_drive = overline(routes_drive_joined, \"drive\")"
+    "text": "4.2 Aggregating Routes\n\n# Create route network by aggregating overlapping routes\nrnet_drive = overline(routes_drive_joined, \"drive\")\ntm_shape(rnet_drive) +\n  tm_lines(\n    col = \"drive\",\n    col.scale = tm_scale_intervals(values = \"-viridis\", style = \"jenks\"),\n    lwd = 2\n  )"
   },
   {
     "objectID": "s5.html#visualizing-route-networks",
@@ -570,18 +570,11 @@
     "text": "5.1 Preparing Network Data\n\nzones = zonebuilder::zb_zone(\"Leeds\", n_circles = 3)\nstudy_area = zones |&gt;\n  sf::st_union()\nextra_tags = c(\n  \"maxspeed\",\n  \"lit\",\n  \"cycleway\"\n)\nroads = osmextract::oe_get_network(\n  mode= \"driving\",\n  place = study_area,\n  boundary = study_area,\n  boundary_type = \"clipsrc\",\n  extra_tags = extra_tags\n)\n\n# Filter for main roads\nroads = roads |&gt;\n  filter(!is.na(highway)) |&gt;\n  filter(highway %in% c(\"primary\", \"secondary\", \"tertiary\", \"residential\", \"unclassified\")) |&gt;\n  sf::st_cast(\"LINESTRING\") \n\n# Create network graph\ngraph = weight_streetnet(roads)"
   },
   {
-    "objectID": "s5.html#calculating-centrality",
-    "href": "s5.html#calculating-centrality",
+    "objectID": "s5.html#calculating-and-visualising-centrality",
+    "href": "s5.html#calculating-and-visualising-centrality",
     "title": "Routing and route network analysis",
-    "section": "5.2 Calculating Centrality",
-    "text": "5.2 Calculating Centrality\n\n# Calculate betweenness centrality\ncentrality = dodgr_centrality(graph)\n\n# Convert back to spatial format\ncentrality_sf = dodgr_to_sf(centrality)"
-  },
-  {
-    "objectID": "s5.html#visualizing-centrality",
-    "href": "s5.html#visualizing-centrality",
-    "title": "Routing and route network analysis",
-    "section": "5.3 Visualizing Centrality",
-    "text": "5.3 Visualizing Centrality\n\ntm_shape(centrality_sf) +\n  tm_lines(\n    col = \"centrality\",\n    col.scale = tm_scale_intervals(values = \"-viridis\", style = \"fisher\"),\n    lwd = 3\n  )"
+    "section": "5.2 Calculating and visualising centrality",
+    "text": "5.2 Calculating and visualising centrality\n\n# Deduplicate edges:\ngraph = dodgr_deduplicate_graph(graph)\n# Calculate betweenness centrality\ncentrality = dodgr_centrality(graph)\n# Convert back to spatial format\ncentrality_sf = dodgr_to_sf(centrality)\n\ntm_shape(centrality_sf) +\n  tm_lines(\n    col = \"centrality\",\n    col.scale = tm_scale_intervals(values = \"-viridis\", style = \"fisher\"),\n    lwd = 3\n  )\n\nYou should get something that looks like this:\n\nNote: you can save an interactive version of the map with tmap_save() and then share it, e.g. with gh release upload to share it on GitHub."
   },
   {
     "objectID": "s5.html#exercise-1-basic-routing",

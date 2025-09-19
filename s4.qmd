@@ -58,13 +58,17 @@ library(sf)
 # --- 2. Set up Mapbox Access Token (required for the basemap) ---
 # Get a free token from https://account.mapbox.com/access-tokens/
 # Sys.setenv(MAPBOX_TOKEN = "YOUR_MAPBOX_ACCESS_TOKEN")
+# Or, longer term solution: usethis::edit_r_environ()
+# Restart R after setting the token for it to take effect
 
 # --- 3. Download and prepare the data ---
 
-# Get OD data for a typical day in 2021
+# Get OD data for the most recently days
 zones <- spod_get_zones(zones = "distr", ver = 2)
 valid_dates <- spod_get_valid_dates(2)
 recent_dates = tail(valid_dates, 3)
+
+#
 flows <- spod_get(
   type = "origin-destination",
   zones = "districts",
@@ -77,7 +81,8 @@ od_data_time <- flows |>
   group_by(origin = id_origin, dest = id_destination, time) |>
   summarise(count = sum(n_trips, na.rm = TRUE), .groups = "drop") |>
   collect()
-
+saveRDS(od_data_time, "od_data_time.rds")
+fs::file_size("od_data_time.rds")
 # --- 5. Filter data for the Seville region ---
 
 # Identify zones corresponding to Seville
@@ -102,6 +107,16 @@ locations_seville <- zones_seville_fua |>
 # Filter the time-based OD data to include only flows within the Seville FUA
 flows_seville_time <- od_data_time |>
   filter(origin %in% zones_seville_fua$id & dest %in% zones_seville_fua$id)
+saveRDS(flows_seville_time, "flows_seville_time.rds")
+fs::file_size("flows_seville_time.rds")
+system("gh release upload v1 flows_seville_time.rds")
+
+# Get that file with:
+if(!file.exists("flows_seville_time.rds")) {
+  download.file("https://github.com/tdscience/dstp/releases/download/v1/flows_seville_time.rds", "flows_seville_time.rds")
+  flows_seville_time <- readRDS("flows_seville_time.rds")
+}
+
 
 # --- 6. Generate the interactive flow map ---
 

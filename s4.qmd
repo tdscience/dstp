@@ -68,6 +68,25 @@ zones <- spod_get_zones(zones = "distr", ver = 2)
 valid_dates <- spod_get_valid_dates(2)
 recent_dates = tail(valid_dates, 3)
 
+# Identify zones corresponding to Seville
+zones_seville <- zones |>
+  filter(grepl("^Sevilla distrito", name, ignore.case = TRUE))
+mapview::mapview(zones_seville)
+
+# Create a 10km buffer to define the Functional Urban Area (FUA)
+zones_seville_fua <- zones[st_buffer(zones_seville, dist = 10000), ]
+plot(st_geometry(zones_seville_fua))
+
+# Prepare the location data (centroids) for the flow map
+sf::sf_use_s2(FALSE)
+locations_seville <- zones_seville_fua |>
+  st_transform(crs = 4326) |>
+  st_centroid() |>
+  st_coordinates() |>
+  as.data.frame() |>
+  mutate(id = zones_seville_fua$id) |>
+  rename(lon = X, lat = Y)
+
 # # Uncomment to re-download the data:
 # flows <- spod_get(
 #   type = "origin-destination",
@@ -85,25 +104,6 @@ recent_dates = tail(valid_dates, 3)
 # fs::file_size("od_data_time.rds")
 # # --- 5. Filter data for the Seville region ---
 
-# # Identify zones corresponding to Seville
-# zones_seville <- zones |>
-#   filter(grepl("^Sevilla distrito", name, ignore.case = TRUE))
-# mapview::mapview(zones_seville)
-
-# # Create a 10km buffer to define the Functional Urban Area (FUA)
-# zones_seville_fua <- zones[st_buffer(zones_seville, dist = 10000), ]
-# plot(st_geometry(zones_seville_fua))
-
-# # Prepare the location data (centroids) for the flow map
-# sf::sf_use_s2(FALSE)
-# locations_seville <- zones_seville_fua |>
-#   st_transform(crs = 4326) |>
-#   st_centroid() |>
-#   st_coordinates() |>
-#   as.data.frame() |>
-#   mutate(id = zones_seville_fua$id) |>
-#   rename(lon = X, lat = Y)
-
 # # Filter the time-based OD data to include only flows within the Seville FUA
 # flows_seville_time <- od_data_time |>
 #   filter(origin %in% zones_seville_fua$id & dest %in% zones_seville_fua$id)
@@ -113,6 +113,8 @@ recent_dates = tail(valid_dates, 3)
 
 # Get that file with:
 if(!file.exists("flows_seville_time.rds")) {
+  # if you have the gh tool:
+  system("gh release download v1 --pattern flows_seville_time.rds")
   download.file("https://github.com/tdscience/dstp/releases/download/v1/flows_seville_time.rds", "flows_seville_time.rds")
   flows_seville_time <- readRDS("flows_seville_time.rds")
 }

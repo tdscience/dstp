@@ -1,7 +1,7 @@
 ---
 title: "Routing and route network analysis"
-execute: 
-  eval: false
+# execute: 
+#   eval: false
 ---
 
 # Introduction
@@ -212,21 +212,18 @@ Route networks aggregate individual routes to show cumulative traffic flow.
 The full dataset can be loaded as follows:
 
 ```{r}
-#| eval: false
 # Load more comprehensive route data
 routes_drive = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_drive.geojson")
 routes_transit = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/routes_transit.geojson")
+# Check the dimensions of these datasets
+names(desire_lines)
+dim(desire_lines)
+names(routes_drive)
+dim(routes_drive)
+dim(routes_transit)
 ```
 
 We'll join this with the desire lines data to get trip counts associated with each route.
-
-```{r}
-names(desire_lines)
-nrow(desire_lines)
-names(routes_drive)
-nrow(routes_drive)
-nrow(routes_transit)
-```
 
 ```{r}
 routes_drive_joined = dplyr::left_join(
@@ -251,6 +248,12 @@ routes_transit_joined = dplyr::left_join(
 ```{r}
 # Create route network by aggregating overlapping routes
 rnet_drive = overline(routes_drive_joined, "drive")
+tm_shape(rnet_drive) +
+  tm_lines(
+    col = "drive",
+    col.scale = tm_scale_intervals(values = "-viridis", style = "jenks"),
+    lwd = 2
+  )
 ```
 
 ## Visualizing Route Networks
@@ -264,7 +267,7 @@ tm_shape(rnet_drive) +
   )
 ```
 
-# Network Centrality Analysis
+# Bonus: Network Centrality Analysis
 
 Network centrality measures help identify critical infrastructure.
 
@@ -297,19 +300,16 @@ roads = roads |>
 graph = weight_streetnet(roads)
 ```
 
-## Calculating Centrality
+## Calculating and visualising centrality
 
 ```{r}
+# Deduplicate edges:
+graph = dodgr_deduplicate_graph(graph)
 # Calculate betweenness centrality
 centrality = dodgr_centrality(graph)
-
 # Convert back to spatial format
 centrality_sf = dodgr_to_sf(centrality)
-```
 
-## Visualizing Centrality
-
-```{r}
 tm_shape(centrality_sf) +
   tm_lines(
     col = "centrality",

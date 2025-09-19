@@ -4,7 +4,7 @@ execute:
   eval: false
 ---
 
-# Introduction
+## Introduction
 
 This session demonstrates routing and network analysis techniques.
 By the end of this session, you should be able to:
@@ -34,11 +34,11 @@ library(lwgeom)
 tmap_mode("view")
 ```
 
-# OpenTripPlanner Routing
+## OpenTripPlanner Routing
 
 OpenTripPlanner (OTP) is a powerful open-source routing engine that supports multi-modal transportation planning.
 
-## Connecting to OTP
+### Connecting to OTP
 
 ```{r}
 #| eval: false
@@ -50,7 +50,7 @@ otpcon = otp_connect(
 )
 ```
 
-## Basic Routing
+### Basic Routing
 
 ```{r}
 #| eval: false
@@ -98,7 +98,7 @@ sf::write_sf(route_walk, "leeds_walk_route.geojson")
 ```
 :::
 
-## Multi-Modal Routing
+### Multi-Modal Routing
 
 ```{r}
 #| eval: false
@@ -119,11 +119,11 @@ route_bike_transit = otp_plan(
 )
 ```
 
-# Working with Desire Lines
+## Working with Desire Lines
 
 Desire lines represent travel demand between origin-destination pairs.
 
-## Loading OD Data
+### Loading OD Data
 
 We'll import and apply basic preprocessing steps to desire lines from the National Trip End Model (NTEM).
 Note that we keep the raw data unchanged for reproducibility.
@@ -141,12 +141,12 @@ centroids = read_sf("https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_c
 We'll also create a smaller subset of the desire lines for demonstration purposes.
 
 ```{r}
-# Filter for top 5 desire lines by total trips
+## Filter for top 5 desire lines by total trips
 desire_top = desire_lines |>
   slice_max(order_by = all, n = 5)
 ```
 
-## Visualizing Desire Lines
+### Visualizing Desire Lines
 
 ```{r}
 tm_shape(desire_lines) +
@@ -174,7 +174,7 @@ toPlace = sf::st_sf(
 )
 ```
 
-## Calculating Routes
+### Calculating Routes
 
 ```{r}
 #| eval: false
@@ -202,18 +202,18 @@ routes_drive_top = route(l = desire_top, route_fun = otp_plan, mode = "CAR", otp
 routes_drive_top = readRDS(url("https://github.com/ITSLeeds/TDS/releases/download/23/routes_drive_top.Rds"))
 ```
 
-## Visualizing Routes
+### Visualizing Routes
 
 ```{r}
 tm_shape(routes_drive_top) +
   tm_lines(col = "blue", lwd = 3)
 ```
 
-# Route Network Analysis
+## Route Network Analysis
 
 Route networks aggregate individual routes to show cumulative traffic flow.
 
-## Joining routes to create a route network
+### Joining routes to create a route network
 
 The full dataset can be loaded as follows:
 
@@ -249,7 +249,7 @@ routes_transit_joined = dplyr::left_join(
 )
 ```
 
-## Aggregating Routes
+### Aggregating Routes
 
 ```{r}
 # Create route network by aggregating overlapping routes
@@ -262,7 +262,7 @@ tm_shape(rnet_drive) +
   )
 ```
 
-## Visualizing Route Networks
+### Visualizing Route Networks
 
 ```{r}
 tm_shape(rnet_drive) +
@@ -273,11 +273,11 @@ tm_shape(rnet_drive) +
   )
 ```
 
-# Bonus: Network Centrality Analysis
+## Bonus: Network Centrality Analysis
 
 Network centrality measures help identify critical infrastructure.
 
-## Preparing Network Data
+### Preparing Network Data
 
 ```{r}
 zones = zonebuilder::zb_zone("Leeds", n_circles = 3)
@@ -306,7 +306,7 @@ roads = roads |>
 graph = weight_streetnet(roads)
 ```
 
-## Calculating and visualising centrality
+### Calculating and visualising centrality
 
 ```{r}
 # Deduplicate edges:
@@ -329,8 +329,6 @@ You should get something that looks like this:
 ![](images/paste-5.png)
 
 Note: you can save an interactive version of the map with `tmap_save()` and then share it, e.g. with `gh release upload` to share it on GitHub.
-
-# Exercises
 
 ## Exercise 1: Basic Routing
 
@@ -362,7 +360,7 @@ Note: you can save an interactive version of the map with `tmap_save()` and then
 
 ```{r}
 #| eval: false
-# Your code here
+## Your code here
 ```
 
 ## Exercise 4: Route Network Creation
@@ -373,7 +371,7 @@ Note: you can save an interactive version of the map with `tmap_save()` and then
 
 ```{r}
 #| eval: false
-# Your code here
+## Your code here
 ```
 
 ## Exercise 5: Network Centrality
@@ -427,7 +425,7 @@ doc_walk = mp_directions(
   origin = from,
   destination = to,
   mode = "walking",
-  key = Sys.getenv("GOOGLE")
+  key = key  # your API key
 )
 
 # Extract route as sf lines
@@ -435,19 +433,8 @@ route_walk_gmaps = mp_get_routes(doc_walk)
 
 # Visualize
 tmap_mode("view")
-tm_shape(route_walk_gmaps) + tm_lines(col = "blue", lwd = 3) +
-  # otp route for comparison
-  tm_shape(route_walk) + tm_lines(col = "red", lwd = 3)
+tm_shape(route_walk_gmaps) + tm_lines(col = "blue", lwd = 3)
 # Or static: plot(route_walk_gmaps)
-
-# With route_google
-routes_walk_gmaps2 = stplanr::route(
-  l = desire_top,
-  route_fun = stplanr::route_google,
-  key = Sys.getenv("GOOGLE"),
-  mode = "walking"
-)
-qtm(routes_walk_gmaps2)  # should be similar to route_walk_gmaps
 ```
 
 Compare with the earlier OTP walking route (line 68). The Google route may differ slightly due to different routing algorithms.
@@ -518,13 +505,13 @@ Bonus: Use `mp_matrix` to compute travel times between multiple origins/destinat
 
 See [mapsapi documentation](https://michaeldorman.github.io/mapsapi/articles/directions.html) for more on parameters like `avoid` (tolls, highways) and transit modes.
 
-# Further Reading
+## Further Reading
 
 -   [OpenTripPlanner Documentation](https://docs.opentripplanner.org/)
 -   [dodgr Network Analysis](https://urbananalyst.github.io/dodgr/)
 -   [stplanr Transport Analysis](https://docs.ropensci.org/stplanr/)
 
-# Homework
+## Homework
 
 1.  Experiment with different routing modes and parameters
 2.  Create a route network for your local area

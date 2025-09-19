@@ -131,7 +131,14 @@
     "href": "slides/day2.html#practical-session-6-version-control-gitgithub",
     "title": "Data Science for Transport Planning: Day 2",
     "section": "Practical session 6: Version control (Git+GitHub)",
-    "text": "Practical session 6: Version control (Git+GitHub)\nVersion Control\nWe do not need that for sure!\nVersion Control\nYes, you do…\n\nVersion control. From: programmerhumor.io"
+    "text": "Practical session 6: Version control (Git+GitHub)\nWe do not need that for sure!"
+  },
+  {
+    "objectID": "slides/day2.html#version-control",
+    "href": "slides/day2.html#version-control",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Version Control",
+    "text": "Version Control\nYes, we do…\n\nVersion control. From: programmerhumor.io"
   },
   {
     "objectID": "slides/day2.html#how-does-it-look",
@@ -152,7 +159,7 @@
     "href": "slides/day2.html#what-we-will-be-doing",
     "title": "Data Science for Transport Planning: Day 2",
     "section": "What we will be doing",
-    "text": "What we will be doing\n\nFork\nClone (for those working locally)\nCreating an issue\nMaking changes\nCommitting changes\nPushing\nCreating a PR"
+    "text": "What we will be doing\n\nForking a repository\nCloning a repository (for those working locally)\nCreating an issue\nCreating a branch\nMaking changes\nCommitting changes\nPushing changes\nCreating a PR"
   },
   {
     "objectID": "slides/day2.html#feedback-on-the-course",
@@ -574,7 +581,7 @@
     "href": "s5.html#basic-routing",
     "title": "Routing and route network analysis",
     "section": "2.2 Basic Routing",
-    "text": "2.2 Basic Routing\n\n# Create a simple walking route from ITS Leeds to Leeds Railway Station\nfrom = stplanr::geo_code(\"Institute for Transport Studies, Leeds\")\nto = stplanr::geo_code(\"Leeds Railway Station\")\n\nroute_walk = otp_plan(\n  otpcon = otpcon,\n  fromPlace = from, # c(-1.555, 53.810), # Longitude, Latitude\n  toPlace = to, # c(-1.54710, 53.79519),\n  mode = \"WALK\"\n)\nqtm(route_walk)\n\nYou should see something like this, a good route from ITS to the train station. Zoom into the interactive map at leeds_walk_route.html in the releases to see if it’s the same route you would take.\n\n\n\n\n\n\n\nNote\n\n\n\nYou can download and view the resulting map with the following code:\n\ndownload.file(\"https://github.com/tdscience/dstp/releases/download/v1/leeds_walk_route.html\")\nbrowseURL(\"leeds_walk_route.html\", browser = \"firefox\")"
+    "text": "2.2 Basic Routing\n\n# Create a simple walking route from ITS Leeds to Leeds Railway Station\nfrom = stplanr::geo_code(\"Institute for Transport Studies, Leeds\")\nto = stplanr::geo_code(\"Leeds Railway Station\")\n\nroute_walk = otp_plan(\n  otpcon = otpcon,\n  fromPlace = from, # c(-1.555, 53.810), # Longitude, Latitude\n  toPlace = to, # c(-1.54710, 53.79519),\n  mode = \"WALK\"\n)\nqtm(route_walk)\n\nYou should see something like this, a good route from ITS to the train station. Zoom into the interactive map at leeds_walk_route.html in the releases to see if it’s the same route you would take.\n\n\n\n\n\n\n\nNote\n\n\n\nYou can download and view the resulting map with the following code:\n\ndownload.file(\"https://github.com/tdscience/dstp/releases/download/v1/leeds_walk_route.html\")\nbrowseURL(\"leeds_walk_route.html\", browser = \"firefox\")\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nShare the dataset with others as follows:\n\nsf::write_sf(route_walk, \"leeds_walk_route.geojson\")"
   },
   {
     "objectID": "s5.html#multi-modal-routing",

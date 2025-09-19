@@ -403,6 +403,121 @@ To use any of this services you will need to have an API key for each one. Both 
 
 <!-- Bonus: compare with google's routing engine using the `googleway` package or Microsoft's Azure Maps using the `azuremapsr` package. -->
 
+## Exercise 8: Vehicle routing with traffic (Google)
+
+Use the `mapsapi` package to interface with the Google Maps Directions API for routing with traffic data. This exercise reproduces the walking route from earlier using the existing `from` and `to` objects, then extends to driving with real-time traffic.
+
+::: callout-important
+You need a Google Maps API key with Directions API enabled. See the [mapsapi vignette](https://michaeldorman.github.io/mapsapi/) for setup instructions. Store it as `key = readLines("path/to/your/key")` or set as environment variable `Sys.setenv(GOOGLE_MAPS_API_KEY = "your_key")`.
+:::
+
+1. Load the `mapsapi` package and use `mp_directions` to get a walking route.
+
+```{r}
+#| eval: false
+#| echo: true
+library(mapsapi)
+
+# Assume 'from' and 'to' are already defined as sf points (from earlier in the session)
+# from = stplanr::geo_code("Institute for Transport Studies, Leeds")
+# to = stplanr::geo_code("Leeds Railway Station")
+
+# Get walking directions (reproducing the OTP route)
+doc_walk = mp_directions(
+  origin = from,
+  destination = to,
+  mode = "walking",
+  key = Sys.getenv("GOOGLE")
+)
+
+# Extract route as sf lines
+route_walk_gmaps = mp_get_routes(doc_walk)
+
+# Visualize
+tmap_mode("view")
+tm_shape(route_walk_gmaps) + tm_lines(col = "blue", lwd = 3) +
+  # otp route for comparison
+  tm_shape(route_walk) + tm_lines(col = "red", lwd = 3)
+# Or static: plot(route_walk_gmaps)
+
+# With route_google
+routes_walk_gmaps2 = stplanr::route(
+  l = desire_top,
+  route_fun = stplanr::route_google,
+  key = Sys.getenv("GOOGLE"),
+  mode = "walking"
+)
+qtm(routes_walk_gmaps2)  # should be similar to route_walk_gmaps
+```
+
+Compare with the earlier OTP walking route (line 68). The Google route may differ slightly due to different routing algorithms.
+
+2. Now, get a driving route with traffic data. Specify `departure_time` (current time or future) and `traffic_model` to account for traffic.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Get current time for departure (or set to future time)
+departure_time = Sys.time()
+
+# Driving directions with traffic
+doc_drive = mp_directions(
+  origin = from,
+  destination = to,
+  mode = "driving",
+  departure_time = departure_time,
+  traffic_model = "best_guess",  # options: "best_guess" (default), "pessimistic", "optimistic"
+  alternatives = TRUE,  # get alternative routes
+  key = key
+)
+
+# Extract routes
+routes_drive_gmaps = mp_get_routes(doc_drive)
+
+# Visualize all alternatives
+tm_shape(routes_drive_gmaps) + 
+  tm_lines(col = "route", lwd = 2, palette = "Set1") +
+  tm_layout(title = "Driving routes with traffic")
+
+# Extract durations including traffic
+routes_drive_gmaps$duration_text
+routes_drive_gmaps$duration_in_traffic_text  # only if departure_time provided
+
+# Compare traffic models (run separately)
+doc_pess = mp_directions(
+  origin = from, destination = to, mode = "driving",
+  departure_time = departure_time, traffic_model = "pessimistic", key = key
+)
+doc_opt = mp_directions(
+  origin = from, destination = to, mode = "driving",
+  departure_time = departure_time, traffic_model = "optimistic", key = key
+)
+mp_get_routes(doc_pess)$duration_in_traffic_text
+mp_get_routes(doc_opt)$duration_in_traffic_text
+```
+
+3. Analyze route segments for detailed traffic insights.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Get detailed segments
+segments_drive = mp_get_segments(doc_drive)
+
+# Plot segments (may be many lines)
+tm_shape(segments_drive) + tm_lines(lwd = 1, alpha = 0.6)
+
+# Summarize: e.g., total distance and duration per route
+routes_drive_gmaps$distance_text
+routes_drive_gmaps$duration_in_traffic_text
+```
+
+Bonus: Use `mp_matrix` to compute travel times between multiple origins/destinations, e.g., for the top desire lines from Exercise 3.
+
+See [mapsapi documentation](https://michaeldorman.github.io/mapsapi/articles/directions.html) for more on parameters like `avoid` (tolls, highways) and transit modes.
+
 # Further Reading
 
 -   [OpenTripPlanner Documentation](https://docs.opentripplanner.org/)

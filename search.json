@@ -117,7 +117,28 @@
     "href": "slides/day2.html#practical-session-6-version-control-gitgithub",
     "title": "Data Science for Transport Planning: Day 2",
     "section": "Practical session 6: Version control (Git+GitHub)",
-    "text": "Practical session 6: Version control (Git+GitHub)\nVersion Control\nWe do not need that for sure!\nVersion Control\nYes, you do…\n\n\n\nVersion control. From: programmerhumor.io\n\n\nHow does it look?\n\n\n\nFrom 20i.com\n\n\nKey terms\n\nFork: Making a personal copu of a repository\nClone: Downloading a full copy of a repository to your computer\nPull : Fetches changes from the cloud to your local copy\nCommit: Saves a snapshot of your changes\nPush: Uploads your local commits\nBranch: A separate line of development in a repository.\nPull request: Proposes your changes from a branch to be merged into the main project.\n\nWhat we will be doing\n\nFork\nClone (for those working locally)\nCreating an issue\nMaking changes\nCommitting changes\nPushing\nCreating a PR"
+    "text": "Practical session 6: Version control (Git+GitHub)\nVersion Control\nWe do not need that for sure!\nVersion Control\nYes, you do…\n\nVersion control. From: programmerhumor.io"
+  },
+  {
+    "objectID": "slides/day2.html#how-does-it-look",
+    "href": "slides/day2.html#how-does-it-look",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "How does it look?",
+    "text": "How does it look?\n\nFrom 20i.com"
+  },
+  {
+    "objectID": "slides/day2.html#key-terms",
+    "href": "slides/day2.html#key-terms",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Key terms",
+    "text": "Key terms\n\nFork: Making a personal copu of a repository\nClone: Downloading a full copy of a repository to your computer\nPull : Fetches changes from the cloud to your local copy\nCommit: Saves a snapshot of your changes\nPush: Uploads your local commits\nBranch: A separate line of development in a repository.\nPull request: Proposes your changes from a branch to be merged into the main project."
+  },
+  {
+    "objectID": "slides/day2.html#what-we-will-be-doing",
+    "href": "slides/day2.html#what-we-will-be-doing",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "What we will be doing",
+    "text": "What we will be doing\n\nFork\nClone (for those working locally)\nCreating an issue\nMaking changes\nCommitting changes\nPushing\nCreating a PR"
   },
   {
     "objectID": "slides/day2.html#feedback-on-the-course",

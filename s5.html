@@ -238,6 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercise-5-network-centrality" id="toc-exercise-5-network-centrality" class="nav-link" data-scroll-target="#exercise-5-network-centrality"><span class="header-section-number">6.5</span> Exercise 5: Network Centrality</a></li>
   <li><a href="#exercise-6-advanced-routing" id="toc-exercise-6-advanced-routing" class="nav-link" data-scroll-target="#exercise-6-advanced-routing"><span class="header-section-number">6.6</span> Exercise 6: Advanced Routing</a></li>
   <li><a href="#exercise-7-vehicle-routing-with-traffic-azuremapsr" id="toc-exercise-7-vehicle-routing-with-traffic-azuremapsr" class="nav-link" data-scroll-target="#exercise-7-vehicle-routing-with-traffic-azuremapsr"><span class="header-section-number">6.7</span> Exercise 7: Vehicle routing with traffic (azuremapsr)</a></li>
+  <li><a href="#exercise-8-vehicle-routing-with-traffic-google" id="toc-exercise-8-vehicle-routing-with-traffic-google" class="nav-link" data-scroll-target="#exercise-8-vehicle-routing-with-traffic-google"><span class="header-section-number">6.8</span> Exercise 8: Vehicle routing with traffic (Google)</a></li>
   </ul></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7</span> Further Reading</a></li>
   <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">8</span> Homework</a></li>
@@ -645,6 +646,119 @@ Important
 </div>
 </div>
 <!-- Bonus: compare with google's routing engine using the `googleway` package or Microsoft's Azure Maps using the `azuremapsr` package. -->
+</section>
+<section id="exercise-8-vehicle-routing-with-traffic-google" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="exercise-8-vehicle-routing-with-traffic-google"><span class="header-section-number">6.8</span> Exercise 8: Vehicle routing with traffic (Google)</h2>
+<p>Use the <code>mapsapi</code> package to interface with the Google Maps Directions API for routing with traffic data. This exercise reproduces the walking route from earlier using the existing <code>from</code> and <code>to</code> objects, then extends to driving with real-time traffic.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You need a Google Maps API key with Directions API enabled. See the <a href="https://michaeldorman.github.io/mapsapi/">mapsapi vignette</a> for setup instructions. Store it as <code>key = readLines("path/to/your/key")</code> or set as environment variable <code>Sys.setenv(GOOGLE_MAPS_API_KEY = "your_key")</code>.</p>
+</div>
+</div>
+<ol type="1">
+<li>Load the <code>mapsapi</code> package and use <code>mp_directions</code> to get a walking route.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsapi)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume 'from' and 'to' are already defined as sf points (from earlier in the session)</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># from = stplanr::geo_code("Institute for Transport Studies, Leeds")</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to = stplanr::geo_code("Leeds Railway Station")</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get walking directions (reproducing the OTP route)</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>doc_walk <span class="ot">=</span> <span class="fu">mp_directions</span>(</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">origin =</span> from,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">destination =</span> to,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"walking"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract route as sf lines</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>route_walk_gmaps <span class="ot">=</span> <span class="fu">mp_get_routes</span>(doc_walk)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"view"</span>)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(route_walk_gmaps) <span class="sc">+</span> <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># otp route for comparison</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(route_walk) <span class="sc">+</span> <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Or static: plot(route_walk_gmaps)</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co"># With route_google</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>routes_walk_gmaps2 <span class="ot">=</span> stplanr<span class="sc">::</span><span class="fu">route</span>(</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">l =</span> desire_top,</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">route_fun =</span> stplanr<span class="sc">::</span>route_google,</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE"</span>),</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"walking"</span></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="fu">qtm</span>(routes_walk_gmaps2)  <span class="co"># should be similar to route_walk_gmaps</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Compare with the earlier OTP walking route (line 68). The Google route may differ slightly due to different routing algorithms.</p>
+<ol start="2" type="1">
+<li>Now, get a driving route with traffic data. Specify <code>departure_time</code> (current time or future) and <code>traffic_model</code> to account for traffic.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get current time for departure (or set to future time)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>departure_time <span class="ot">=</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Driving directions with traffic</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>doc_drive <span class="ot">=</span> <span class="fu">mp_directions</span>(</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">origin =</span> from,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">destination =</span> to,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"driving"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">departure_time =</span> departure_time,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">traffic_model =</span> <span class="st">"best_guess"</span>,  <span class="co"># options: "best_guess" (default), "pessimistic", "optimistic"</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternatives =</span> <span class="cn">TRUE</span>,  <span class="co"># get alternative routes</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">key =</span> key</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract routes</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>routes_drive_gmaps <span class="ot">=</span> <span class="fu">mp_get_routes</span>(doc_drive)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize all alternatives</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(routes_drive_gmaps) <span class="sc">+</span> </span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"route"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">title =</span> <span class="st">"Driving routes with traffic"</span>)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract durations including traffic</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>routes_drive_gmaps<span class="sc">$</span>duration_text</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>routes_drive_gmaps<span class="sc">$</span>duration_in_traffic_text  <span class="co"># only if departure_time provided</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare traffic models (run separately)</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>doc_pess <span class="ot">=</span> <span class="fu">mp_directions</span>(</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">origin =</span> from, <span class="at">destination =</span> to, <span class="at">mode =</span> <span class="st">"driving"</span>,</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">departure_time =</span> departure_time, <span class="at">traffic_model =</span> <span class="st">"pessimistic"</span>, <span class="at">key =</span> key</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>doc_opt <span class="ot">=</span> <span class="fu">mp_directions</span>(</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">origin =</span> from, <span class="at">destination =</span> to, <span class="at">mode =</span> <span class="st">"driving"</span>,</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">departure_time =</span> departure_time, <span class="at">traffic_model =</span> <span class="st">"optimistic"</span>, <span class="at">key =</span> key</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="fu">mp_get_routes</span>(doc_pess)<span class="sc">$</span>duration_in_traffic_text</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="fu">mp_get_routes</span>(doc_opt)<span class="sc">$</span>duration_in_traffic_text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="3" type="1">
+<li>Analyze route segments for detailed traffic insights.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get detailed segments</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>segments_drive <span class="ot">=</span> <span class="fu">mp_get_segments</span>(doc_drive)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot segments (may be many lines)</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(segments_drive) <span class="sc">+</span> <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize: e.g., total distance and duration per route</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>routes_drive_gmaps<span class="sc">$</span>distance_text</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>routes_drive_gmaps<span class="sc">$</span>duration_in_traffic_text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Bonus: Use <code>mp_matrix</code> to compute travel times between multiple origins/destinations, e.g., for the top desire lines from Exercise 3.</p>
+<p>See <a href="https://michaeldorman.github.io/mapsapi/articles/directions.html">mapsapi documentation</a> for more on parameters like <code>avoid</code> (tolls, highways) and transit modes.</p>
 </section>
 </section>
 <section id="further-reading" class="level1" data-number="7">

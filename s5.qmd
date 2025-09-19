@@ -324,6 +324,8 @@ tm_shape(centrality_sf) +
   )
 ```
 
+For large-scale routing on local networks, including traffic impacts, consider the `cppRouting` package [@larmet2019], which provides efficient C++-based algorithms for shortest paths and traffic assignment. See the [repository](https://github.com/vlarmet/cppRouting) for examples.
+
 You should get something that looks like this:
 
 ![](images/paste-5.png)

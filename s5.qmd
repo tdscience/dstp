@@ -80,8 +80,7 @@ Zoom into the interactive map at [leeds_walk_route.html in the releases](https:/
 
 ![](images/paste-4.png)
 
-::: {.callout-note}
-
+::: callout-note
 You can download and view the resulting map with the following code:
 
 ```{r}
@@ -89,7 +88,6 @@ You can download and view the resulting map with the following code:
 download.file("https://github.com/tdscience/dstp/releases/download/v1/leeds_walk_route.html")
 browseURL("leeds_walk_route.html", browser = "firefox")
 ```
-
 :::
 
 ## Multi-Modal Routing
@@ -317,6 +315,12 @@ tm_shape(centrality_sf) +
     lwd = 3
   )
 ```
+
+You should get something that looks like this:
+
+![](images/paste-5.png)
+
+Note: you can save an interactive version of the map with `tmap_save()` and then share it, e.g. with `gh release upload` to share it on GitHub.
 
 # Exercises
 

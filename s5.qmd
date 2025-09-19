@@ -90,6 +90,14 @@ browseURL("leeds_walk_route.html", browser = "firefox")
 ```
 :::
 
+::: {.callout-tip}
+Share the dataset with others as follows:
+
+```{r}
+sf::write_sf(route_walk, "leeds_walk_route.geojson")
+```
+:::
+
 ## Multi-Modal Routing
 
 ```{r}

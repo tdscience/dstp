@@ -13,3 +13,4 @@ site_libs/
 *.html
 
 /.luarc.json
+*.rds

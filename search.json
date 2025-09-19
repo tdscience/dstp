@@ -693,7 +693,7 @@
     "href": "s5.html#exercise-7-vehicle-routing-with-traffic-azuremapsr",
     "title": "Routing and route network analysis",
     "section": "6.7 Exercise 7: Vehicle routing with traffic (azuremapsr)",
-    "text": "6.7 Exercise 7: Vehicle routing with traffic (azuremapsr)"
+    "text": "6.7 Exercise 7: Vehicle routing with traffic (azuremapsr)\nOne of the main limitations of routing services is related to the availability of actual traffic data. Services such as Google Maps or Azure provide routing with real-time and historic traffic data.\nYou can access to those services through some R packages like mapsapi and azuremapsr.\n\n\n\n\n\n\nImportant\n\n\n\nTo use any of this services you will need to have an API key for each one. Both packages have instructions for obtaining one in their documentation."
   },
   {
     "objectID": "collisions.html",

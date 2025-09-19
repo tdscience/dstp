@@ -38,6 +38,8 @@ Any questions before we start?
 
 ## Practical session 4: Spatio-temporal data
 
+![](images/paste-19.png)
+
 ## Practical session 5: Routing and route network analysis
 
 ## Practical session 6: Version control (Git+GitHub)
@@ -58,25 +60,23 @@ Yes, you do...
 
 ### Key terms
 
-- Fork: Making a personal copu of a repository
-- Clone: Downloading a full copy of a repository to your computer
-- Pull : Fetches changes from the cloud to your local copy
-- Commit: Saves a snapshot of your changes
-- Push: Uploads your local ***commits***
-- Branch: A separate line of development in a repository.
-- Pull request: Proposes your changes from a branch to be merged into the main project.
+-   Fork: Making a personal copu of a repository
+-   Clone: Downloading a full copy of a repository to your computer
+-   Pull : Fetches changes from the cloud to your local copy
+-   Commit: Saves a snapshot of your changes
+-   Push: Uploads your local ***commits***
+-   Branch: A separate line of development in a repository.
+-   Pull request: Proposes your changes from a branch to be merged into the main project.
 
 ### What we will be doing
 
-1. Fork
-2. Clone (for those working locally)
-3. Creating an issue
-3. Making changes
-4. Committing changes
-5. Pushing
-6. Creating a PR
-
-
+1.  Fork
+2.  Clone (for those working locally)
+3.  Creating an issue
+4.  Making changes
+5.  Committing changes
+6.  Pushing
+7.  Creating a PR
 
 ## Routing infrastructure
 

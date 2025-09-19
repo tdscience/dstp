@@ -68,48 +68,48 @@ zones <- spod_get_zones(zones = "distr", ver = 2)
 valid_dates <- spod_get_valid_dates(2)
 recent_dates = tail(valid_dates, 3)
 
-#
-flows <- spod_get(
-  type = "origin-destination",
-  zones = "districts",
-  dates = recent_dates
-)
+# # Uncomment to re-download the data:
+# flows <- spod_get(
+#   type = "origin-destination",
+#   zones = "districts",
+#   dates = recent_dates
+# )
 
-# Process the OD data to create a timestamp for each flow
-od_data_time <- flows |>
-  mutate(time = as.POSIXct(paste0(date, "T", hour, ":00:00"))) |>
-  group_by(origin = id_origin, dest = id_destination, time) |>
-  summarise(count = sum(n_trips, na.rm = TRUE), .groups = "drop") |>
-  collect()
-saveRDS(od_data_time, "od_data_time.rds")
-fs::file_size("od_data_time.rds")
-# --- 5. Filter data for the Seville region ---
+# # Process the OD data to create a timestamp for each flow
+# od_data_time <- flows |>
+#   mutate(time = as.POSIXct(paste0(date, "T", hour, ":00:00"))) |>
+#   group_by(origin = id_origin, dest = id_destination, time) |>
+#   summarise(count = sum(n_trips, na.rm = TRUE), .groups = "drop") |>
+#   collect()
+# saveRDS(od_data_time, "od_data_time.rds")
+# fs::file_size("od_data_time.rds")
+# # --- 5. Filter data for the Seville region ---
 
-# Identify zones corresponding to Seville
-zones_seville <- zones |>
-  filter(grepl("^Sevilla distrito", name, ignore.case = TRUE))
-mapview::mapview(zones_seville)
+# # Identify zones corresponding to Seville
+# zones_seville <- zones |>
+#   filter(grepl("^Sevilla distrito", name, ignore.case = TRUE))
+# mapview::mapview(zones_seville)
 
-# Create a 10km buffer to define the Functional Urban Area (FUA)
-zones_seville_fua <- zones[st_buffer(zones_seville, dist = 10000), ]
-plot(st_geometry(zones_seville_fua))
+# # Create a 10km buffer to define the Functional Urban Area (FUA)
+# zones_seville_fua <- zones[st_buffer(zones_seville, dist = 10000), ]
+# plot(st_geometry(zones_seville_fua))
 
-# Prepare the location data (centroids) for the flow map
-sf::sf_use_s2(FALSE)
-locations_seville <- zones_seville_fua |>
-  st_transform(crs = 4326) |>
-  st_centroid() |>
-  st_coordinates() |>
-  as.data.frame() |>
-  mutate(id = zones_seville_fua$id) |>
-  rename(lon = X, lat = Y)
+# # Prepare the location data (centroids) for the flow map
+# sf::sf_use_s2(FALSE)
+# locations_seville <- zones_seville_fua |>
+#   st_transform(crs = 4326) |>
+#   st_centroid() |>
+#   st_coordinates() |>
+#   as.data.frame() |>
+#   mutate(id = zones_seville_fua$id) |>
+#   rename(lon = X, lat = Y)
 
-# Filter the time-based OD data to include only flows within the Seville FUA
-flows_seville_time <- od_data_time |>
-  filter(origin %in% zones_seville_fua$id & dest %in% zones_seville_fua$id)
-saveRDS(flows_seville_time, "flows_seville_time.rds")
-fs::file_size("flows_seville_time.rds")
-system("gh release upload v1 flows_seville_time.rds")
+# # Filter the time-based OD data to include only flows within the Seville FUA
+# flows_seville_time <- od_data_time |>
+#   filter(origin %in% zones_seville_fua$id & dest %in% zones_seville_fua$id)
+# saveRDS(flows_seville_time, "flows_seville_time.rds")
+# fs::file_size("flows_seville_time.rds")
+# system("gh release upload v1 flows_seville_time.rds")
 
 # Get that file with:
 if(!file.exists("flows_seville_time.rds")) {

@@ -161,8 +161,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#visualising-large-datasets" id="toc-visualising-large-datasets" class="nav-link active" data-scroll-target="#visualising-large-datasets"><span class="header-section-number">1</span> Visualising large datasets</a></li>
+  <li><a href="#route-network-integration" id="toc-route-network-integration" class="nav-link" data-scroll-target="#route-network-integration"><span class="header-section-number">2</span> Route network integration</a></li>
+  <li><a href="#deploying-your-work-as-web-applications" id="toc-deploying-your-work-as-web-applications" class="nav-link" data-scroll-target="#deploying-your-work-as-web-applications"><span class="header-section-number">3</span> Deploying your work as web applications</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -186,9 +194,39 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Placeholder for session 7 content.</p>
+<section id="visualising-large-datasets" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="visualising-large-datasets"><span class="header-section-number">1</span> Visualising large datasets</h2>
+<p>Install and try visualising datasets from previous sessions with:</p>
+<ul>
+<li>{<a href="https://github.com/walkerke/mapgl/"><code>mapgl</code></a>}: an R interface to Mapbox GL JS for rendering large spatial datasets.</li>
+<li>{<a href="https://github.com/r-tmap/tmap.mapgl/"><code>tmap.gl</code></a>}: Use your existing <code>tmap</code> code, that builds on <code>mapgl</code></li>
+<li>The {<a href="https://github.com/nptscot/pmtiles"><code>nptscot/pmtiles</code></a>} GitHub package provides tools for creating vector tiles in R (advanced).</li>
+</ul>
+</section>
+<section id="route-network-integration" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="route-network-integration"><span class="header-section-number">2</span> Route network integration</h2>
+<!-- We’ll present ways to join different networks, e.g. OSM networks -->
+<ul>
+<li>Take a read of the <a href="https://nptscot/networkmerge">networkmerge paper</a> and try to reproduce some of the code</li>
+<li>Search for and download the Ordnance Survey’s OpenRoads data product</li>
+<li>Check-out the <a href="https://docs.ropensci.org/stplanr/"><code>stplanr</code></a> function <a href="https://docs.ropensci.org/stplanr/reference/rnet_join.html"><code>rnet_join()</code></a> for joining different route networks, e.g.&nbsp;walking and cycling networks.</li>
+<li>Check-out the <a href="https://github.com/josiahparker/anime"><code>anime</code></a> package for astonishingly fast network joining (advanced).</li>
+</ul>
+</section>
+<section id="deploying-your-work-as-web-applications" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="deploying-your-work-as-web-applications"><span class="header-section-number">3</span> Deploying your work as web applications</h2>
+<ul>
+<li>Think about the project that you’re working on that would have the maximum benefit from being deployed as a web application.</li>
+<li>Sketch out the user interface and user experience (UI/UX) of the application.</li>
+<li>Sketch the data flow and architecture of backend systems.</li>
+<li>Read-up on the <a href="https://books.ropensci.org/targets/"><code>targets</code></a> package for reproducible pipelines.</li>
+<li>Take a look at the source code of some deployed web applications for inspiration</li>
+<li>Check out the code in the <a href="https://github.com/nptscot/npt"><code>nptscot/nptscot</code></a> and <a href="https://github.com/nptscot/nptscot.github.io"><code>nptscot/nptscot.github.io</code></a> repositories, plus the resulting app at <a href="https://npt.scot">npt.scot</a>.</li>
+<li>Look for the source code associated with other apps including <a href="https://pctni.org">pctni.org</a>, <a href="https://pct.bike">pct.bike</a> and other apps of your choice.</li>
+</ul>
 
 
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>© 2025 Robin Lovelace</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -599,7 +637,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

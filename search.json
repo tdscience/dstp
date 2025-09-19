@@ -518,7 +518,28 @@
     "href": "s7.html",
     "title": "Advanced topics",
     "section": "",
-    "text": "Placeholder for session 7 content.\n\n\n\nReuseCC BY-SA 4.0Copyright© 2025 Robin Lovelace"
+    "text": "Install and try visualising datasets from previous sessions with:\n\n{mapgl}: an R interface to Mapbox GL JS for rendering large spatial datasets.\n{tmap.gl}: Use your existing tmap code, that builds on mapgl\nThe {nptscot/pmtiles} GitHub package provides tools for creating vector tiles in R (advanced)."
+  },
+  {
+    "objectID": "s7.html#visualising-large-datasets",
+    "href": "s7.html#visualising-large-datasets",
+    "title": "Advanced topics",
+    "section": "",
+    "text": "Install and try visualising datasets from previous sessions with:\n\n{mapgl}: an R interface to Mapbox GL JS for rendering large spatial datasets.\n{tmap.gl}: Use your existing tmap code, that builds on mapgl\nThe {nptscot/pmtiles} GitHub package provides tools for creating vector tiles in R (advanced)."
+  },
+  {
+    "objectID": "s7.html#route-network-integration",
+    "href": "s7.html#route-network-integration",
+    "title": "Advanced topics",
+    "section": "2 Route network integration",
+    "text": "2 Route network integration\n\n\nTake a read of the networkmerge paper and try to reproduce some of the code\nSearch for and download the Ordnance Survey’s OpenRoads data product\nCheck-out the stplanr function rnet_join() for joining different route networks, e.g. walking and cycling networks.\nCheck-out the anime package for astonishingly fast network joining (advanced)."
+  },
+  {
+    "objectID": "s7.html#deploying-your-work-as-web-applications",
+    "href": "s7.html#deploying-your-work-as-web-applications",
+    "title": "Advanced topics",
+    "section": "3 Deploying your work as web applications",
+    "text": "3 Deploying your work as web applications\n\nThink about the project that you’re working on that would have the maximum benefit from being deployed as a web application.\nSketch out the user interface and user experience (UI/UX) of the application.\nSketch the data flow and architecture of backend systems.\nRead-up on the targets package for reproducible pipelines.\nTake a look at the source code of some deployed web applications for inspiration\nCheck out the code in the nptscot/nptscot and nptscot/nptscot.github.io repositories, plus the resulting app at npt.scot.\nLook for the source code associated with other apps including pctni.org, pct.bike and other apps of your choice."
   },
   {
     "objectID": "s4.html",

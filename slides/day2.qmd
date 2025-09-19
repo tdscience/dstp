@@ -76,11 +76,11 @@ Yes, you do...
 
 ![Version control. From: [programmerhumor.io](https://programmerhumor.io/)](images/version_control_humour.jpg)
 
-### How does it look?
+## How does it look?
 
 ![From [20i.com](https://docs.20i.com/reseller-hosting/git-version-control-my20i)](images/paste-18.png)
 
-### Key terms
+## Key terms
 
 -   Fork: Making a personal copu of a repository
 -   Clone: Downloading a full copy of a repository to your computer
@@ -90,7 +90,7 @@ Yes, you do...
 -   Branch: A separate line of development in a repository.
 -   Pull request: Proposes your changes from a branch to be merged into the main project.
 
-### What we will be doing
+## What we will be doing
 
 1.  Fork
 2.  Clone (for those working locally)

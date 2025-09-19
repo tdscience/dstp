@@ -385,6 +385,14 @@ Note: you can save an interactive version of the map with `tmap_save()` and then
 
 ## Exercise 7: Vehicle routing with traffic (azuremapsr)
 
+One of the main limitations of routing services is related to the availability of actual traffic data. Services such as Google Maps or Azure provide routing with real-time and historic traffic data.
+
+You can access to those services through some R packages like [mapsapi](https://github.com/michaeldorman/mapsapi) and [azuremapsr](https://github.com/juanfonsecaLS1/azuremapsr). 
+
+::: callout-important
+To use any of this services you will need to have an API key for each one. Both packages have instructions for obtaining one in their documentation.
+:::
+
 <!-- Bonus: compare with google's routing engine using the `googleway` package or Microsoft's Azure Maps using the `azuremapsr` package. -->
 
 # Further Reading

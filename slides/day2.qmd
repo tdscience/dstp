@@ -80,13 +80,11 @@ Download a load of data from Spain!
 
 ## Practical session 6: Version control (Git+GitHub)
 
-### Version Control
-
 We do not need that for sure!
 
-### Version Control
+## Version Control
 
-Yes, you do...
+Yes, we do...
 
 ![Version control. From: [programmerhumor.io](https://programmerhumor.io/)](images/version_control_humour.jpg)
 
@@ -106,12 +104,13 @@ Yes, you do...
 
 ## What we will be doing
 
-1.  Fork
-2.  Clone (for those working locally)
+1.  Forking a repository
+2.  Cloning a repository (for those working locally)
 3.  Creating an issue
+3.  Creating a branch
 4.  Making changes
 5.  Committing changes
-6.  Pushing
+6.  Pushing changes
 7.  Creating a PR
 
 ## Feedback on the course

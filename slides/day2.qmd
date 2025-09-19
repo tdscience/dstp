@@ -44,6 +44,26 @@ Any questions before we start?
 
 ![](images/paste-20.png)
 
+## Routing infrastructure
+
+![](images/routing-code-live.png)
+
+## Routing costs
+
+![](images/routing-costs.png)
+
+## Routing Server Cost Summary
+
+**VM Configuration:** - e2-medium instance (2 vCPUs, 4 GB RAM) - Spot pricing (60-90% discount) - Europe-west2 region
+
+**Estimated Daily Cost:** - On-demand: \~\$0.034/hour - Spot discount: \~70% = \~\$0.010/hour - **Per day (24h):** \~\$0.24
+
+**Monthly Estimate:** \~\$7-8
+
+**Additional Costs:** - Disk storage: \~\$0.04/month - Network egress: Free for 1 GB/day, then \~\$0.12/GB - Spot interruptions possible but cost-effective for non-critical workloads
+
+*Prices approximate; use GCP Pricing Calculator for current rates.*
+
 ## Practical session 6: Version control (Git+GitHub)
 
 ### Version Control
@@ -79,26 +99,6 @@ Yes, you do...
 5.  Committing changes
 6.  Pushing
 7.  Creating a PR
-
-## Routing infrastructure
-
-![](images/routing-code-live.png)
-
-## Routing costs
-
-![](images/routing-costs.png)
-
-## Routing Server Cost Summary
-
-**VM Configuration:** - e2-medium instance (2 vCPUs, 4 GB RAM) - Spot pricing (60-90% discount) - Europe-west2 region
-
-**Estimated Daily Cost:** - On-demand: \~\$0.034/hour - Spot discount: \~70% = \~\$0.010/hour - **Per day (24h):** \~\$0.24
-
-**Monthly Estimate:** \~\$7-8
-
-**Additional Costs:** - Disk storage: \~\$0.04/month - Network egress: Free for 1 GB/day, then \~\$0.12/GB - Spot interruptions possible but cost-effective for non-critical workloads
-
-*Prices approximate; use GCP Pricing Calculator for current rates.*
 
 ## Feedback on the course
 

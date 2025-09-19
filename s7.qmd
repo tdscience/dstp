@@ -29,3 +29,27 @@ Install and try visualising datasets from previous sessions with:
 - Take a look at the source code of some deployed web applications for inspiration
 - Check out the code in the [`nptscot/nptscot`](https://github.com/nptscot/npt) and [`nptscot/nptscot.github.io`](https://github.com/nptscot/nptscot.github.io) repositories, plus the resulting app at [npt.scot](https://npt.scot).
 - Look for the source code associated with other apps including [pctni.org](https://pctni.org), [pct.bike](https://pct.bike) and other apps of your choice.
+
+### Examples of R-based Transport Web Apps
+
+#### Propensity to Cycle Tool (PCT)
+
+The PCT is an open-source planning support system for sustainable transport, providing evidence-based cycling scenarios across England and Wales.
+
+*(Interactive map screenshot: Cycling potential layers over England and Wales, showing commute scenarios with color-coded routes)*
+
+- Built with Shiny and Leaflet for interactive maps
+- Scenarios include Government Target, Go Dutch, Ebike; layers for commute/school trips
+- Best practices: Integrate open data (census, OSM), enable scenario modeling for policy impact, use open-source for community contributions
+- Source: [pct.bike](https://www.pct.bike), GitHub [npct/pct](https://github.com/npct/pct); see [paper](https://www.researchgate.net/publication/281896289_The_Propensity_to_Cycle_Tool_An_open_source_online_system_for_sustainable_transport_planning) for methodology
+
+#### Propensity to Cycle Tool for Northern Ireland (PCTNI)
+
+An alpha version adapted for Northern Ireland, building on PCT and NPT.
+
+*(Interactive map screenshot: Route network layers for Northern Ireland, highlighting fastest/quietest cycling routes)*
+
+- Features route networks (fastest/quietest), cycle infrastructure layers
+- Based on 2011 Census for work trips; active development with OSM integration
+- Best practices: Iterative releases with issue tracking, validate against local data, emphasize limitations for responsible use
+- Source: [pctni.org](https://pctni.org), GitHub [pctni](https://github.com/pctni)

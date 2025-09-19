@@ -201,7 +201,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#spatio-temporal-data-with-od-data" id="toc-spatio-temporal-data-with-od-data" class="nav-link active" data-scroll-target="#spatio-temporal-data-with-od-data"><span class="header-section-number">1</span> Spatio-temporal data with OD data</a></li>
+  <li><a href="#spatio-temporal-data-with-od-data" id="toc-spatio-temporal-data-with-od-data" class="nav-link active" data-scroll-target="#spatio-temporal-data-with-od-data"><span class="header-section-number">1</span> Spatio-temporal data with OD data</a>
+  <ul class="collapse">
+  <li><a href="#practical-4-options" id="toc-practical-4-options" class="nav-link" data-scroll-target="#practical-4-options"><span class="header-section-number">1.1</span> Practical 4 options</a></li>
+  <li><a href="#spanishoddata" id="toc-spanishoddata" class="nav-link" data-scroll-target="#spanishoddata"><span class="header-section-number">1.2</span> spanishoddata</a></li>
+  <li><a href="#option-2-london-cycle-hire-flow-visualization" id="toc-option-2-london-cycle-hire-flow-visualization" class="nav-link" data-scroll-target="#option-2-london-cycle-hire-flow-visualization"><span class="header-section-number">1.3</span> Option 2: London Cycle Hire flow visualization</a></li>
+  <li><a href="#option-3-road-traffic-collisions-with-stats19" id="toc-option-3-road-traffic-collisions-with-stats19" class="nav-link" data-scroll-target="#option-3-road-traffic-collisions-with-stats19"><span class="header-section-number">1.4</span> Option 3: Road traffic collisions with stats19</a></li>
+  <li><a href="#option-4-bring-your-own-data-byod" id="toc-option-4-bring-your-own-data-byod" class="nav-link" data-scroll-target="#option-4-bring-your-own-data-byod"><span class="header-section-number">1.5</span> Option 4: Bring your own data (BYOD)</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -231,16 +238,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="1"><span class="header-section-number">1</span> Spatio-temporal data with OD data</h1>
 <p>This exercise is based on the tutorial “Analysing massive open human mobility data in R using spanishoddata, duckdb and flowmaps” by Egor Kotov <span class="citation" data-cites="kotov2025">[@kotov2025]</span>.</p>
 <p>This is a more advanced exercise that benefits from having a fast internet connection, decent compute resources, and an interest in the Iberian Peninsula.</p>
-<p>There are three main parts, all of which can be found at <a href="https://www.ekotov.pro/agit-2025-spanishoddata/">ekotov.pro</a>:</p>
+<section id="practical-4-options" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="practical-4-options"><span class="header-section-number">1.1</span> Practical 4 options</h2>
+<p>There are four options for this practical session:</p>
+<ol type="1">
+<li><p>Get stuck-into open access CDR (call detail records) data from Spain using the <code>spanishoddata</code> package (detailed below with example for Seville)</p></li>
+<li><p>Revisit the London Cycle Hire data from <a href="./s3.html">session 3</a> and visualize flows using the <code>flowmapblue</code> package</p></li>
+<li><p>Explore changes in the spatial and temporal distributions of road traffic collisions using the <a href="https://itsleeds.github.io/stats19/"><code>stats19</code> package</a></p></li>
+<li><p>Bring your own data (BYOD)!</p></li>
+</ol>
+<p>The <code>spanishoddata</code> option is based on the tutorial “Analysing massive open human mobility data in R using spanishoddata, duckdb and flowmaps” by Egor Kotov <span class="citation" data-cites="kotov2025">[@kotov2025]</span>.</p>
+<p>See <a href="https://www.ekotov.pro/agit-2025-spanishoddata/">ekotov.pro</a> for details:</p>
 <ul>
 <li><a href="https://www.ekotov.pro/agit-2025-spanishoddata/software-setup.html">Setting up the software</a></li>
 <li><a href="https://www.ekotov.pro/agit-2025-spanishoddata/1-mobility-data.html">Importing the data</a></li>
-<li><a href="https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html">Visualising the data with flowmaps</a></li>
-<li>Run the code below for Seville and as a bonus for a different part of Spain</li>
-<li>Bonus: try visualising the cycle flows for the London Cycle Hire data used in <a href="./s3.html">session 3</a> using the <code>flowmapblue</code> package.</li>
+<li><a href="https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html">Visualising the data with flowmaps</a> An example of code using the package is shown below, which results in an interactive flow map for Seville, as shown below and in the interactive HTML file <a href="https://github.com/tdscience/dstp/releases/download/v1/seville_flowmap.html">seville_flowmap.html</a> in the releases section of this repository.</li>
 </ul>
-<p>An example of code using the package is shown below, which results in an interactive flow map for Seville, as shown below and in the interactive HTML file <a href="https://github.com/tdscience/dstp/releases/download/v1/seville_flowmap.html">seville_flowmap.html</a> in the releases section of this repository.</p>
 <p><img src="images/seville-flowmap.png" class="img-fluid"></p>
+</section>
+<section id="spanishoddata" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="spanishoddata"><span class="header-section-number">1.2</span> spanishoddata</h2>
+<p>Download a load of data from Spain!</p>
+<p><img src="https://github.com/rOpenSpain/spanishoddata/raw/main/man/figures/logo.png" class="img-fluid"></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This code chunk creates an interactive flow map for Seville,</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># demonstrating animation and time-filtering capabilities.</span></span>
@@ -322,8 +341,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"gh release create"</span>)</span>
 <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"gh release upload v1 seville_flowmap.html"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="option-2-london-cycle-hire-flow-visualization" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="option-2-london-cycle-hire-flow-visualization"><span class="header-section-number">1.3</span> Option 2: London Cycle Hire flow visualization</h2>
+<p>To extend the analysis from <a href="./s3.html">session 3</a>, prepare the cycle hire data as origin-destination flows with timestamps (e.g., from start/end stations and times). Then use <code>flowmapblue</code> for interactive visualization.</p>
+<p>See the <a href="https://github.com/riatelab/flowmapblue/blob/main/vignettes/flowmapblue.Rmd"><code>flowmapblue</code> vignette</a> for details.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries (assuming data prepared as in s3.qmd)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flowmapblue)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume 'cycle_data' is loaded with columns: origin_id, dest_id, time (POSIXct), count</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># And 'stations' sf with id, lon, lat</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare locations (stations)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>locations_london <span class="ot">&lt;-</span> stations <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> stations<span class="sc">$</span>id) <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">lon =</span> X, <span class="at">lat =</span> Y)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare flows (aggregate if needed)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>flows_london <span class="ot">&lt;-</span> cycle_data <span class="sc">|&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">origin =</span> origin_id, <span class="at">dest =</span> dest_id, time) <span class="sc">|&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)  <span class="co"># or sum trips</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Create interactive flow map</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>flowmap_london <span class="ot">&lt;-</span> <span class="fu">flowmapblue</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">locations =</span> locations_london,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">flows =</span> flows_london,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapboxAccessToken =</span> <span class="fu">Sys.getenv</span>(<span class="st">"MAPBOX_TOKEN"</span>),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">animation =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">clustering =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>flowmap_london</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Save</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>htmlwidgets<span class="sc">::</span><span class="fu">saveWidget</span>(flowmap_london, <span class="st">"london_flowmap.html"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="option-3-road-traffic-collisions-with-stats19" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="option-3-road-traffic-collisions-with-stats19"><span class="header-section-number">1.4</span> Option 3: Road traffic collisions with stats19</h2>
+<p>The <a href="https://itsleeds.github.io/stats19/"><code>stats19</code></a> package provides access to detailed road safety data for Great Britain, including timestamps and locations for spatio-temporal analysis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats19)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Download collisions for 2020 (pandemic year) and 2021</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>collisions_20 <span class="ot">&lt;-</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2020</span>, <span class="at">type =</span> <span class="st">"collision"</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>collisions_21 <span class="ot">&lt;-</span> <span class="fu">get_stats19</span>(<span class="at">year =</span> <span class="dv">2021</span>, <span class="at">type =</span> <span class="st">"collision"</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Format to sf (for spatial if needed)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>london_20 <span class="ot">&lt;-</span> <span class="fu">format_sf</span>(collisions_20)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>london_21 <span class="ot">&lt;-</span> <span class="fu">format_sf</span>(collisions_21)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Temporal analysis: extract hour and compare distributions</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>london_20 <span class="ot">&lt;-</span> london_20 <span class="sc">|&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_time =</span> <span class="fu">as.POSIXct</span>(datetime, <span class="at">tz =</span> <span class="st">"Europe/London"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">hour =</span> <span class="fu">hour</span>(date_time),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="dv">2020</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>london_21 <span class="ot">&lt;-</span> london_21 <span class="sc">|&gt;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_time =</span> <span class="fu">as.POSIXct</span>(datetime, <span class="at">tz =</span> <span class="st">"Europe/London"</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">hour =</span> <span class="fu">hour</span>(date_time),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="dv">2021</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine and plot hourly distribution</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>temporal_changes <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(london_20, london_21) <span class="sc">|&gt;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(longitude <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">0.5</span>, longitude <span class="sc">&lt;</span> <span class="fl">0.25</span>, latitude <span class="sc">&gt;</span> <span class="fl">51.28</span>, latitude <span class="sc">&lt;</span> <span class="fl">51.72</span>)  <span class="co"># rough London bbox</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temporal_changes, <span class="fu">aes</span>(<span class="at">x =</span> hour, <span class="at">fill =</span> <span class="fu">factor</span>(year))) <span class="sc">+</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Hourly distribution of road collisions in London: 2020 vs 2021"</span>,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Hour of day"</span>, <span class="at">y =</span> <span class="st">"Number of collisions"</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co"># For spatial: map collisions by hour or severity</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># tmap::tm_shape(london_20) + tmap::tm_dots(col = "hour")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For spatial analysis, filter to your area of interest and use <code>tmap</code> or <code>ggplot</code> with <code>sf</code>. See <a href="https://itsleeds.github.io/stats19/articles/stats19.html"><code>stats19</code> articles</a> for more.</p>
+</section>
+<section id="option-4-bring-your-own-data-byod" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="option-4-bring-your-own-data-byod"><span class="header-section-number">1.5</span> Option 4: Bring your own data (BYOD)</h2>
+<p>If you have access to your own spatio-temporal transport data (e.g., GPS trajectories, sensor data, or time-stamped OD matrices):</p>
+<ol type="1">
+<li>Load and clean the data in R (use <code>readr</code>, <code>sf</code>, <code>lubridate</code> for timestamps).</li>
+<li>Aggregate into flows: origin, destination, time, count.</li>
+<li>Visualize: use <code>flowmapblue</code> for interactive maps, <code>ggplot2</code> + <code>geom_sf</code> for static plots, or <code>leaflet</code> for web maps.</li>
+<li>Analyze: explore temporal patterns with <code>tsibble</code> or <code>lubridate</code>, spatial with <code>sf</code>.</li>
+</ol>
+<p>Share your results or challenges in the discussion!</p>
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>© 2025 Robin Lovelace</div></div></section></div></main> <!-- /main -->

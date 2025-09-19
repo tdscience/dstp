@@ -3,4 +3,29 @@ title: "Advanced topics"
 pagetitle: "Session 7"
 ---
 
-Placeholder for session 7 content.
+
+## Visualising large datasets
+
+Install and try visualising datasets from previous sessions with:
+
+- {[`mapgl`](https://github.com/walkerke/mapgl/)}: an R interface to Mapbox GL JS for rendering large spatial datasets.
+- {[`tmap.gl`](https://github.com/r-tmap/tmap.mapgl/)}: Use your existing `tmap` code, that builds on `mapgl`
+- The {[`nptscot/pmtiles`](https://github.com/nptscot/pmtiles)} GitHub package provides tools for creating vector tiles in R (advanced).
+
+## Route network integration
+<!-- We’ll present ways to join different networks, e.g. OSM networks -->
+
+- Take a read of the [networkmerge paper](https://nptscot/networkmerge) and try to reproduce some of the code
+- Search for and download the Ordnance Survey's OpenRoads data product
+- Check-out the [`stplanr`](https://docs.ropensci.org/stplanr/) function [`rnet_join()`](https://docs.ropensci.org/stplanr/reference/rnet_join.html) for joining different route networks, e.g. walking and cycling networks.
+- Check-out the [`anime`](https://github.com/josiahparker/anime) package for astonishingly fast network joining (advanced).
+
+## Deploying your work as web applications
+
+- Think about the project that you're working on that would have the maximum benefit from being deployed as a web application.
+- Sketch out the user interface and user experience (UI/UX) of the application.
+- Sketch the data flow and architecture of backend systems.
+- Read-up on the [`targets`](https://books.ropensci.org/targets/) package for reproducible pipelines.
+- Take a look at the source code of some deployed web applications for inspiration
+- Check out the code in the [`nptscot/nptscot`](https://github.com/nptscot/npt) and [`nptscot/nptscot.github.io`](https://github.com/nptscot/nptscot.github.io) repositories, plus the resulting app at [npt.scot](https://npt.scot).
+- Look for the source code associated with other apps including [pctni.org](https://pctni.org), [pct.bike](https://pct.bike) and other apps of your choice.

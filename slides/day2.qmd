@@ -40,6 +40,20 @@ Any questions before we start?
 
 ![](images/paste-19.png)
 
+
+## Practical 4 options
+
+1. Get stuck-into open access CDR (call detail records) data from Spain using the `spanishoddata` package
+2. Revisit the London Cycle Hire data from session 3.
+3. Explore changes in the spatial and temporal distrutions of road traffic collisions with stats19 package
+4. Bring your own data (BYOD)! 
+
+## spanishoddata
+
+Download a load of data from Spain!
+
+![](https://github.com/rOpenSpain/spanishoddata/raw/main/man/figures/logo.png)
+
 ## Practical session 5: Routing and route network analysis
 
 ![](images/paste-20.png)

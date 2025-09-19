@@ -9,18 +9,35 @@ This exercise is based on the tutorial "Analysing massive open human mobility da
 
 This is a more advanced exercise that benefits from having a fast internet connection, decent compute resources, and an interest in the Iberian Peninsula.
 
-There are three main parts, all of which can be found at [ekotov.pro](https://www.ekotov.pro/agit-2025-spanishoddata/):
+## Practical 4 options
+
+There are four options for this practical session:
+
+1. Get stuck-into open access CDR (call detail records) data from Spain using the `spanishoddata` package (detailed below with example for Seville)
+
+2. Revisit the London Cycle Hire data from [session 3](s3.qmd) and visualize flows using the `flowmapblue` package
+
+3. Explore changes in the spatial and temporal distributions of road traffic collisions using the [`stats19` package](https://itsleeds.github.io/stats19/)
+
+4. Bring your own data (BYOD)!
+
+The `spanishoddata` option is based on the tutorial "Analysing massive open human mobility data in R using spanishoddata, duckdb and flowmaps" by Egor Kotov [@kotov2025].
+
+See [ekotov.pro](https://www.ekotov.pro/agit-2025-spanishoddata/) for details:
 
 -   [Setting up the software](https://www.ekotov.pro/agit-2025-spanishoddata/software-setup.html)
 -   [Importing the data](https://www.ekotov.pro/agit-2025-spanishoddata/1-mobility-data.html)
 -   [Visualising the data with flowmaps](https://www.ekotov.pro/agit-2025-spanishoddata/2-flowmapping.html)
--   Run the code below for Seville and as a bonus for a different part of Spain
--   Bonus: try visualising the cycle flows for the London Cycle Hire data used in [session 3](s3.qmd) using the `flowmapblue` package.
-
 An example of code using the package is shown below, which results in an interactive flow map for Seville, as shown below and in the interactive HTML file [seville_flowmap.html](https://github.com/tdscience/dstp/releases/download/v1/seville_flowmap.html) in the releases section of this repository.
 
 ![](images/seville-flowmap.png)
 
+
+## spanishoddata
+
+Download a load of data from Spain!
+
+![](https://github.com/rOpenSpain/spanishoddata/raw/main/man/figures/logo.png)
 
 ```{r}
 #| label: flowmap-seville
@@ -108,3 +125,116 @@ fs::file_size("seville_flowmap.html")
 system("gh release create")
 system("gh release upload v1 seville_flowmap.html")
 ```
+
+## Option 2: London Cycle Hire flow visualization
+
+To extend the analysis from [session 3](s3.qmd), prepare the cycle hire data as origin-destination flows with timestamps (e.g., from start/end stations and times). Then use `flowmapblue` for interactive visualization.
+
+See the [`flowmapblue` vignette](https://github.com/riatelab/flowmapblue/blob/main/vignettes/flowmapblue.Rmd) for details.
+
+```{r}
+#| label: flowmap-london
+#| eval: false
+#| echo: true
+#| code-summary: "Skeleton for London Cycle Hire flow map"
+
+# Load libraries (assuming data prepared as in s3.qmd)
+library(flowmapblue)
+library(tidyverse)
+library(sf)
+
+# Assume 'cycle_data' is loaded with columns: origin_id, dest_id, time (POSIXct), count
+# And 'stations' sf with id, lon, lat
+
+# Prepare locations (stations)
+locations_london <- stations |>
+  st_transform(crs = 4326) |>
+  st_coordinates() |>
+  as.data.frame() |>
+  mutate(id = stations$id) |>
+  rename(lon = X, lat = Y)
+
+# Prepare flows (aggregate if needed)
+flows_london <- cycle_data |>
+  group_by(origin = origin_id, dest = dest_id, time) |>
+  summarise(count = n(), .groups = "drop")  # or sum trips
+
+# Create interactive flow map
+flowmap_london <- flowmapblue(
+  locations = locations_london,
+  flows = flows_london,
+  mapboxAccessToken = Sys.getenv("MAPBOX_TOKEN"),
+  animation = TRUE,
+  clustering = TRUE
+)
+
+flowmap_london
+
+# Save
+htmlwidgets::saveWidget(flowmap_london, "london_flowmap.html")
+```
+
+## Option 3: Road traffic collisions with stats19
+
+The [`stats19`](https://itsleeds.github.io/stats19/) package provides access to detailed road safety data for Great Britain, including timestamps and locations for spatio-temporal analysis.
+
+```{r}
+#| label: stats19-example
+#| eval: false
+#| echo: true
+#| code-summary: "Example: temporal distribution of collisions"
+
+library(stats19)
+library(tidyverse)
+library(lubridate)
+
+# Download collisions for 2020 (pandemic year) and 2021
+collisions_20 <- get_stats19(year = 2020, type = "collision", ask = FALSE)
+collisions_21 <- get_stats19(year = 2021, type = "collision", ask = FALSE)
+
+# Format to sf (for spatial if needed)
+london_20 <- format_sf(collisions_20)
+london_21 <- format_sf(collisions_21)
+
+# Temporal analysis: extract hour and compare distributions
+london_20 <- london_20 |>
+  mutate(
+    date_time = as.POSIXct(datetime, tz = "Europe/London"),
+    hour = hour(date_time),
+    year = 2020
+  )
+
+london_21 <- london_21 |>
+  mutate(
+    date_time = as.POSIXct(datetime, tz = "Europe/London"),
+    hour = hour(date_time),
+    year = 2021
+  )
+
+# Combine and plot hourly distribution
+temporal_changes <- bind_rows(london_20, london_21) |>
+  filter(longitude > -0.5, longitude < 0.25, latitude > 51.28, latitude < 51.72)  # rough London bbox
+
+ggplot(temporal_changes, aes(x = hour, fill = factor(year))) +
+  geom_histogram(binwidth = 1, position = "dodge", alpha = 0.7) +
+  labs(title = "Hourly distribution of road collisions in London: 2020 vs 2021",
+       x = "Hour of day", y = "Number of collisions",
+       fill = "Year") +
+  theme_minimal()
+
+# For spatial: map collisions by hour or severity
+# tmap::tm_shape(london_20) + tmap::tm_dots(col = "hour")
+```
+
+For spatial analysis, filter to your area of interest and use `tmap` or `ggplot` with `sf`. See [`stats19` articles](https://itsleeds.github.io/stats19/articles/stats19.html) for more.
+
+## Option 4: Bring your own data (BYOD)
+
+If you have access to your own spatio-temporal transport data (e.g., GPS trajectories, sensor data, or time-stamped OD matrices):
+
+1. Load and clean the data in R (use `readr`, `sf`, `lubridate` for timestamps).
+2. Aggregate into flows: origin, destination, time, count.
+3. Visualize: use `flowmapblue` for interactive maps, `ggplot2` + `geom_sf` for static plots, or `leaflet` for web maps.
+4. Analyze: explore temporal patterns with `tsibble` or `lubridate`, spatial with `sf`.
+
+Share your results or challenges in the discussion!

@@ -252,9 +252,61 @@ Professor Robin Lovelace
 <h2>Feedback on the course</h2>
 <p>Please provide feedback on this <a href="https://forms.office.com/e/m102aC23ZD">forms.office.com/e/m102aC23ZD</a> (should take less than 5 minutes):</p>
 
-
-
 <img data-src="images/paste-16.png" class="r-stretch"></section>
+<section id="advanced-topics" class="slide level2">
+<h2>Advanced topics</h2>
+</section>
+<section id="visualising-large-datasets" class="slide level2">
+<h2>Visualising large datasets</h2>
+<ul>
+<li>Install and try visualising datasets from previous sessions with:
+<ul>
+<li><a href="https://github.com/walkerke/mapgl/"><code>mapgl</code></a>: an R interface to Mapbox GL JS for rendering large spatial datasets.</li>
+<li><a href="https://github.com/r-tmap/tmap.mapgl/"><code>tmap.gl</code></a>: Use your existing <code>tmap</code> code, that builds on <code>mapgl</code></li>
+<li>The <a href="https://github.com/nptscot/pmtiles"><code>nptscot/pmtiles</code></a> GitHub package provides tools for creating vector tiles in R (advanced).</li>
+</ul></li>
+</ul>
+</section>
+<section id="route-network-integration" class="slide level2">
+<h2>Route network integration</h2>
+<ul>
+<li>Take a read of the <a href="https://nptscot/networkmerge">networkmerge paper</a> and try to reproduce some of the code</li>
+<li>Search for and download the Ordnance Survey’s OpenRoads data product</li>
+<li>Check-out the <a href="https://docs.ropensci.org/stplanr/"><code>stplanr</code></a> function <a href="https://docs.ropensci.org/stplanr/reference/rnet_join.html"><code>rnet_join()</code></a> for joining different route networks, e.g.&nbsp;walking and cycling networks.</li>
+<li>Check-out the <a href="https://github.com/josiahparker/anime"><code>anime</code></a> package for astonishingly fast network joining (advanced).</li>
+</ul>
+</section>
+<section id="deploying-your-work-as-web-applications" class="slide level2">
+<h2>Deploying your work as web applications</h2>
+<ul>
+<li>Think about the project that you’re working on that would have the maximum benefit from being deployed as a web application.</li>
+<li>Sketch out the user interface and user experience (UI/UX) of the application.</li>
+<li>Sketch the data flow and architecture of backend systems.</li>
+<li>Read-up on the <a href="https://books.ropensci.org/targets/"><code>targets</code></a> package for reproducible pipelines.</li>
+<li>Take a look at the source code of some deployed web applications for inspiration</li>
+</ul>
+<h3 id="example-propensity-to-cycle-tool-pct">Example: Propensity to Cycle Tool (PCT)</h3>
+<p>The PCT is an open-source planning tool for cycling scenarios in England and Wales.</p>
+<p><em>(Interactive map screenshot: Cycling potential layers over England and Wales, showing commute scenarios with color-coded routes)</em></p>
+<ul>
+<li>Interactive maps with Leaflet for route visualization</li>
+<li>Scenarios: Government Target, Go Dutch, Ebike</li>
+<li>Source: <a href="https://www.pct.bike">pct.bike</a>, GitHub <a href="https://github.com/npct/pct">npct/pct</a></li>
+</ul>
+<p>Best practice: Use Shiny for interactivity, open-source for collaboration, integrate with census data for evidence-based planning.</p>
+<h3 id="example-propensity-to-cycle-tool-for-northern-ireland-pctni">Example: Propensity to Cycle Tool for Northern Ireland (PCTNI)</h3>
+<p>Similar to PCT, adapted for Northern Ireland with OSM data.</p>
+<p><em>(Interactive map screenshot: Route network layers for Northern Ireland, highlighting fastest/quietest cycling routes)</em></p>
+<ul>
+<li><p>Layers for fastest/quietest routes, cycle networks</p></li>
+<li><p>Based on 2011 Census, under active development</p></li>
+<li><p>Source: <a href="https://pctni.org">pctni.org</a>, GitHub <a href="https://github.com/pctni">pctni</a></p></li>
+<li><p>Check out the code in the <a href="https://github.com/nptscot/npt"><code>nptscot/nptscot</code></a> and <a href="https://github.com/nptscot/nptscot.github.io"><code>nptscot/nptscot.github.io</code></a> repositories, plus the resulting app at <a href="https://npt.scot">npt.scot</a>.</p></li>
+<li><p>Look for the source code associated with other apps including <a href="https://pctni.org">pctni.org</a>, <a href="https://pct.bike">pct.bike</a> and other apps of your choice.</p></li>
+</ul>
+
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

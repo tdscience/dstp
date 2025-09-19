@@ -168,7 +168,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#visualising-large-datasets" id="toc-visualising-large-datasets" class="nav-link active" data-scroll-target="#visualising-large-datasets"><span class="header-section-number">1</span> Visualising large datasets</a></li>
   <li><a href="#route-network-integration" id="toc-route-network-integration" class="nav-link" data-scroll-target="#route-network-integration"><span class="header-section-number">2</span> Route network integration</a></li>
-  <li><a href="#deploying-your-work-as-web-applications" id="toc-deploying-your-work-as-web-applications" class="nav-link" data-scroll-target="#deploying-your-work-as-web-applications"><span class="header-section-number">3</span> Deploying your work as web applications</a></li>
+  <li><a href="#deploying-your-work-as-web-applications" id="toc-deploying-your-work-as-web-applications" class="nav-link" data-scroll-target="#deploying-your-work-as-web-applications"><span class="header-section-number">3</span> Deploying your work as web applications</a>
+  <ul class="collapse">
+  <li><a href="#examples-of-r-based-transport-web-apps" id="toc-examples-of-r-based-transport-web-apps" class="nav-link" data-scroll-target="#examples-of-r-based-transport-web-apps"><span class="header-section-number">3.1</span> Examples of R-based Transport Web Apps</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -224,8 +227,33 @@ ul.task-list li input[type="checkbox"] {
 <li>Check out the code in the <a href="https://github.com/nptscot/npt"><code>nptscot/nptscot</code></a> and <a href="https://github.com/nptscot/nptscot.github.io"><code>nptscot/nptscot.github.io</code></a> repositories, plus the resulting app at <a href="https://npt.scot">npt.scot</a>.</li>
 <li>Look for the source code associated with other apps including <a href="https://pctni.org">pctni.org</a>, <a href="https://pct.bike">pct.bike</a> and other apps of your choice.</li>
 </ul>
+<section id="examples-of-r-based-transport-web-apps" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="examples-of-r-based-transport-web-apps"><span class="header-section-number">3.1</span> Examples of R-based Transport Web Apps</h3>
+<section id="propensity-to-cycle-tool-pct" class="level4" data-number="3.1.1">
+<h4 data-number="3.1.1" class="anchored" data-anchor-id="propensity-to-cycle-tool-pct"><span class="header-section-number">3.1.1</span> Propensity to Cycle Tool (PCT)</h4>
+<p>The PCT is an open-source planning support system for sustainable transport, providing evidence-based cycling scenarios across England and Wales.</p>
+<p><em>(Interactive map screenshot: Cycling potential layers over England and Wales, showing commute scenarios with color-coded routes)</em></p>
+<ul>
+<li>Built with Shiny and Leaflet for interactive maps</li>
+<li>Scenarios include Government Target, Go Dutch, Ebike; layers for commute/school trips</li>
+<li>Best practices: Integrate open data (census, OSM), enable scenario modeling for policy impact, use open-source for community contributions</li>
+<li>Source: <a href="https://www.pct.bike">pct.bike</a>, GitHub <a href="https://github.com/npct/pct">npct/pct</a>; see <a href="https://www.researchgate.net/publication/281896289_The_Propensity_to_Cycle_Tool_An_open_source_online_system_for_sustainable_transport_planning">paper</a> for methodology</li>
+</ul>
+</section>
+<section id="propensity-to-cycle-tool-for-northern-ireland-pctni" class="level4" data-number="3.1.2">
+<h4 data-number="3.1.2" class="anchored" data-anchor-id="propensity-to-cycle-tool-for-northern-ireland-pctni"><span class="header-section-number">3.1.2</span> Propensity to Cycle Tool for Northern Ireland (PCTNI)</h4>
+<p>An alpha version adapted for Northern Ireland, building on PCT and NPT.</p>
+<p><em>(Interactive map screenshot: Route network layers for Northern Ireland, highlighting fastest/quietest cycling routes)</em></p>
+<ul>
+<li>Features route networks (fastest/quietest), cycle infrastructure layers</li>
+<li>Based on 2011 Census for work trips; active development with OSM integration</li>
+<li>Best practices: Iterative releases with issue tracking, validate against local data, emphasize limitations for responsible use</li>
+<li>Source: <a href="https://pctni.org">pctni.org</a>, GitHub <a href="https://github.com/pctni">pctni</a></li>
+</ul>
 
 
+</section>
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-copyright"><h2 class="anchored quarto-appendix-heading">Copyright</h2><div class="quarto-appendix-contents"><div>© 2025 Robin Lovelace</div></div></section></div></main> <!-- /main -->

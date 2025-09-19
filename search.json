@@ -169,6 +169,34 @@
     "text": "Feedback on the course\nPlease provide feedback on this forms.office.com/e/m102aC23ZD (should take less than 5 minutes):"
   },
   {
+    "objectID": "slides/day2.html#advanced-topics",
+    "href": "slides/day2.html#advanced-topics",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Advanced topics",
+    "text": "Advanced topics"
+  },
+  {
+    "objectID": "slides/day2.html#visualising-large-datasets",
+    "href": "slides/day2.html#visualising-large-datasets",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Visualising large datasets",
+    "text": "Visualising large datasets\n\nInstall and try visualising datasets from previous sessions with:\n\nmapgl: an R interface to Mapbox GL JS for rendering large spatial datasets.\ntmap.gl: Use your existing tmap code, that builds on mapgl\nThe nptscot/pmtiles GitHub package provides tools for creating vector tiles in R (advanced)."
+  },
+  {
+    "objectID": "slides/day2.html#route-network-integration",
+    "href": "slides/day2.html#route-network-integration",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Route network integration",
+    "text": "Route network integration\n\nTake a read of the networkmerge paper and try to reproduce some of the code\nSearch for and download the Ordnance Survey’s OpenRoads data product\nCheck-out the stplanr function rnet_join() for joining different route networks, e.g. walking and cycling networks.\nCheck-out the anime package for astonishingly fast network joining (advanced)."
+  },
+  {
+    "objectID": "slides/day2.html#deploying-your-work-as-web-applications",
+    "href": "slides/day2.html#deploying-your-work-as-web-applications",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Deploying your work as web applications",
+    "text": "Deploying your work as web applications\n\nThink about the project that you’re working on that would have the maximum benefit from being deployed as a web application.\nSketch out the user interface and user experience (UI/UX) of the application.\nSketch the data flow and architecture of backend systems.\nRead-up on the targets package for reproducible pipelines.\nTake a look at the source code of some deployed web applications for inspiration\n\nExample: Propensity to Cycle Tool (PCT)\nThe PCT is an open-source planning tool for cycling scenarios in England and Wales.\n(Interactive map screenshot: Cycling potential layers over England and Wales, showing commute scenarios with color-coded routes)\n\nInteractive maps with Leaflet for route visualization\nScenarios: Government Target, Go Dutch, Ebike\nSource: pct.bike, GitHub npct/pct\n\nBest practice: Use Shiny for interactivity, open-source for collaboration, integrate with census data for evidence-based planning.\nExample: Propensity to Cycle Tool for Northern Ireland (PCTNI)\nSimilar to PCT, adapted for Northern Ireland with OSM data.\n(Interactive map screenshot: Route network layers for Northern Ireland, highlighting fastest/quietest cycling routes)\n\nLayers for fastest/quietest routes, cycle networks\nBased on 2011 Census, under active development\nSource: pctni.org, GitHub pctni\nCheck out the code in the nptscot/nptscot and nptscot/nptscot.github.io repositories, plus the resulting app at npt.scot.\nLook for the source code associated with other apps including pctni.org, pct.bike and other apps of your choice."
+  },
+  {
     "objectID": "session1.html",
     "href": "session1.html",
     "title": "1 Importing data from OSM",
@@ -539,7 +567,7 @@
     "href": "s7.html#deploying-your-work-as-web-applications",
     "title": "Advanced topics",
     "section": "3 Deploying your work as web applications",
-    "text": "3 Deploying your work as web applications\n\nThink about the project that you’re working on that would have the maximum benefit from being deployed as a web application.\nSketch out the user interface and user experience (UI/UX) of the application.\nSketch the data flow and architecture of backend systems.\nRead-up on the targets package for reproducible pipelines.\nTake a look at the source code of some deployed web applications for inspiration\nCheck out the code in the nptscot/nptscot and nptscot/nptscot.github.io repositories, plus the resulting app at npt.scot.\nLook for the source code associated with other apps including pctni.org, pct.bike and other apps of your choice."
+    "text": "3 Deploying your work as web applications\n\nThink about the project that you’re working on that would have the maximum benefit from being deployed as a web application.\nSketch out the user interface and user experience (UI/UX) of the application.\nSketch the data flow and architecture of backend systems.\nRead-up on the targets package for reproducible pipelines.\nTake a look at the source code of some deployed web applications for inspiration\nCheck out the code in the nptscot/nptscot and nptscot/nptscot.github.io repositories, plus the resulting app at npt.scot.\nLook for the source code associated with other apps including pctni.org, pct.bike and other apps of your choice.\n\n\n3.1 Examples of R-based Transport Web Apps\n\n3.1.1 Propensity to Cycle Tool (PCT)\nThe PCT is an open-source planning support system for sustainable transport, providing evidence-based cycling scenarios across England and Wales.\n(Interactive map screenshot: Cycling potential layers over England and Wales, showing commute scenarios with color-coded routes)\n\nBuilt with Shiny and Leaflet for interactive maps\nScenarios include Government Target, Go Dutch, Ebike; layers for commute/school trips\nBest practices: Integrate open data (census, OSM), enable scenario modeling for policy impact, use open-source for community contributions\nSource: pct.bike, GitHub npct/pct; see paper for methodology\n\n\n\n3.1.2 Propensity to Cycle Tool for Northern Ireland (PCTNI)\nAn alpha version adapted for Northern Ireland, building on PCT and NPT.\n(Interactive map screenshot: Route network layers for Northern Ireland, highlighting fastest/quietest cycling routes)\n\nFeatures route networks (fastest/quietest), cycle infrastructure layers\nBased on 2011 Census for work trips; active development with OSM integration\nBest practices: Iterative releases with issue tracking, validate against local data, emphasize limitations for responsible use\nSource: pctni.org, GitHub pctni"
   },
   {
     "objectID": "s4.html",

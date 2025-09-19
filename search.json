@@ -85,6 +85,20 @@
     "text": "Practical session 4: Spatio-temporal data"
   },
   {
+    "objectID": "slides/day2.html#practical-4-options",
+    "href": "slides/day2.html#practical-4-options",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "Practical 4 options",
+    "text": "Practical 4 options\n\nGet stuck-into open access CDR (call detail records) data from Spain using the spanishoddata package\nRevisit the London Cycle Hire data from session 3.\nExplore changes in the spatial and temporal distrutions of road traffic collisions with stats19 package\nBring your own data (BYOD)!"
+  },
+  {
+    "objectID": "slides/day2.html#spanishoddata",
+    "href": "slides/day2.html#spanishoddata",
+    "title": "Data Science for Transport Planning: Day 2",
+    "section": "spanishoddata",
+    "text": "spanishoddata\nDownload a load of data from Spain!"
+  },
+  {
     "objectID": "slides/day2.html#practical-session-5-routing-and-route-network-analysis",
     "href": "slides/day2.html#practical-session-5-routing-and-route-network-analysis",
     "title": "Data Science for Transport Planning: Day 2",

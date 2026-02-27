@@ -197,3 +197,76 @@ gcloud iam service-accounts delete otp-vm-sa@shiny-server-154518.iam.gserviceacc
 # Optional: Delete the Docker image from Artifact Registry
 gcloud artifacts repositories delete routing-engine --location=europe-west2 --quiet
 ```
+
+---
+
+## Alternative: Simple Remote Server Deployment
+
+For simpler deployments (e.g., on a VPS or home server), follow these steps:
+
+### 1. Server Setup
+
+Install Docker on your server:
+
+```bash
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+```
+
+### 2. Run OTP Container
+
+```bash
+# Pull the TDS image
+docker pull itsleeds/tds:latest
+
+# Run the container
+docker run -d \
+  --name otp \
+  -p 8080:8080 \
+  -v otp-data:/opt/otp/graph \
+  itsleeds/tds:latest
+```
+
+### 3. Set Up Reverse Proxy
+
+For HTTPS access, configure a reverse proxy (Nginx, Caddy, or cloudflare):
+
+**Nginx example:**
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+Then add SSL with Certbot:
+
+```bash
+sudo certbot --nginx -d your-domain.com
+```
+
+### 4. Verify
+
+```bash
+curl https://your-domain.com/otp/routers/default
+```
+
+Should return router info with version details.
+
+---
+
+### Quick Reference
+
+| Component | Command/Resource |
+|-----------|------------------|
+| Image | `itsleeds/tds:latest` |
+| Port | 8080 (internal), 80/443 (proxy) |
+| Graph data | Bundled in TDS image |
+| Documentation | https://docs.opentripplanner.org/ |

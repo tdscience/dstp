@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,10 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-472185a6dd4f00147666a15d3e656cbf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-38a0377b550f11e42cb4e1769f91c374.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,11 +131,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      <div class="sidebar-tools-main">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Transport Planning</a> 
+        <div class="sidebar-tools-main">
     <a href="https://github.com/tdscience/dstp" title="GitHub" class="quarto-navigation-tool px-1" aria-label="GitHub"><i class="bi bi-github"></i></a>
 </div>
+    </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
@@ -207,6 +208,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-2-build-and-deploy-the-routing-engine" id="toc-step-2-build-and-deploy-the-routing-engine" class="nav-link" data-scroll-target="#step-2-build-and-deploy-the-routing-engine"><span class="header-section-number">1.2</span> Step 2: Build and Deploy the Routing Engine</a></li>
   <li><a href="#step-3-access-and-verify" id="toc-step-3-access-and-verify" class="nav-link" data-scroll-target="#step-3-access-and-verify"><span class="header-section-number">1.3</span> Step 3: Access and Verify</a></li>
   <li><a href="#step-4-managing-the-deployment" id="toc-step-4-managing-the-deployment" class="nav-link" data-scroll-target="#step-4-managing-the-deployment"><span class="header-section-number">1.4</span> Step 4: Managing the Deployment</a></li>
+  </ul></li>
+  <li><a href="#alternative-simple-remote-server-deployment" id="toc-alternative-simple-remote-server-deployment" class="nav-link" data-scroll-target="#alternative-simple-remote-server-deployment"><span class="header-section-number">2</span> Alternative: Simple Remote Server Deployment</a>
+  <ul class="collapse">
+  <li><a href="#server-setup" id="toc-server-setup" class="nav-link" data-scroll-target="#server-setup"><span class="header-section-number">2.1</span> 1. Server Setup</a></li>
+  <li><a href="#run-otp-container" id="toc-run-otp-container" class="nav-link" data-scroll-target="#run-otp-container"><span class="header-section-number">2.2</span> 2. Run OTP Container</a></li>
+  <li><a href="#set-up-reverse-proxy" id="toc-set-up-reverse-proxy" class="nav-link" data-scroll-target="#set-up-reverse-proxy"><span class="header-section-number">2.3</span> 3. Set Up Reverse Proxy</a></li>
+  <li><a href="#verify" id="toc-verify" class="nav-link" data-scroll-target="#verify"><span class="header-section-number">2.4</span> 4. Verify</a></li>
+  <li><a href="#quick-reference" id="toc-quick-reference" class="nav-link" data-scroll-target="#quick-reference"><span class="header-section-number">2.5</span> Quick Reference</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/tdscience/dstp/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -378,6 +387,81 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Delete the Docker image from Artifact Registry</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> artifacts repositories delete routing-engine <span class="at">--location</span><span class="op">=</span>europe-west2 <span class="at">--quiet</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="alternative-simple-remote-server-deployment" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="alternative-simple-remote-server-deployment"><span class="header-section-number">2</span> Alternative: Simple Remote Server Deployment</h2>
+<p>For simpler deployments (e.g., on a VPS or home server), follow these steps:</p>
+<section id="server-setup" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="server-setup"><span class="header-section-number">2.1</span> 1. Server Setup</h3>
+<p>Install Docker on your server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://get.docker.com <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> docker <span class="va">$USER</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="run-otp-container" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="run-otp-container"><span class="header-section-number">2.2</span> 2. Run OTP Container</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the TDS image</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull itsleeds/tds:latest</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the container</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="dt">\</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> otp <span class="dt">\</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> 8080:8080 <span class="dt">\</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-v</span> otp-data:/opt/otp/graph <span class="dt">\</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  itsleeds/tds:latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="set-up-reverse-proxy" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="set-up-reverse-proxy"><span class="header-section-number">2.3</span> 3. Set Up Reverse Proxy</h3>
+<p>For HTTPS access, configure a reverse proxy (Nginx, Caddy, or cloudflare):</p>
+<p><strong>Nginx example:</strong></p>
+<pre class="nginx"><code>server {
+    listen 80;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</code></pre>
+<p>Then add SSL with Certbot:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> certbot <span class="at">--nginx</span> <span class="at">-d</span> your-domain.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="verify" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="verify"><span class="header-section-number">2.4</span> 4. Verify</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://your-domain.com/otp/routers/default</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Should return router info with version details.</p>
+<hr>
+</section>
+<section id="quick-reference" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="quick-reference"><span class="header-section-number">2.5</span> Quick Reference</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Command/Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Image</td>
+<td><code>itsleeds/tds:latest</code></td>
+</tr>
+<tr class="even">
+<td>Port</td>
+<td>8080 (internal), 80/443 (proxy)</td>
+</tr>
+<tr class="odd">
+<td>Graph data</td>
+<td>Bundled in TDS image</td>
+</tr>
+<tr class="even">
+<td>Documentation</td>
+<td>https://docs.opentripplanner.org/</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
